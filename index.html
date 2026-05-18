@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>BarManager Pro — Gestion intégrale de bar | Cameroun</title>
+<title data-fr="BarManager Pro — Gestion intégrale de bar | Cameroun" data-en="BarManager Pro — All-in-one bar management | Cameroon">BarManager Pro — Gestion intégrale de bar | Cameroun</title>
+<meta name="description" data-fr-content="La solution tout-en-un pour les bars et restaurants du Cameroun et d'Afrique Centrale — caisse, stocks, paiements MoMo, conformité DGI." data-en-content="The all-in-one solution for bars and restaurants in Cameroon and Central Africa — POS, inventory, MoMo payments, DGI compliance." content="La solution tout-en-un pour les bars et restaurants du Cameroun et d'Afrique Centrale — caisse, stocks, paiements MoMo, conformité DGI."/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <style>
@@ -408,6 +409,37 @@ body.banner-closed { --banner-h: 0px; }
 .nav-links a.active { color: var(--gold); }
 
 .nav-cta { display: flex; align-items: center; gap: 8px; }
+
+/* Language switcher */
+.lang-switch {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(255,255,255,.04);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 3px;
+  gap: 2px;
+}
+.lang-switch button {
+  background: transparent;
+  border: none;
+  padding: 5px 10px;
+  font-family: var(--font-h);
+  font-size: .75rem;
+  font-weight: 700;
+  color: var(--muted);
+  cursor: pointer;
+  border-radius: 6px;
+  letter-spacing: .04em;
+  transition: all .2s;
+}
+.lang-switch button.active {
+  background: var(--gold);
+  color: #0C0E0B;
+}
+.lang-switch button:not(.active):hover {
+  color: var(--white);
+}
 
 /* Mobile menu */
 .hamburger {
@@ -1094,8 +1126,8 @@ textarea.form-control { resize: vertical; min-height: 120px; }
      ============================================================ -->
 <div class="top-banner" id="topBanner">
   <div class="top-banner-dot"></div>
-  <span>Version web SaaS en développement — <strong>Téléchargez la version Desktop dès maintenant</strong> et pilotez votre bar.</span>
-  <a href="https://github.com/guylain237/barmanagerpro-download/releases/download/v1.0.2/BarManager.Pro_1.0.2_x64-setup.exe" target="_blank" rel="noopener noreferrer">Télécharger gratuitement &darr;</a>
+  <span data-fr-html="Version web SaaS en développement — <strong>Téléchargez la version Desktop dès maintenant</strong> et pilotez votre bar." data-en-html="Web SaaS version in development — <strong>Download the Desktop version now</strong> and run your bar.">Version web SaaS en développement — <strong>Téléchargez la version Desktop dès maintenant</strong> et pilotez votre bar.</span>
+  <a href="https://github.com/guylain237/barmanagerpro-download/releases/download/v1.0.2/BarManager.Pro_1.0.2_x64-setup.exe" rel="noopener" download onclick="trackDownload(event)" data-fr="Télécharger gratuitement ↓" data-en="Download for free ↓">Télécharger gratuitement &darr;</a>
   <button class="top-banner-close" onclick="closeBanner()" aria-label="Fermer le bandeau">✕</button>
 </div>
 
@@ -1113,17 +1145,21 @@ textarea.form-control { resize: vertical; min-height: 120px; }
 
       <!-- Links -->
       <ul class="nav-links" id="navLinks">
-        <li><a href="#" onclick="showPage('home')" data-page="home" class="active">Accueil</a></li>
-        <li><a href="#" onclick="showPage('modules')" data-page="modules">Modules</a></li>
-        <li><a href="#" onclick="showPage('planning')" data-page="planning">Planning</a></li>
-        <li><a href="#" onclick="showPage('pricing')" data-page="pricing">Tarifs</a></li>
-        <li><a href="#" onclick="showPage('contact')" data-page="contact">Contact</a></li>
+        <li><a href="#" onclick="showPage('home')" data-page="home" class="active" data-fr="Accueil" data-en="Home">Accueil</a></li>
+        <li><a href="#" onclick="showPage('modules')" data-page="modules" data-fr="Modules" data-en="Modules">Modules</a></li>
+        <li><a href="#" onclick="showPage('planning')" data-page="planning" data-fr="Planning" data-en="Roadmap">Planning</a></li>
+        <li><a href="#" onclick="showPage('pricing')" data-page="pricing" data-fr="Tarifs" data-en="Pricing">Tarifs</a></li>
+        <li><a href="#" onclick="showPage('contact')" data-page="contact" data-fr="Contact" data-en="Contact">Contact</a></li>
       </ul>
 
       <!-- CTA -->
       <div class="nav-cta">
-        <button class="btn btn-ghost" onclick="showPage('contact')">Se connecter</button>
-        <a class="btn btn-primary" href="https://github.com/guylain237/barmanagerpro-download/releases/download/v1.0.2/BarManager.Pro_1.0.2_x64-setup.exe" target="_blank" rel="noopener noreferrer" style="text-decoration:none;">&#8659; Télécharger</a>
+        <div class="lang-switch" role="group" aria-label="Language selector">
+          <button id="langFr" class="active" onclick="setLang('fr')" aria-label="Français">FR</button>
+          <button id="langEn" onclick="setLang('en')" aria-label="English">EN</button>
+        </div>
+        <button class="btn btn-ghost" onclick="showPage('contact')" data-fr="Se connecter" data-en="Sign in">Se connecter</button>
+        <a class="btn btn-primary" href="https://github.com/guylain237/barmanagerpro-download/releases/download/v1.0.2/BarManager.Pro_1.0.2_x64-setup.exe" rel="noopener" download onclick="trackDownload(event)" style="text-decoration:none;" data-fr="⇩ Télécharger" data-en="⇩ Download">&#8659; Télécharger</a>
       </div>
 
       <!-- Hamburger -->
@@ -1148,43 +1184,43 @@ textarea.form-control { resize: vertical; min-height: 120px; }
       <div class="grid-2" style="gap: 64px;">
         <div class="hero-content">
           <div class="hero-eyebrow">
-            <span class="pill"><span class="pill-dot"></span> Version Desktop disponible</span>
+            <span class="pill"><span class="pill-dot"></span> <span data-fr="Version Desktop disponible" data-en="Desktop version available">Version Desktop disponible</span></span>
           </div>
           <!-- Badge version web bientôt -->
           <div class="badge-web-soon">
             <div class="badge-web-soon-dot"></div>
-            Version web SaaS — Bientôt disponible
+            <span data-fr="Version web SaaS — Bientôt disponible" data-en="Web SaaS version — Coming soon">Version web SaaS — Bientôt disponible</span>
           </div>
-          <h1 class="hero-title">
+          <h1 class="hero-title" data-fr-html="Gérez votre bar<br>comme un <em>pro</em>." data-en-html="Run your bar<br>like a <em>pro</em>.">
             Gérez votre bar<br>comme un <em>pro</em>.
           </h1>
-          <p class="hero-desc">
+          <p class="hero-desc" data-fr="La solution tout-en-un pour les bars et restaurants du Cameroun et d'Afrique Centrale — caisse, stocks, paiements MoMo, conformité DGI." data-en="The all-in-one solution for bars and restaurants in Cameroon and Central Africa — POS, inventory, MoMo payments, DGI compliance.">
             La solution tout-en-un pour les bars et restaurants du Cameroun
             et d'Afrique Centrale — caisse, stocks, paiements MoMo,
             conformité DGI.
           </p>
           <div class="hero-cta">
-            <a class="btn btn-primary" href="https://github.com/guylain237/barmanagerpro-download/releases/download/v1.0.2/BarManager.Pro_1.0.2_x64-setup.exe" target="_blank" rel="noopener noreferrer">
+            <a class="btn btn-primary" href="https://github.com/guylain237/barmanagerpro-download/releases/download/v1.0.2/BarManager.Pro_1.0.2_x64-setup.exe" rel="noopener" download onclick="trackDownload(event)" data-fr="⇩ Télécharger gratuitement (Windows)" data-en="⇩ Download for free (Windows)">
               &#8659; Télécharger gratuitement (Windows)
             </a>
-            <button class="btn btn-outline" onclick="showPage('modules')">
+            <button class="btn btn-outline" onclick="showPage('modules')" data-fr="Voir les modules" data-en="View modules">
               Voir les modules
             </button>
           </div>
           <div class="hero-social-proof">
-            <div class="hero-stat"><strong>9</strong><span>Modules intégrés</span></div>
-            <div class="hero-stat"><strong>100%</strong><span>Offline-first</span></div>
-            <div class="hero-stat"><strong>OM + MoMo</strong><span>Paiements locaux</span></div>
-            <div class="hero-stat"><strong>DGI</strong><span>Conformité Cameroun</span></div>
+            <div class="hero-stat"><strong>9</strong><span data-fr="Modules intégrés" data-en="Integrated modules">Modules intégrés</span></div>
+            <div class="hero-stat"><strong>100%</strong><span data-fr="Offline-first" data-en="Offline-first">Offline-first</span></div>
+            <div class="hero-stat"><strong>OM + MoMo</strong><span data-fr="Paiements locaux" data-en="Local payments">Paiements locaux</span></div>
+            <div class="hero-stat"><strong>DGI</strong><span data-fr="Conformité Cameroun" data-en="Cameroon compliance">Conformité Cameroun</span></div>
           </div>
           <div style="margin-top:28px; padding:12px 20px; border-radius:10px; background:rgba(255,255,255,.03); border:1px solid var(--border); display:flex; align-items:center; gap:8px; flex-wrap:wrap; font-size:.8rem; color:var(--muted); font-family:var(--font-h); font-weight:600; letter-spacing:.01em;">
-            <span>9 modules</span>
+            <span data-fr="9 modules" data-en="9 modules">9 modules</span>
             <span style="width:3px;height:3px;border-radius:50%;background:var(--gold);display:inline-block;flex-shrink:0;"></span>
-            <span>100% offline disponible</span>
+            <span data-fr="100% offline disponible" data-en="100% offline available">100% offline disponible</span>
             <span style="width:3px;height:3px;border-radius:50%;background:var(--gold);display:inline-block;flex-shrink:0;"></span>
-            <span>Orange Money &amp; MTN MoMo</span>
+            <span data-fr="Orange Money & MTN MoMo" data-en="Orange Money & MTN MoMo">Orange Money &amp; MTN MoMo</span>
             <span style="width:3px;height:3px;border-radius:50%;background:var(--gold);display:inline-block;flex-shrink:0;"></span>
-            <span>TVA DGI 19,25%</span>
+            <span data-fr="TVA DGI 19,25%" data-en="DGI VAT 19.25%">TVA DGI 19,25%</span>
           </div>
         </div>
 
@@ -1201,27 +1237,27 @@ textarea.form-control { resize: vertical; min-height: 120px; }
             </div>
             <div class="db-body">
               <div class="db-card">
-                <div class="db-card-label">CA aujourd'hui</div>
+                <div class="db-card-label" data-fr="CA aujourd'hui" data-en="Today's revenue">CA aujourd'hui</div>
                 <div class="db-card-val">487 500</div>
-                <div class="db-card-delta">↑ +12% vs hier</div>
+                <div class="db-card-delta" data-fr="↑ +12% vs hier" data-en="↑ +12% vs yesterday">↑ +12% vs hier</div>
               </div>
               <div class="db-card">
-                <div class="db-card-label">Commandes</div>
+                <div class="db-card-label" data-fr="Commandes" data-en="Orders">Commandes</div>
                 <div class="db-card-val">134</div>
-                <div class="db-card-delta">↑ +8 cette heure</div>
+                <div class="db-card-delta" data-fr="↑ +8 cette heure" data-en="↑ +8 this hour">↑ +8 cette heure</div>
               </div>
               <div class="db-card">
-                <div class="db-card-label">Caisse ouverte</div>
+                <div class="db-card-label" data-fr="Caisse ouverte" data-en="Open till">Caisse ouverte</div>
                 <div class="db-card-val">75 000</div>
-                <div class="db-card-delta" style="color: var(--gold)">FCFA en caisse</div>
+                <div class="db-card-delta" style="color: var(--gold)" data-fr="FCFA en caisse" data-en="FCFA in till">FCFA en caisse</div>
               </div>
               <div class="db-card">
-                <div class="db-card-label">Stock critique</div>
+                <div class="db-card-label" data-fr="Stock critique" data-en="Critical stock">Stock critique</div>
                 <div class="db-card-val">3</div>
-                <div class="db-card-delta" style="color:#F87171">⚠ alertes actives</div>
+                <div class="db-card-delta" style="color:#F87171" data-fr="⚠ alertes actives" data-en="⚠ active alerts">⚠ alertes actives</div>
               </div>
               <div class="db-chart">
-                <div class="db-chart-label">Ventes — 7 derniers jours (FCFA)</div>
+                <div class="db-chart-label" data-fr="Ventes — 7 derniers jours (FCFA)" data-en="Sales — Last 7 days (FCFA)">Ventes — 7 derniers jours (FCFA)</div>
                 <div class="db-chart-bars">
                   <div class="db-bar" style="height:55%"></div>
                   <div class="db-bar" style="height:70%"></div>
@@ -1245,82 +1281,82 @@ textarea.form-control { resize: vertical; min-height: 120px; }
   <section class="section">
     <div class="container">
       <div class="section-header text-c stagger">
-        <div class="pill reveal">9 modules tout-en-un</div>
-        <h2 class="reveal">Tout ce dont votre bar a besoin,<br>dans une seule application</h2>
-        <p class="reveal" style="margin: 0 auto;">Conçu pour le contexte camerounais : paiements mobile money, connectivité limitée, TVA DGI — tout est intégré nativement.</p>
+        <div class="pill reveal" data-fr="9 modules tout-en-un" data-en="9 all-in-one modules">9 modules tout-en-un</div>
+        <h2 class="reveal" data-fr-html="Tout ce dont votre bar a besoin,<br>dans une seule application" data-en-html="Everything your bar needs,<br>in a single application">Tout ce dont votre bar a besoin,<br>dans une seule application</h2>
+        <p class="reveal" style="margin: 0 auto;" data-fr="Conçu pour le contexte camerounais : paiements mobile money, connectivité limitée, TVA DGI — tout est intégré nativement." data-en="Designed for the Cameroonian context: mobile money payments, limited connectivity, DGI VAT — everything is natively integrated.">Conçu pour le contexte camerounais : paiements mobile money, connectivité limitée, TVA DGI — tout est intégré nativement.</p>
       </div>
       <div class="feature-grid stagger" style="grid-template-columns:repeat(3,1fr);">
         <div class="card feature-card reveal" style="border-top:2px solid #D4A017;">
           <div class="icon-box icon-box-gold">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#D4A017" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10h18M7 15h1m4 0h1m-7 4h12a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
           </div>
-          <h3>Caisse</h3>
-          <p style="font-size:.8rem;color:#D4A017;font-family:var(--font-h);font-weight:600;margin-bottom:8px;">Le coeur financier du bar</p>
-          <p>Ouverture / clôture avec fond initial, rapport Z PDF conforme DGI, alerte écart de caisse, audit log complet.</p>
+          <h3 data-fr="Caisse" data-en="Cash register">Caisse</h3>
+          <p style="font-size:.8rem;color:#D4A017;font-family:var(--font-h);font-weight:600;margin-bottom:8px;" data-fr="Le coeur financier du bar" data-en="The financial heart of the bar">Le coeur financier du bar</p>
+          <p data-fr="Ouverture / clôture avec fond initial, rapport Z PDF conforme DGI, alerte écart de caisse, audit log complet." data-en="Open / close with initial float, DGI-compliant Z report PDF, cash discrepancy alerts, full audit log.">Ouverture / clôture avec fond initial, rapport Z PDF conforme DGI, alerte écart de caisse, audit log complet.</p>
         </div>
         <div class="card feature-card reveal" style="border-top:2px solid #2DBD7E;">
           <div class="icon-box icon-box-green">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2DBD7E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
           </div>
-          <h3>POS & Commandes</h3>
-          <p style="font-size:.8rem;color:#2DBD7E;font-family:var(--font-h);font-weight:600;margin-bottom:8px;">Encaissement rapide, sans erreur</p>
-          <p>Plan de salle par table, multi-paiement (espèces, Orange Money, MoMo, mixte), transfert de table, remboursement partiel.</p>
+          <h3 data-fr="POS & Commandes" data-en="POS & Orders">POS & Commandes</h3>
+          <p style="font-size:.8rem;color:#2DBD7E;font-family:var(--font-h);font-weight:600;margin-bottom:8px;" data-fr="Encaissement rapide, sans erreur" data-en="Fast checkout, no errors">Encaissement rapide, sans erreur</p>
+          <p data-fr="Plan de salle par table, multi-paiement (espèces, Orange Money, MoMo, mixte), transfert de table, remboursement partiel." data-en="Floor plan with tables, multi-payment (cash, Orange Money, MoMo, mixed), table transfer, partial refund.">Plan de salle par table, multi-paiement (espèces, Orange Money, MoMo, mixte), transfert de table, remboursement partiel.</p>
         </div>
         <div class="card feature-card reveal" style="border-top:2px solid #6CA0F7;">
           <div class="icon-box icon-box-blue">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6CA0F7" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
           </div>
-          <h3>Stocks & Magasin</h3>
-          <p style="font-size:.8rem;color:#6CA0F7;font-family:var(--font-h);font-weight:600;margin-bottom:8px;">Vision temps réel de l'inventaire</p>
-          <p>Étagères visuelles, mouvements avec historique, alertes de seuil, inventaires physiques, import Excel/CSV.</p>
+          <h3 data-fr="Stocks & Magasin" data-en="Inventory & Warehouse">Stocks & Magasin</h3>
+          <p style="font-size:.8rem;color:#6CA0F7;font-family:var(--font-h);font-weight:600;margin-bottom:8px;" data-fr="Vision temps réel de l'inventaire" data-en="Real-time inventory view">Vision temps réel de l'inventaire</p>
+          <p data-fr="Étagères visuelles, mouvements avec historique, alertes de seuil, inventaires physiques, import Excel/CSV." data-en="Visual shelves, movements with history, threshold alerts, physical inventories, Excel/CSV import.">Étagères visuelles, mouvements avec historique, alertes de seuil, inventaires physiques, import Excel/CSV.</p>
         </div>
         <div class="card feature-card reveal" style="border-top:2px solid #F87171;">
           <div class="icon-box" style="background:rgba(248,113,113,.12);">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F87171" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
           </div>
-          <h3>Fournisseurs</h3>
-          <p style="font-size:.8rem;color:#F87171;font-family:var(--font-h);font-weight:600;margin-bottom:8px;">Annuaire et historique commandes</p>
-          <p>Fiche fournisseur complète, historique commandes, notes et tags libres, suggestions de réappro basées sur seuils.</p>
+          <h3 data-fr="Fournisseurs" data-en="Suppliers">Fournisseurs</h3>
+          <p style="font-size:.8rem;color:#F87171;font-family:var(--font-h);font-weight:600;margin-bottom:8px;" data-fr="Annuaire et historique commandes" data-en="Directory and order history">Annuaire et historique commandes</p>
+          <p data-fr="Fiche fournisseur complète, historique commandes, notes et tags libres, suggestions de réappro basées sur seuils." data-en="Complete supplier profile, order history, free notes and tags, restocking suggestions based on thresholds.">Fiche fournisseur complète, historique commandes, notes et tags libres, suggestions de réappro basées sur seuils.</p>
         </div>
         <div class="card feature-card reveal" style="border-top:2px solid #C084FC;">
           <div class="icon-box icon-box-purple">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C084FC" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
           </div>
-          <h3>Dettes & Paiements</h3>
-          <p style="font-size:.8rem;color:#C084FC;font-family:var(--font-h);font-weight:600;margin-bottom:8px;">Suivi fournisseurs sans oubli</p>
-          <p>Dettes fournisseurs avec échéances, paiements partiels, génération PDF facture, alertes automatiques avant échéance.</p>
+          <h3 data-fr="Dettes & Paiements" data-en="Debts & Payments">Dettes & Paiements</h3>
+          <p style="font-size:.8rem;color:#C084FC;font-family:var(--font-h);font-weight:600;margin-bottom:8px;" data-fr="Suivi fournisseurs sans oubli" data-en="Supplier tracking without oversight">Suivi fournisseurs sans oubli</p>
+          <p data-fr="Dettes fournisseurs avec échéances, paiements partiels, génération PDF facture, alertes automatiques avant échéance." data-en="Supplier debts with due dates, partial payments, PDF invoice generation, automatic alerts before deadlines.">Dettes fournisseurs avec échéances, paiements partiels, génération PDF facture, alertes automatiques avant échéance.</p>
         </div>
         <div class="card feature-card reveal" style="border-top:2px solid #34D399;">
           <div class="icon-box icon-box-green">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
           </div>
-          <h3>Équipe & Rôles</h3>
-          <p style="font-size:.8rem;color:#34D399;font-family:var(--font-h);font-weight:600;margin-bottom:8px;">Permissions granulaires par poste</p>
-          <p>4 rôles : Propriétaire, Gérant, Caissier, Serveur — permissions par module, auth sécurisée, audit log par utilisateur.</p>
+          <h3 data-fr="Équipe & Rôles" data-en="Team & Roles">Équipe & Rôles</h3>
+          <p style="font-size:.8rem;color:#34D399;font-family:var(--font-h);font-weight:600;margin-bottom:8px;" data-fr="Permissions granulaires par poste" data-en="Granular permissions per role">Permissions granulaires par poste</p>
+          <p data-fr="4 rôles : Propriétaire, Gérant, Caissier, Serveur — permissions par module, auth sécurisée, audit log par utilisateur." data-en="4 roles: Owner, Manager, Cashier, Server — per-module permissions, secure auth, per-user audit log.">4 rôles : Propriétaire, Gérant, Caissier, Serveur — permissions par module, auth sécurisée, audit log par utilisateur.</p>
         </div>
         <div class="card feature-card reveal" style="border-top:2px solid #FBBF24;">
           <div class="icon-box icon-box-gold">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FBBF24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
           </div>
-          <h3>Analytics</h3>
-          <p style="font-size:.8rem;color:#FBBF24;font-family:var(--font-h);font-weight:600;margin-bottom:8px;">Pilotez par les chiffres</p>
-          <p>KPIs temps réel : CA jour/mois/année, top produits, heatmap horaire, comparaison de périodes, export PDF.</p>
+          <h3 data-fr="Analytics" data-en="Analytics">Analytics</h3>
+          <p style="font-size:.8rem;color:#FBBF24;font-family:var(--font-h);font-weight:600;margin-bottom:8px;" data-fr="Pilotez par les chiffres" data-en="Drive decisions with data">Pilotez par les chiffres</p>
+          <p data-fr="KPIs temps réel : CA jour/mois/année, top produits, heatmap horaire, comparaison de périodes, export PDF." data-en="Real-time KPIs: revenue day/month/year, top products, hourly heatmap, period comparison, PDF export.">KPIs temps réel : CA jour/mois/année, top produits, heatmap horaire, comparaison de périodes, export PDF.</p>
         </div>
         <div class="card feature-card reveal" style="border-top:2px solid #38BDF8;">
           <div class="icon-box icon-box-blue">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#38BDF8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
           </div>
-          <h3>Conformité DGI</h3>
-          <p style="font-size:.8rem;color:#38BDF8;font-family:var(--font-h);font-weight:600;margin-bottom:8px;">Toujours prêt pour un contrôle fiscal</p>
-          <p>TVA 19,25% intégrée nativement, rapport Z quotidien en PDF, numérotation fiscale conforme DGI Cameroun.</p>
+          <h3 data-fr="Conformité DGI" data-en="DGI Compliance">Conformité DGI</h3>
+          <p style="font-size:.8rem;color:#38BDF8;font-family:var(--font-h);font-weight:600;margin-bottom:8px;" data-fr="Toujours prêt pour un contrôle fiscal" data-en="Always ready for a tax audit">Toujours prêt pour un contrôle fiscal</p>
+          <p data-fr="TVA 19,25% intégrée nativement, rapport Z quotidien en PDF, numérotation fiscale conforme DGI Cameroun." data-en="VAT 19.25% natively integrated, daily Z report in PDF, DGI Cameroon-compliant fiscal numbering.">TVA 19,25% intégrée nativement, rapport Z quotidien en PDF, numérotation fiscale conforme DGI Cameroun.</p>
         </div>
         <div class="card feature-card reveal" style="border-top:2px solid #A3E635;">
           <div class="icon-box" style="background:rgba(163,230,53,.12);">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#A3E635" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
           </div>
-          <h3>Sécurité & Backup</h3>
-          <p style="font-size:.8rem;color:#A3E635;font-family:var(--font-h);font-weight:600;margin-bottom:8px;">Vos données protégées, toujours</p>
-          <p>Backup auto chiffré toutes les 6h, SQLCipher + JWT + RolesGuard, sync multi-appareils, mode offline-first.</p>
+          <h3 data-fr="Sécurité & Backup" data-en="Security & Backup">Sécurité & Backup</h3>
+          <p style="font-size:.8rem;color:#A3E635;font-family:var(--font-h);font-weight:600;margin-bottom:8px;" data-fr="Vos données protégées, toujours" data-en="Your data protected, always">Vos données protégées, toujours</p>
+          <p data-fr="Backup auto chiffré toutes les 6h, SQLCipher + JWT + RolesGuard, sync multi-appareils, mode offline-first." data-en="Encrypted auto-backup every 6h, SQLCipher + JWT + RolesGuard, multi-device sync, offline-first mode.">Backup auto chiffré toutes les 6h, SQLCipher + JWT + RolesGuard, sync multi-appareils, mode offline-first.</p>
         </div>
       </div>
     </div>
@@ -1332,11 +1368,11 @@ textarea.form-control { resize: vertical; min-height: 120px; }
   <section class="section-sm">
     <div class="container">
       <div class="card card-accent text-c" style="padding: 56px; background: linear-gradient(135deg, rgba(212,160,23,.06), rgba(45,189,126,.04));">
-        <h2 style="margin-bottom: 16px;">Prêt à transformer la gestion<br>de votre bar ?</h2>
-        <p style="color: var(--muted); margin: 0 auto 32px; font-size: 1.05rem;">Téléchargez la version Desktop dès aujourd'hui — gratuit, sans carte bancaire. Version web SaaS en développement.</p>
+        <h2 style="margin-bottom: 16px;" data-fr-html="Prêt à transformer la gestion<br>de votre bar ?" data-en-html="Ready to transform<br>your bar management?">Prêt à transformer la gestion<br>de votre bar ?</h2>
+        <p style="color: var(--muted); margin: 0 auto 32px; font-size: 1.05rem;" data-fr="Téléchargez la version Desktop dès aujourd'hui — gratuit, sans carte bancaire. Version web SaaS en développement." data-en="Download the Desktop version today — free, no credit card required. Web SaaS version in development.">Téléchargez la version Desktop dès aujourd'hui — gratuit, sans carte bancaire. Version web SaaS en développement.</p>
         <div style="display: flex; justify-content: center; gap: 14px; flex-wrap: wrap;">
-          <a class="btn btn-primary" href="https://github.com/guylain237/barmanagerpro-download/releases/download/v1.0.2/BarManager.Pro_1.0.2_x64-setup.exe" target="_blank" rel="noopener noreferrer">&#8659; Télécharger pour Desktop →</a>
-          <button class="btn btn-outline" onclick="showPage('pricing')">Voir les tarifs</button>
+          <a class="btn btn-primary" href="https://github.com/guylain237/barmanagerpro-download/releases/download/v1.0.2/BarManager.Pro_1.0.2_x64-setup.exe" rel="noopener" download onclick="trackDownload(event)" data-fr="⇩ Télécharger pour Desktop →" data-en="⇩ Download for Desktop →">&#8659; Télécharger pour Desktop →</a>
+          <button class="btn btn-outline" onclick="showPage('pricing')" data-fr="Voir les tarifs" data-en="View pricing">Voir les tarifs</button>
         </div>
       </div>
     </div>
@@ -1348,9 +1384,9 @@ textarea.form-control { resize: vertical; min-height: 120px; }
   <section class="section" id="comparaison">
     <div class="container">
       <div class="section-header text-c stagger">
-        <div class="pill reveal">Desktop · Web · Mobile</div>
-        <h2 class="reveal">Comparaison des versions</h2>
-        <p class="reveal" style="margin: 0 auto; color: var(--muted);">Découvrez ce qui est disponible aujourd'hui et ce qui arrive bientôt.</p>
+        <div class="pill reveal" data-fr="Desktop · Web · Mobile" data-en="Desktop · Web · Mobile">Desktop · Web · Mobile</div>
+        <h2 class="reveal" data-fr="Comparaison des versions" data-en="Version comparison">Comparaison des versions</h2>
+        <p class="reveal" style="margin: 0 auto; color: var(--muted);" data-fr="Découvrez ce qui est disponible aujourd'hui et ce qui arrive bientôt." data-en="See what's available today and what's coming soon.">Découvrez ce qui est disponible aujourd'hui et ce qui arrive bientôt.</p>
       </div>
 
       <!-- Tableau desktop / tablette -->
@@ -1358,86 +1394,86 @@ textarea.form-control { resize: vertical; min-height: 120px; }
         <table class="comparison-table" role="table" aria-label="Comparaison des fonctionnalités Desktop vs Web / Mobile">
           <thead>
             <tr>
-              <th scope="col">Fonctionnalité</th>
-              <th scope="col">💻 Desktop<br><span style="font-weight:400;color:var(--muted);font-size:.72rem;text-transform:none;letter-spacing:0;">Disponible maintenant</span></th>
-              <th scope="col">🌐 Web / 📱 Mobile<br><span style="font-weight:400;color:var(--muted);font-size:.72rem;text-transform:none;letter-spacing:0;">Bientôt</span></th>
+              <th scope="col" data-fr="Fonctionnalité" data-en="Feature">Fonctionnalité</th>
+              <th scope="col" data-fr-html="💻 Desktop<br><span style='font-weight:400;color:var(--muted);font-size:.72rem;text-transform:none;letter-spacing:0;'>Disponible maintenant</span>" data-en-html="💻 Desktop<br><span style='font-weight:400;color:var(--muted);font-size:.72rem;text-transform:none;letter-spacing:0;'>Available now</span>">💻 Desktop<br><span style="font-weight:400;color:var(--muted);font-size:.72rem;text-transform:none;letter-spacing:0;">Disponible maintenant</span></th>
+              <th scope="col" data-fr-html="🌐 Web / 📱 Mobile<br><span style='font-weight:400;color:var(--muted);font-size:.72rem;text-transform:none;letter-spacing:0;'>Bientôt</span>" data-en-html="🌐 Web / 📱 Mobile<br><span style='font-weight:400;color:var(--muted);font-size:.72rem;text-transform:none;letter-spacing:0;'>Soon</span>">🌐 Web / 📱 Mobile<br><span style="font-weight:400;color:var(--muted);font-size:.72rem;text-transform:none;letter-spacing:0;">Bientôt</span></th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td class="cmp-feature-name">Caisse &amp; POS</td>
-              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-avail">Complet</span></td>
-              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-soon">Prévu</span></td>
+              <td class="cmp-feature-name" data-fr="Caisse & POS" data-en="Cash register & POS">Caisse &amp; POS</td>
+              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-avail" data-fr="Complet" data-en="Complete">Complet</span></td>
+              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-soon" data-fr="Prévu" data-en="Planned">Prévu</span></td>
             </tr>
             <tr>
-              <td class="cmp-feature-name">Mode hors-ligne (offline-first)</td>
-              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-avail">100% offline</span></td>
-              <td><span class="cmp-no">❌</span> <span style="font-size:.8rem;color:var(--muted);">Connexion requise</span></td>
+              <td class="cmp-feature-name" data-fr="Mode hors-ligne (offline-first)" data-en="Offline mode (offline-first)">Mode hors-ligne (offline-first)</td>
+              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-avail" data-fr="100% offline" data-en="100% offline">100% offline</span></td>
+              <td><span class="cmp-no">❌</span> <span style="font-size:.8rem;color:var(--muted);" data-fr="Connexion requise" data-en="Connection required">Connexion requise</span></td>
             </tr>
             <tr>
-              <td class="cmp-feature-name">Gestion des stocks &amp; magasin</td>
-              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-avail">Complet</span></td>
-              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-soon">Prévu</span></td>
+              <td class="cmp-feature-name" data-fr="Gestion des stocks & magasin" data-en="Inventory & warehouse management">Gestion des stocks &amp; magasin</td>
+              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-avail" data-fr="Complet" data-en="Complete">Complet</span></td>
+              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-soon" data-fr="Prévu" data-en="Planned">Prévu</span></td>
             </tr>
             <tr>
-              <td class="cmp-feature-name">Commandes fournisseurs</td>
-              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-avail">Complet</span></td>
-              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-soon">Prévu</span></td>
+              <td class="cmp-feature-name" data-fr="Commandes fournisseurs" data-en="Supplier orders">Commandes fournisseurs</td>
+              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-avail" data-fr="Complet" data-en="Complete">Complet</span></td>
+              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-soon" data-fr="Prévu" data-en="Planned">Prévu</span></td>
             </tr>
             <tr>
-              <td class="cmp-feature-name">Dettes &amp; paiements</td>
-              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-avail">Complet</span></td>
-              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-soon">Prévu</span></td>
+              <td class="cmp-feature-name" data-fr="Dettes & paiements" data-en="Debts & payments">Dettes &amp; paiements</td>
+              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-avail" data-fr="Complet" data-en="Complete">Complet</span></td>
+              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-soon" data-fr="Prévu" data-en="Planned">Prévu</span></td>
             </tr>
             <tr>
-              <td class="cmp-feature-name">Équipe &amp; rôles (RH, paie)</td>
-              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-avail">Complet</span></td>
-              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-soon">Prévu</span></td>
+              <td class="cmp-feature-name" data-fr="Équipe & rôles (RH, paie)" data-en="Team & roles (HR, payroll)">Équipe &amp; rôles (RH, paie)</td>
+              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-avail" data-fr="Complet" data-en="Complete">Complet</span></td>
+              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-soon" data-fr="Prévu" data-en="Planned">Prévu</span></td>
             </tr>
             <tr>
-              <td class="cmp-feature-name">Analytics &amp; rapports</td>
-              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-avail">Complet</span></td>
-              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-soon">Prévu (temps réel)</span></td>
+              <td class="cmp-feature-name" data-fr="Analytics & rapports" data-en="Analytics & reports">Analytics &amp; rapports</td>
+              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-avail" data-fr="Complet" data-en="Complete">Complet</span></td>
+              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-soon" data-fr="Prévu (temps réel)" data-en="Planned (real-time)">Prévu (temps réel)</span></td>
             </tr>
             <tr>
-              <td class="cmp-feature-name">Conformité DGI Cameroun</td>
-              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-avail">TVA 19,25%</span></td>
-              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-soon">Prévu</span></td>
+              <td class="cmp-feature-name" data-fr="Conformité DGI Cameroun" data-en="DGI Cameroon compliance">Conformité DGI Cameroun</td>
+              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-avail" data-fr="TVA 19,25%" data-en="VAT 19.25%">TVA 19,25%</span></td>
+              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-soon" data-fr="Prévu" data-en="Planned">Prévu</span></td>
             </tr>
             <tr>
-              <td class="cmp-feature-name">Paiements Orange Money &amp; MTN MoMo</td>
-              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-avail">Disponible</span></td>
-              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-soon">Prévu</span></td>
+              <td class="cmp-feature-name" data-fr="Paiements Orange Money & MTN MoMo" data-en="Orange Money & MTN MoMo payments">Paiements Orange Money &amp; MTN MoMo</td>
+              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-avail" data-fr="Disponible" data-en="Available">Disponible</span></td>
+              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-soon" data-fr="Prévu" data-en="Planned">Prévu</span></td>
             </tr>
             <tr>
-              <td class="cmp-feature-name">Backup automatique</td>
-              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-avail">Local + cloud optionnel</span></td>
-              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-soon">Cloud natif</span></td>
+              <td class="cmp-feature-name" data-fr="Backup automatique" data-en="Automatic backup">Backup automatique</td>
+              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-avail" data-fr="Local + cloud optionnel" data-en="Local + optional cloud">Local + cloud optionnel</span></td>
+              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-soon" data-fr="Cloud natif" data-en="Native cloud">Cloud natif</span></td>
             </tr>
             <tr>
-              <td class="cmp-feature-name">Multi-établissements (chaînes)</td>
-              <td><span class="cmp-no">❌</span> <span style="font-size:.8rem;color:var(--muted);">Non</span></td>
-              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-soon">Prévu — Enterprise</span></td>
+              <td class="cmp-feature-name" data-fr="Multi-établissements (chaînes)" data-en="Multi-location (chains)">Multi-établissements (chaînes)</td>
+              <td><span class="cmp-no">❌</span> <span style="font-size:.8rem;color:var(--muted);" data-fr="Non" data-en="No">Non</span></td>
+              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-soon" data-fr="Prévu — Enterprise" data-en="Planned — Enterprise">Prévu — Enterprise</span></td>
             </tr>
             <tr>
-              <td class="cmp-feature-name">Accès distant (gérant en déplacement)</td>
-              <td><span class="cmp-no">❌</span> <span style="font-size:.8rem;color:var(--muted);">Local uniquement</span></td>
-              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-soon">Prévu</span></td>
+              <td class="cmp-feature-name" data-fr="Accès distant (gérant en déplacement)" data-en="Remote access (manager on the move)">Accès distant (gérant en déplacement)</td>
+              <td><span class="cmp-no">❌</span> <span style="font-size:.8rem;color:var(--muted);" data-fr="Local uniquement" data-en="Local only">Local uniquement</span></td>
+              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-soon" data-fr="Prévu" data-en="Planned">Prévu</span></td>
             </tr>
             <tr>
-              <td class="cmp-feature-name">Application mobile native</td>
+              <td class="cmp-feature-name" data-fr="Application mobile native" data-en="Native mobile app">Application mobile native</td>
               <td><span class="cmp-no">❌</span> <span style="font-size:.8rem;color:var(--muted);">N/A</span></td>
-              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-soon">Prévu (iOS + Android)</span></td>
+              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-soon" data-fr="Prévu (iOS + Android)" data-en="Planned (iOS + Android)">Prévu (iOS + Android)</span></td>
             </tr>
             <tr>
-              <td class="cmp-feature-name">Synchronisation multi-appareils</td>
-              <td><span class="cmp-no">❌</span> <span style="font-size:.8rem;color:var(--muted);">Mono-poste</span></td>
-              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-soon">Prévu temps réel</span></td>
+              <td class="cmp-feature-name" data-fr="Synchronisation multi-appareils" data-en="Multi-device synchronization">Synchronisation multi-appareils</td>
+              <td><span class="cmp-no">❌</span> <span style="font-size:.8rem;color:var(--muted);" data-fr="Mono-poste" data-en="Single-device">Mono-poste</span></td>
+              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-soon" data-fr="Prévu temps réel" data-en="Real-time planned">Prévu temps réel</span></td>
             </tr>
             <tr>
-              <td class="cmp-feature-name">API publique (intégrations tierces)</td>
-              <td><span class="cmp-no">❌</span> <span style="font-size:.8rem;color:var(--muted);">Non</span></td>
-              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-soon">Prévu (REST + webhooks)</span></td>
+              <td class="cmp-feature-name" data-fr="API publique (intégrations tierces)" data-en="Public API (third-party integrations)">API publique (intégrations tierces)</td>
+              <td><span class="cmp-no">❌</span> <span style="font-size:.8rem;color:var(--muted);" data-fr="Non" data-en="No">Non</span></td>
+              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-soon" data-fr="Prévu (REST + webhooks)" data-en="Planned (REST + webhooks)">Prévu (REST + webhooks)</span></td>
             </tr>
           </tbody>
         </table>
@@ -1447,113 +1483,113 @@ textarea.form-control { resize: vertical; min-height: 120px; }
       <div class="comparison-cards" aria-hidden="true">
         <!-- Caisse & POS -->
         <div class="comparison-card">
-          <div class="comparison-card-name">Caisse &amp; POS</div>
+          <div class="comparison-card-name" data-fr="Caisse & POS" data-en="Cash register & POS">Caisse &amp; POS</div>
           <div class="comparison-card-row">
-            <div><div class="comparison-card-col-label">💻 Desktop</div><span class="cmp-yes">✅</span> <span class="cmp-badge-avail">Complet</span></div>
-            <div><div class="comparison-card-col-label">🌐 Web / 📱 Mobile</div><span class="cmp-yes">✅</span> <span class="cmp-badge-soon">Prévu</span></div>
+            <div><div class="comparison-card-col-label">💻 Desktop</div><span class="cmp-yes">✅</span> <span class="cmp-badge-avail" data-fr="Complet" data-en="Complete">Complet</span></div>
+            <div><div class="comparison-card-col-label">🌐 Web / 📱 Mobile</div><span class="cmp-yes">✅</span> <span class="cmp-badge-soon" data-fr="Prévu" data-en="Planned">Prévu</span></div>
           </div>
         </div>
         <div class="comparison-card">
-          <div class="comparison-card-name">Mode hors-ligne (offline-first)</div>
+          <div class="comparison-card-name" data-fr="Mode hors-ligne (offline-first)" data-en="Offline mode (offline-first)">Mode hors-ligne (offline-first)</div>
           <div class="comparison-card-row">
-            <div><div class="comparison-card-col-label">💻 Desktop</div><span class="cmp-yes">✅</span> <span class="cmp-badge-avail">100% offline</span></div>
-            <div><div class="comparison-card-col-label">🌐 Web / 📱 Mobile</div><span class="cmp-no">❌</span> <span style="font-size:.78rem;color:var(--muted);">Connexion requise</span></div>
+            <div><div class="comparison-card-col-label">💻 Desktop</div><span class="cmp-yes">✅</span> <span class="cmp-badge-avail" data-fr="100% offline" data-en="100% offline">100% offline</span></div>
+            <div><div class="comparison-card-col-label">🌐 Web / 📱 Mobile</div><span class="cmp-no">❌</span> <span style="font-size:.78rem;color:var(--muted);" data-fr="Connexion requise" data-en="Connection required">Connexion requise</span></div>
           </div>
         </div>
         <div class="comparison-card">
-          <div class="comparison-card-name">Gestion des stocks &amp; magasin</div>
+          <div class="comparison-card-name" data-fr="Gestion des stocks & magasin" data-en="Inventory & warehouse management">Gestion des stocks &amp; magasin</div>
           <div class="comparison-card-row">
-            <div><div class="comparison-card-col-label">💻 Desktop</div><span class="cmp-yes">✅</span> <span class="cmp-badge-avail">Complet</span></div>
-            <div><div class="comparison-card-col-label">🌐 Web / 📱 Mobile</div><span class="cmp-yes">✅</span> <span class="cmp-badge-soon">Prévu</span></div>
+            <div><div class="comparison-card-col-label">💻 Desktop</div><span class="cmp-yes">✅</span> <span class="cmp-badge-avail" data-fr="Complet" data-en="Complete">Complet</span></div>
+            <div><div class="comparison-card-col-label">🌐 Web / 📱 Mobile</div><span class="cmp-yes">✅</span> <span class="cmp-badge-soon" data-fr="Prévu" data-en="Planned">Prévu</span></div>
           </div>
         </div>
         <div class="comparison-card">
-          <div class="comparison-card-name">Commandes fournisseurs</div>
+          <div class="comparison-card-name" data-fr="Commandes fournisseurs" data-en="Supplier orders">Commandes fournisseurs</div>
           <div class="comparison-card-row">
-            <div><div class="comparison-card-col-label">💻 Desktop</div><span class="cmp-yes">✅</span> <span class="cmp-badge-avail">Complet</span></div>
-            <div><div class="comparison-card-col-label">🌐 Web / 📱 Mobile</div><span class="cmp-yes">✅</span> <span class="cmp-badge-soon">Prévu</span></div>
+            <div><div class="comparison-card-col-label">💻 Desktop</div><span class="cmp-yes">✅</span> <span class="cmp-badge-avail" data-fr="Complet" data-en="Complete">Complet</span></div>
+            <div><div class="comparison-card-col-label">🌐 Web / 📱 Mobile</div><span class="cmp-yes">✅</span> <span class="cmp-badge-soon" data-fr="Prévu" data-en="Planned">Prévu</span></div>
           </div>
         </div>
         <div class="comparison-card">
-          <div class="comparison-card-name">Dettes &amp; paiements</div>
+          <div class="comparison-card-name" data-fr="Dettes & paiements" data-en="Debts & payments">Dettes &amp; paiements</div>
           <div class="comparison-card-row">
-            <div><div class="comparison-card-col-label">💻 Desktop</div><span class="cmp-yes">✅</span> <span class="cmp-badge-avail">Complet</span></div>
-            <div><div class="comparison-card-col-label">🌐 Web / 📱 Mobile</div><span class="cmp-yes">✅</span> <span class="cmp-badge-soon">Prévu</span></div>
+            <div><div class="comparison-card-col-label">💻 Desktop</div><span class="cmp-yes">✅</span> <span class="cmp-badge-avail" data-fr="Complet" data-en="Complete">Complet</span></div>
+            <div><div class="comparison-card-col-label">🌐 Web / 📱 Mobile</div><span class="cmp-yes">✅</span> <span class="cmp-badge-soon" data-fr="Prévu" data-en="Planned">Prévu</span></div>
           </div>
         </div>
         <div class="comparison-card">
-          <div class="comparison-card-name">Équipe &amp; rôles (RH, paie)</div>
+          <div class="comparison-card-name" data-fr="Équipe & rôles (RH, paie)" data-en="Team & roles (HR, payroll)">Équipe &amp; rôles (RH, paie)</div>
           <div class="comparison-card-row">
-            <div><div class="comparison-card-col-label">💻 Desktop</div><span class="cmp-yes">✅</span> <span class="cmp-badge-avail">Complet</span></div>
-            <div><div class="comparison-card-col-label">🌐 Web / 📱 Mobile</div><span class="cmp-yes">✅</span> <span class="cmp-badge-soon">Prévu</span></div>
+            <div><div class="comparison-card-col-label">💻 Desktop</div><span class="cmp-yes">✅</span> <span class="cmp-badge-avail" data-fr="Complet" data-en="Complete">Complet</span></div>
+            <div><div class="comparison-card-col-label">🌐 Web / 📱 Mobile</div><span class="cmp-yes">✅</span> <span class="cmp-badge-soon" data-fr="Prévu" data-en="Planned">Prévu</span></div>
           </div>
         </div>
         <div class="comparison-card">
-          <div class="comparison-card-name">Analytics &amp; rapports</div>
+          <div class="comparison-card-name" data-fr="Analytics & rapports" data-en="Analytics & reports">Analytics &amp; rapports</div>
           <div class="comparison-card-row">
-            <div><div class="comparison-card-col-label">💻 Desktop</div><span class="cmp-yes">✅</span> <span class="cmp-badge-avail">Complet</span></div>
-            <div><div class="comparison-card-col-label">🌐 Web / 📱 Mobile</div><span class="cmp-yes">✅</span> <span class="cmp-badge-soon">Prévu (temps réel)</span></div>
+            <div><div class="comparison-card-col-label">💻 Desktop</div><span class="cmp-yes">✅</span> <span class="cmp-badge-avail" data-fr="Complet" data-en="Complete">Complet</span></div>
+            <div><div class="comparison-card-col-label">🌐 Web / 📱 Mobile</div><span class="cmp-yes">✅</span> <span class="cmp-badge-soon" data-fr="Prévu (temps réel)" data-en="Planned (real-time)">Prévu (temps réel)</span></div>
           </div>
         </div>
         <div class="comparison-card">
-          <div class="comparison-card-name">Conformité DGI Cameroun</div>
+          <div class="comparison-card-name" data-fr="Conformité DGI Cameroun" data-en="DGI Cameroon compliance">Conformité DGI Cameroun</div>
           <div class="comparison-card-row">
-            <div><div class="comparison-card-col-label">💻 Desktop</div><span class="cmp-yes">✅</span> <span class="cmp-badge-avail">TVA 19,25%</span></div>
-            <div><div class="comparison-card-col-label">🌐 Web / 📱 Mobile</div><span class="cmp-yes">✅</span> <span class="cmp-badge-soon">Prévu</span></div>
+            <div><div class="comparison-card-col-label">💻 Desktop</div><span class="cmp-yes">✅</span> <span class="cmp-badge-avail" data-fr="TVA 19,25%" data-en="VAT 19.25%">TVA 19,25%</span></div>
+            <div><div class="comparison-card-col-label">🌐 Web / 📱 Mobile</div><span class="cmp-yes">✅</span> <span class="cmp-badge-soon" data-fr="Prévu" data-en="Planned">Prévu</span></div>
           </div>
         </div>
         <div class="comparison-card">
-          <div class="comparison-card-name">Paiements Orange Money &amp; MTN MoMo</div>
+          <div class="comparison-card-name" data-fr="Paiements Orange Money & MTN MoMo" data-en="Orange Money & MTN MoMo payments">Paiements Orange Money &amp; MTN MoMo</div>
           <div class="comparison-card-row">
-            <div><div class="comparison-card-col-label">💻 Desktop</div><span class="cmp-yes">✅</span> <span class="cmp-badge-avail">Disponible</span></div>
-            <div><div class="comparison-card-col-label">🌐 Web / 📱 Mobile</div><span class="cmp-yes">✅</span> <span class="cmp-badge-soon">Prévu</span></div>
+            <div><div class="comparison-card-col-label">💻 Desktop</div><span class="cmp-yes">✅</span> <span class="cmp-badge-avail" data-fr="Disponible" data-en="Available">Disponible</span></div>
+            <div><div class="comparison-card-col-label">🌐 Web / 📱 Mobile</div><span class="cmp-yes">✅</span> <span class="cmp-badge-soon" data-fr="Prévu" data-en="Planned">Prévu</span></div>
           </div>
         </div>
         <div class="comparison-card">
-          <div class="comparison-card-name">Backup automatique</div>
+          <div class="comparison-card-name" data-fr="Backup automatique" data-en="Automatic backup">Backup automatique</div>
           <div class="comparison-card-row">
-            <div><div class="comparison-card-col-label">💻 Desktop</div><span class="cmp-yes">✅</span> <span class="cmp-badge-avail">Local + cloud</span></div>
-            <div><div class="comparison-card-col-label">🌐 Web / 📱 Mobile</div><span class="cmp-yes">✅</span> <span class="cmp-badge-soon">Cloud natif</span></div>
+            <div><div class="comparison-card-col-label">💻 Desktop</div><span class="cmp-yes">✅</span> <span class="cmp-badge-avail" data-fr="Local + cloud" data-en="Local + cloud">Local + cloud</span></div>
+            <div><div class="comparison-card-col-label">🌐 Web / 📱 Mobile</div><span class="cmp-yes">✅</span> <span class="cmp-badge-soon" data-fr="Cloud natif" data-en="Native cloud">Cloud natif</span></div>
           </div>
         </div>
         <div class="comparison-card">
-          <div class="comparison-card-name">Multi-établissements (chaînes)</div>
+          <div class="comparison-card-name" data-fr="Multi-établissements (chaînes)" data-en="Multi-location (chains)">Multi-établissements (chaînes)</div>
           <div class="comparison-card-row">
-            <div><div class="comparison-card-col-label">💻 Desktop</div><span class="cmp-no">❌</span> <span style="font-size:.78rem;color:var(--muted);">Non</span></div>
+            <div><div class="comparison-card-col-label">💻 Desktop</div><span class="cmp-no">❌</span> <span style="font-size:.78rem;color:var(--muted);" data-fr="Non" data-en="No">Non</span></div>
             <div><div class="comparison-card-col-label">🌐 Web / 📱 Mobile</div><span class="cmp-yes">✅</span> <span class="cmp-badge-soon">Enterprise</span></div>
           </div>
         </div>
         <div class="comparison-card">
-          <div class="comparison-card-name">Accès distant (gérant en déplacement)</div>
+          <div class="comparison-card-name" data-fr="Accès distant (gérant en déplacement)" data-en="Remote access (manager on the move)">Accès distant (gérant en déplacement)</div>
           <div class="comparison-card-row">
-            <div><div class="comparison-card-col-label">💻 Desktop</div><span class="cmp-no">❌</span> <span style="font-size:.78rem;color:var(--muted);">Local uniquement</span></div>
-            <div><div class="comparison-card-col-label">🌐 Web / 📱 Mobile</div><span class="cmp-yes">✅</span> <span class="cmp-badge-soon">Prévu</span></div>
+            <div><div class="comparison-card-col-label">💻 Desktop</div><span class="cmp-no">❌</span> <span style="font-size:.78rem;color:var(--muted);" data-fr="Local uniquement" data-en="Local only">Local uniquement</span></div>
+            <div><div class="comparison-card-col-label">🌐 Web / 📱 Mobile</div><span class="cmp-yes">✅</span> <span class="cmp-badge-soon" data-fr="Prévu" data-en="Planned">Prévu</span></div>
           </div>
         </div>
         <div class="comparison-card">
-          <div class="comparison-card-name">Application mobile native</div>
+          <div class="comparison-card-name" data-fr="Application mobile native" data-en="Native mobile app">Application mobile native</div>
           <div class="comparison-card-row">
             <div><div class="comparison-card-col-label">💻 Desktop</div><span class="cmp-no">❌</span> <span style="font-size:.78rem;color:var(--muted);">N/A</span></div>
             <div><div class="comparison-card-col-label">📱 Mobile</div><span class="cmp-yes">✅</span> <span class="cmp-badge-soon">iOS + Android</span></div>
           </div>
         </div>
         <div class="comparison-card">
-          <div class="comparison-card-name">Synchronisation multi-appareils</div>
+          <div class="comparison-card-name" data-fr="Synchronisation multi-appareils" data-en="Multi-device synchronization">Synchronisation multi-appareils</div>
           <div class="comparison-card-row">
-            <div><div class="comparison-card-col-label">💻 Desktop</div><span class="cmp-no">❌</span> <span style="font-size:.78rem;color:var(--muted);">Mono-poste</span></div>
-            <div><div class="comparison-card-col-label">🌐 Web / 📱 Mobile</div><span class="cmp-yes">✅</span> <span class="cmp-badge-soon">Temps réel</span></div>
+            <div><div class="comparison-card-col-label">💻 Desktop</div><span class="cmp-no">❌</span> <span style="font-size:.78rem;color:var(--muted);" data-fr="Mono-poste" data-en="Single-device">Mono-poste</span></div>
+            <div><div class="comparison-card-col-label">🌐 Web / 📱 Mobile</div><span class="cmp-yes">✅</span> <span class="cmp-badge-soon" data-fr="Temps réel" data-en="Real-time">Temps réel</span></div>
           </div>
         </div>
         <div class="comparison-card">
-          <div class="comparison-card-name">API publique (intégrations tierces)</div>
+          <div class="comparison-card-name" data-fr="API publique (intégrations tierces)" data-en="Public API (third-party integrations)">API publique (intégrations tierces)</div>
           <div class="comparison-card-row">
-            <div><div class="comparison-card-col-label">💻 Desktop</div><span class="cmp-no">❌</span> <span style="font-size:.78rem;color:var(--muted);">Non</span></div>
+            <div><div class="comparison-card-col-label">💻 Desktop</div><span class="cmp-no">❌</span> <span style="font-size:.78rem;color:var(--muted);" data-fr="Non" data-en="No">Non</span></div>
             <div><div class="comparison-card-col-label">🌐 Web</div><span class="cmp-yes">✅</span> <span class="cmp-badge-soon">REST + webhooks</span></div>
           </div>
         </div>
       </div>
 
-      <p class="cmp-note reveal">
+      <p class="cmp-note reveal" data-fr-html="<strong>La version Desktop fonctionne entièrement hors-ligne.</strong> La version Web SaaS et l'application Mobile sont en développement actif — inscription à la liste d'attente bientôt disponible." data-en-html="<strong>The Desktop version works entirely offline.</strong> The Web SaaS version and Mobile app are in active development — waitlist signup coming soon.">
         <strong>La version Desktop fonctionne entièrement hors-ligne.</strong> La version Web SaaS et l'application Mobile sont en développement actif — inscription à la liste d'attente bientôt disponible.
       </p>
     </div>
@@ -1565,10 +1601,10 @@ textarea.form-control { resize: vertical; min-height: 120px; }
   <section class="section" id="telechargement">
     <div class="container">
       <div class="section-header text-c stagger">
-        <div class="pill reveal">Disponible maintenant</div>
-        <h2 class="reveal">Téléchargez BarManager Pro<br><em>Desktop</em></h2>
-        <p class="reveal" style="margin: 0 auto; color: var(--muted);">Installez l'application sur votre ordinateur et gérez votre bar immédiatement, même sans connexion internet.</p>
-        <p class="reveal" style="margin: 12px auto 0; color: var(--muted); font-size: .85rem;">Disponible sur Windows 10 / 11 — 64 bits.</p>
+        <div class="pill reveal" data-fr="Disponible maintenant" data-en="Available now">Disponible maintenant</div>
+        <h2 class="reveal" data-fr-html="Téléchargez BarManager Pro<br><em>Desktop</em>" data-en-html="Download BarManager Pro<br><em>Desktop</em>">Téléchargez BarManager Pro<br><em>Desktop</em></h2>
+        <p class="reveal" style="margin: 0 auto; color: var(--muted);" data-fr="Installez l'application sur votre ordinateur et gérez votre bar immédiatement, même sans connexion internet." data-en="Install the app on your computer and start managing your bar instantly, even without an internet connection.">Installez l'application sur votre ordinateur et gérez votre bar immédiatement, même sans connexion internet.</p>
+        <p class="reveal" style="margin: 12px auto 0; color: var(--muted); font-size: .85rem;" data-fr="Disponible sur Windows 10 / 11 — 64 bits." data-en="Available on Windows 10 / 11 — 64-bit.">Disponible sur Windows 10 / 11 — 64 bits.</p>
       </div>
 
       <div class="dl-grid stagger">
@@ -1580,11 +1616,11 @@ textarea.form-control { resize: vertical; min-height: 120px; }
             </svg>
           </div>
           <h3>Windows</h3>
-          <p>Windows 10 / 11 — 64 bits</p>
-          <a class="dl-btn" href="https://github.com/guylain237/barmanagerpro-download/releases/download/v1.0.2/BarManager.Pro_1.0.2_x64-setup.exe" target="_blank" rel="noopener noreferrer">
+          <p data-fr="Windows 10 / 11 — 64 bits" data-en="Windows 10 / 11 — 64-bit">Windows 10 / 11 — 64 bits</p>
+          <a class="dl-btn" href="https://github.com/guylain237/barmanagerpro-download/releases/download/v1.0.2/BarManager.Pro_1.0.2_x64-setup.exe" rel="noopener" download onclick="trackDownload(event)" data-fr="⇩ Télécharger .exe" data-en="⇩ Download .exe">
             &#8659; Télécharger .exe
           </a>
-          <span class="dl-version">v1.0.2 — ~35 Mo</span>
+          <span class="dl-version" data-fr="v1.0.2 — ~35 Mo" data-en="v1.0.2 — ~35 MB">v1.0.2 — ~35 Mo</span>
         </div>
 
       </div>
@@ -1602,9 +1638,9 @@ textarea.form-control { resize: vertical; min-height: 120px; }
 
   <div class="modules-hero">
     <div class="container">
-      <div class="pill" style="margin-bottom: 20px;">9 modules fonctionnels</div>
-      <h1 style="max-width: 14ch; margin-bottom: 20px;">Chaque module,<br>pensé pour le terrain.</h1>
-      <p style="color: var(--muted); font-size: 1.1rem; max-width: 52ch;">Des modules P1 essentiels aux fonctions avancées, BarManager Pro couvre l'intégralité du cycle de vie d'un bar.</p>
+      <div class="pill" style="margin-bottom: 20px;" data-fr="9 modules fonctionnels" data-en="9 functional modules">9 modules fonctionnels</div>
+      <h1 style="max-width: 14ch; margin-bottom: 20px;" data-fr-html="Chaque module,<br>pensé pour le terrain." data-en-html="Every module,<br>built for the field.">Chaque module,<br>pensé pour le terrain.</h1>
+      <p style="color: var(--muted); font-size: 1.1rem; max-width: 52ch;" data-fr="Des modules P1 essentiels aux fonctions avancées, BarManager Pro couvre l'intégralité du cycle de vie d'un bar." data-en="From essential P1 modules to advanced features, BarManager Pro covers the entire lifecycle of a bar.">Des modules P1 essentiels aux fonctions avancées, BarManager Pro couvre l'intégralité du cycle de vie d'un bar.</p>
     </div>
   </div>
 
@@ -1613,126 +1649,126 @@ textarea.form-control { resize: vertical; min-height: 120px; }
   <section class="section">
     <div class="container">
       <div class="section-header">
-        <div class="pill" style="margin-bottom: 20px;">Priorité P1 — Essentiels</div>
-        <h2>Fonctionnalités cœur</h2>
-        <p style="color: var(--muted);">Ces modules sont indispensables et constituent le MVP de l'application, livrés dans les 4 premières phases.</p>
+        <div class="pill" style="margin-bottom: 20px;" data-fr="Priorité P1 — Essentiels" data-en="Priority P1 — Essentials">Priorité P1 — Essentiels</div>
+        <h2 data-fr="Fonctionnalités cœur" data-en="Core features">Fonctionnalités cœur</h2>
+        <p style="color: var(--muted);" data-fr="Ces modules sont indispensables et constituent le MVP de l'application, livrés dans les 4 premières phases." data-en="These essential modules form the application's MVP and are delivered in the first 4 phases.">Ces modules sont indispensables et constituent le MVP de l'application, livrés dans les 4 premières phases.</p>
       </div>
       <div class="modules-grid">
         <div class="card module-card card-green">
-          <div class="badge badge-green">P1 — Essentiel</div>
+          <div class="badge badge-green" data-fr="P1 — Essentiel" data-en="P1 — Essential">P1 — Essentiel</div>
           <div class="icon-box icon-box-green" style="margin-bottom: 16px; width: 52px; height: 52px; font-size: 1.5rem;">📦</div>
-          <h3>Gestion des stocks</h3>
+          <h3 data-fr="Gestion des stocks" data-en="Inventory management">Gestion des stocks</h3>
           <ul>
-            <li>Entrées & sorties de produits</li>
-            <li>Catégories (boissons, consommables)</li>
-            <li>Seuils d'alerte configurables</li>
-            <li>Inventaire physique</li>
-            <li>Historique des mouvements</li>
-            <li>Mode offline + synchronisation auto</li>
+            <li data-fr="Entrées & sorties de produits" data-en="Product inflows & outflows">Entrées & sorties de produits</li>
+            <li data-fr="Catégories (boissons, consommables)" data-en="Categories (beverages, consumables)">Catégories (boissons, consommables)</li>
+            <li data-fr="Seuils d'alerte configurables" data-en="Configurable alert thresholds">Seuils d'alerte configurables</li>
+            <li data-fr="Inventaire physique" data-en="Physical inventory">Inventaire physique</li>
+            <li data-fr="Historique des mouvements" data-en="Movement history">Historique des mouvements</li>
+            <li data-fr="Mode offline + synchronisation auto" data-en="Offline mode + auto sync">Mode offline + synchronisation auto</li>
           </ul>
         </div>
         <div class="card module-card card-green">
-          <div class="badge badge-green">P1 — Essentiel</div>
+          <div class="badge badge-green" data-fr="P1 — Essentiel" data-en="P1 — Essential">P1 — Essentiel</div>
           <div class="icon-box icon-box-gold" style="margin-bottom: 16px; width: 52px; height: 52px; font-size: 1.5rem;">🧾</div>
-          <h3>Facturation & Comptabilité</h3>
+          <h3 data-fr="Facturation & Comptabilité" data-en="Billing & Accounting">Facturation & Comptabilité</h3>
           <ul>
-            <li>Factures de vente et d'achat</li>
-            <li>Gestion des fournisseurs</li>
-            <li>TVA 19,25 % conforme DGI</li>
-            <li>Bilans quotidiens & hebdomadaires</li>
-            <li>Ouverture / Clôture de caisse</li>
-            <li>Impression tickets thermiques</li>
+            <li data-fr="Factures de vente et d'achat" data-en="Sales and purchase invoices">Factures de vente et d'achat</li>
+            <li data-fr="Gestion des fournisseurs" data-en="Supplier management">Gestion des fournisseurs</li>
+            <li data-fr="TVA 19,25 % conforme DGI" data-en="VAT 19.25% DGI-compliant">TVA 19,25 % conforme DGI</li>
+            <li data-fr="Bilans quotidiens & hebdomadaires" data-en="Daily & weekly reports">Bilans quotidiens & hebdomadaires</li>
+            <li data-fr="Ouverture / Clôture de caisse" data-en="Cash register open / close">Ouverture / Clôture de caisse</li>
+            <li data-fr="Impression tickets thermiques" data-en="Thermal receipt printing">Impression tickets thermiques</li>
           </ul>
         </div>
         <div class="card module-card card-green">
-          <div class="badge badge-green">P1 — Essentiel</div>
+          <div class="badge badge-green" data-fr="P1 — Essentiel" data-en="P1 — Essential">P1 — Essentiel</div>
           <div class="icon-box icon-box-blue" style="margin-bottom: 16px; width: 52px; height: 52px; font-size: 1.5rem;">🖥️</div>
-          <h3>POS tactile & Commandes</h3>
+          <h3 data-fr="POS tactile & Commandes" data-en="Touch POS & Orders">POS tactile & Commandes</h3>
           <ul>
-            <li>Interface tactile pour tablette</li>
-            <li>Gestion du plan de salle</li>
-            <li>QR code par table</li>
-            <li>App client PWA (sans installation)</li>
-            <li>Notifications push temps réel</li>
-            <li>Statut commandes en direct</li>
+            <li data-fr="Interface tactile pour tablette" data-en="Touch interface for tablet">Interface tactile pour tablette</li>
+            <li data-fr="Gestion du plan de salle" data-en="Floor plan management">Gestion du plan de salle</li>
+            <li data-fr="QR code par table" data-en="QR code per table">QR code par table</li>
+            <li data-fr="App client PWA (sans installation)" data-en="Client PWA app (no install)">App client PWA (sans installation)</li>
+            <li data-fr="Notifications push temps réel" data-en="Real-time push notifications">Notifications push temps réel</li>
+            <li data-fr="Statut commandes en direct" data-en="Live order status">Statut commandes en direct</li>
           </ul>
         </div>
         <div class="card module-card card-green">
-          <div class="badge badge-green">P1 — Essentiel</div>
+          <div class="badge badge-green" data-fr="P1 — Essentiel" data-en="P1 — Essential">P1 — Essentiel</div>
           <div class="icon-box icon-box-green" style="margin-bottom: 16px; width: 52px; height: 52px; font-size: 1.5rem;">💳</div>
-          <h3>Paiements multicanaux</h3>
+          <h3 data-fr="Paiements multicanaux" data-en="Multi-channel payments">Paiements multicanaux</h3>
           <ul>
-            <li>Orange Money (API officielle)</li>
-            <li>MTN Mobile Money (API officielle)</li>
-            <li>Espèces & carte bancaire</li>
-            <li>Reçus digitaux automatiques</li>
-            <li>Réconciliation avec la caisse</li>
-            <li>Gestion des remboursements</li>
+            <li data-fr="Orange Money (API officielle)" data-en="Orange Money (official API)">Orange Money (API officielle)</li>
+            <li data-fr="MTN Mobile Money (API officielle)" data-en="MTN Mobile Money (official API)">MTN Mobile Money (API officielle)</li>
+            <li data-fr="Espèces & carte bancaire" data-en="Cash & credit card">Espèces & carte bancaire</li>
+            <li data-fr="Reçus digitaux automatiques" data-en="Automatic digital receipts">Reçus digitaux automatiques</li>
+            <li data-fr="Réconciliation avec la caisse" data-en="Cash register reconciliation">Réconciliation avec la caisse</li>
+            <li data-fr="Gestion des remboursements" data-en="Refund management">Gestion des remboursements</li>
           </ul>
         </div>
         <div class="card module-card card-green">
-          <div class="badge badge-green">P1 — Essentiel</div>
+          <div class="badge badge-green" data-fr="P1 — Essentiel" data-en="P1 — Essential">P1 — Essentiel</div>
           <div class="icon-box icon-box-purple" style="margin-bottom: 16px; width: 52px; height: 52px; font-size: 1.5rem;">🔐</div>
-          <h3>Auth & Rôles multi-profils</h3>
+          <h3 data-fr="Auth & Rôles multi-profils" data-en="Auth & Multi-profile Roles">Auth & Rôles multi-profils</h3>
           <ul>
-            <li>Gérant — accès complet</li>
-            <li>Caissier — caisse & tickets</li>
-            <li>Serveur / Barman — commandes</li>
-            <li>Client — menu & fidélité</li>
-            <li>Fournisseur — bons de commande</li>
-            <li>Comptable externe — rapports</li>
+            <li data-fr="Gérant — accès complet" data-en="Manager — full access">Gérant — accès complet</li>
+            <li data-fr="Caissier — caisse & tickets" data-en="Cashier — register & receipts">Caissier — caisse & tickets</li>
+            <li data-fr="Serveur / Barman — commandes" data-en="Server / Bartender — orders">Serveur / Barman — commandes</li>
+            <li data-fr="Client — menu & fidélité" data-en="Customer — menu & loyalty">Client — menu & fidélité</li>
+            <li data-fr="Fournisseur — bons de commande" data-en="Supplier — purchase orders">Fournisseur — bons de commande</li>
+            <li data-fr="Comptable externe — rapports" data-en="External accountant — reports">Comptable externe — rapports</li>
           </ul>
         </div>
       </div>
 
       <div class="section-header" style="margin-top: 80px;">
-        <div class="pill" style="margin-bottom: 20px;">Priorité P2 — Importants</div>
-        <h2>Fonctionnalités avancées</h2>
-        <p style="color: var(--muted);">Ces modules enrichissent l'application et sont livrés en phases 3 et 4.</p>
+        <div class="pill" style="margin-bottom: 20px;" data-fr="Priorité P2 — Importants" data-en="Priority P2 — Important">Priorité P2 — Importants</div>
+        <h2 data-fr="Fonctionnalités avancées" data-en="Advanced features">Fonctionnalités avancées</h2>
+        <p style="color: var(--muted);" data-fr="Ces modules enrichissent l'application et sont livrés en phases 3 et 4." data-en="These modules enrich the application and are delivered in phases 3 and 4.">Ces modules enrichissent l'application et sont livrés en phases 3 et 4.</p>
       </div>
       <div class="modules-grid">
         <div class="card module-card card-accent">
-          <div class="badge badge-gold">P2 — Important</div>
+          <div class="badge badge-gold" data-fr="P2 — Important" data-en="P2 — Important">P2 — Important</div>
           <div class="icon-box icon-box-gold" style="margin-bottom: 16px; width: 52px; height: 52px; font-size: 1.5rem;">👥</div>
-          <h3>RH & Paie</h3>
+          <h3 data-fr="RH & Paie" data-en="HR & Payroll">RH & Paie</h3>
           <ul>
-            <li>Fiches employés complètes</li>
-            <li>Bulletins de paie (CNPS Cameroun)</li>
-            <li>Présences & absences</li>
-            <li>Évaluations de performance</li>
+            <li data-fr="Fiches employés complètes" data-en="Complete employee records">Fiches employés complètes</li>
+            <li data-fr="Bulletins de paie (CNPS Cameroun)" data-en="Payslips (CNPS Cameroon)">Bulletins de paie (CNPS Cameroun)</li>
+            <li data-fr="Présences & absences" data-en="Attendance & absences">Présences & absences</li>
+            <li data-fr="Évaluations de performance" data-en="Performance reviews">Évaluations de performance</li>
           </ul>
         </div>
         <div class="card module-card card-accent">
-          <div class="badge badge-gold">P2 — Important</div>
+          <div class="badge badge-gold" data-fr="P2 — Important" data-en="P2 — Important">P2 — Important</div>
           <div class="icon-box icon-box-gold" style="margin-bottom: 16px; width: 52px; height: 52px; font-size: 1.5rem;">⭐</div>
-          <h3>Programme de fidélité</h3>
+          <h3 data-fr="Programme de fidélité" data-en="Loyalty program">Programme de fidélité</h3>
           <ul>
-            <li>Points attribués automatiquement</li>
-            <li>Niveaux VIP configurables</li>
-            <li>Récompenses paramétrables</li>
-            <li>Espace client dédié</li>
+            <li data-fr="Points attribués automatiquement" data-en="Automatically awarded points">Points attribués automatiquement</li>
+            <li data-fr="Niveaux VIP configurables" data-en="Configurable VIP tiers">Niveaux VIP configurables</li>
+            <li data-fr="Récompenses paramétrables" data-en="Customizable rewards">Récompenses paramétrables</li>
+            <li data-fr="Espace client dédié" data-en="Dedicated customer area">Espace client dédié</li>
           </ul>
         </div>
         <div class="card module-card card-accent">
-          <div class="badge badge-gold">P2 — Important</div>
+          <div class="badge badge-gold" data-fr="P2 — Important" data-en="P2 — Important">P2 — Important</div>
           <div class="icon-box icon-box-purple" style="margin-bottom: 16px; width: 52px; height: 52px; font-size: 1.5rem;">📢</div>
-          <h3>Marketing & Publications</h3>
+          <h3 data-fr="Marketing & Publications" data-en="Marketing & Posts">Marketing & Publications</h3>
           <ul>
-            <li>Facebook & Instagram intégrés</li>
-            <li>WhatsApp Business</li>
-            <li>Promotions & happy hours</li>
-            <li>Notifications ciblées</li>
+            <li data-fr="Facebook & Instagram intégrés" data-en="Facebook & Instagram integrated">Facebook & Instagram intégrés</li>
+            <li data-fr="WhatsApp Business" data-en="WhatsApp Business">WhatsApp Business</li>
+            <li data-fr="Promotions & happy hours" data-en="Promotions & happy hours">Promotions & happy hours</li>
+            <li data-fr="Notifications ciblées" data-en="Targeted notifications">Notifications ciblées</li>
           </ul>
         </div>
         <div class="card module-card card-accent">
-          <div class="badge badge-gold">P2 — Important</div>
+          <div class="badge badge-gold" data-fr="P2 — Important" data-en="P2 — Important">P2 — Important</div>
           <div class="icon-box icon-box-gold" style="margin-bottom: 16px; width: 52px; height: 52px; font-size: 1.5rem;">📈</div>
-          <h3>Analytics & BI</h3>
+          <h3 data-fr="Analytics & BI" data-en="Analytics & BI">Analytics & BI</h3>
           <ul>
-            <li>Tableaux de bord en temps réel</li>
-            <li>KPIs & rapports exportables</li>
-            <li>Prévisions IA sur les stocks</li>
-            <li>Multi-établissements</li>
+            <li data-fr="Tableaux de bord en temps réel" data-en="Real-time dashboards">Tableaux de bord en temps réel</li>
+            <li data-fr="KPIs & rapports exportables" data-en="Exportable KPIs & reports">KPIs & rapports exportables</li>
+            <li data-fr="Prévisions IA sur les stocks" data-en="AI inventory forecasting">Prévisions IA sur les stocks</li>
+            <li data-fr="Multi-établissements" data-en="Multi-location">Multi-établissements</li>
           </ul>
         </div>
       </div>
@@ -1744,9 +1780,9 @@ textarea.form-control { resize: vertical; min-height: 120px; }
   <section class="section" style="background: var(--dark2);">
     <div class="container">
       <div class="section-header text-c">
-        <div class="pill" style="margin-bottom: 20px;">Compatibilité</div>
-        <h2>Fonctionne sur tous vos appareils</h2>
-        <p style="color: var(--muted); margin: 0 auto;">Aujourd'hui sur Windows, demain partout — votre bar avec vous, où que vous soyez.</p>
+        <div class="pill" style="margin-bottom: 20px;" data-fr="Compatibilité" data-en="Compatibility">Compatibilité</div>
+        <h2 data-fr="Fonctionne sur tous vos appareils" data-en="Works on all your devices">Fonctionne sur tous vos appareils</h2>
+        <p style="color: var(--muted); margin: 0 auto;" data-fr="Aujourd'hui sur Windows, demain partout — votre bar avec vous, où que vous soyez." data-en="Today on Windows, tomorrow everywhere — your bar with you, wherever you are.">Aujourd'hui sur Windows, demain partout — votre bar avec vous, où que vous soyez.</p>
       </div>
       <div class="arch-cards">
 
@@ -1758,10 +1794,10 @@ textarea.form-control { resize: vertical; min-height: 120px; }
             </svg>
           </div>
           <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:6px;">
-            <h4 style="margin:0;">Ordinateur Windows</h4>
-            <span style="font-size:.68rem; background:rgba(34,197,94,.15); color:#4ade80; border:1px solid rgba(34,197,94,.30); padding:2px 9px; border-radius:6px; font-family:var(--font-h); font-weight:700; letter-spacing:.04em; white-space:nowrap;">Disponible</span>
+            <h4 style="margin:0;" data-fr="Ordinateur Windows" data-en="Windows computer">Ordinateur Windows</h4>
+            <span style="font-size:.68rem; background:rgba(34,197,94,.15); color:#4ade80; border:1px solid rgba(34,197,94,.30); padding:2px 9px; border-radius:6px; font-family:var(--font-h); font-weight:700; letter-spacing:.04em; white-space:nowrap;" data-fr="Disponible" data-en="Available">Disponible</span>
           </div>
-          <p>Installation native sur Windows 10 et 11 (64 bits). Fonctionne entièrement hors-ligne. Idéal pour le comptoir, la caisse et la gestion quotidienne du bar.</p>
+          <p data-fr="Installation native sur Windows 10 et 11 (64 bits). Fonctionne entièrement hors-ligne. Idéal pour le comptoir, la caisse et la gestion quotidienne du bar." data-en="Native installation on Windows 10 and 11 (64-bit). Works entirely offline. Perfect for the counter, the cash register and daily bar management.">Installation native sur Windows 10 et 11 (64 bits). Fonctionne entièrement hors-ligne. Idéal pour le comptoir, la caisse et la gestion quotidienne du bar.</p>
           <div style="margin-top:auto; padding-top:14px;">
             <span style="display:inline-block; background:rgba(255,255,255,.06); color:var(--muted); font-size:.72rem; padding:3px 10px; border-radius:20px; border:1px solid rgba(255,255,255,.10);">Windows 10 / 11</span>
           </div>
@@ -1775,10 +1811,10 @@ textarea.form-control { resize: vertical; min-height: 120px; }
             </svg>
           </div>
           <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:6px;">
-            <h4 style="margin:0;">Tablette tactile</h4>
-            <span style="font-size:.68rem; background:rgba(212,160,23,.15); color:var(--gold); border:1px solid rgba(212,160,23,.30); padding:2px 9px; border-radius:6px; font-family:var(--font-h); font-weight:700; letter-spacing:.04em; white-space:nowrap;">Bientôt</span>
+            <h4 style="margin:0;" data-fr="Tablette tactile" data-en="Touch tablet">Tablette tactile</h4>
+            <span style="font-size:.68rem; background:rgba(212,160,23,.15); color:var(--gold); border:1px solid rgba(212,160,23,.30); padding:2px 9px; border-radius:6px; font-family:var(--font-h); font-weight:700; letter-spacing:.04em; white-space:nowrap;" data-fr="Bientôt" data-en="Soon">Bientôt</span>
           </div>
-          <p>Mode POS optimisé pour les tablettes Android et iPad. Saisie rapide des commandes en salle, synchronisation temps réel avec la caisse.</p>
+          <p data-fr="Mode POS optimisé pour les tablettes Android et iPad. Saisie rapide des commandes en salle, synchronisation temps réel avec la caisse." data-en="POS mode optimized for Android tablets and iPad. Quick order entry on the floor, real-time sync with the cash register.">Mode POS optimisé pour les tablettes Android et iPad. Saisie rapide des commandes en salle, synchronisation temps réel avec la caisse.</p>
           <div style="margin-top:auto; padding-top:14px;">
             <span style="display:inline-block; background:rgba(255,255,255,.06); color:var(--muted); font-size:.72rem; padding:3px 10px; border-radius:20px; border:1px solid rgba(255,255,255,.10);">Android / iPad</span>
           </div>
@@ -1792,10 +1828,10 @@ textarea.form-control { resize: vertical; min-height: 120px; }
             </svg>
           </div>
           <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:6px;">
-            <h4 style="margin:0;">Smartphone</h4>
-            <span style="font-size:.68rem; background:rgba(212,160,23,.15); color:var(--gold); border:1px solid rgba(212,160,23,.30); padding:2px 9px; border-radius:6px; font-family:var(--font-h); font-weight:700; letter-spacing:.04em; white-space:nowrap;">Bientôt</span>
+            <h4 style="margin:0;" data-fr="Smartphone" data-en="Smartphone">Smartphone</h4>
+            <span style="font-size:.68rem; background:rgba(212,160,23,.15); color:var(--gold); border:1px solid rgba(212,160,23,.30); padding:2px 9px; border-radius:6px; font-family:var(--font-h); font-weight:700; letter-spacing:.04em; white-space:nowrap;" data-fr="Bientôt" data-en="Soon">Bientôt</span>
           </div>
-          <p>Application mobile pour suivre les ventes, les stocks et les performances de votre bar depuis n'importe où. Notifications push en cas d'alerte stock ou de clôture caisse.</p>
+          <p data-fr="Application mobile pour suivre les ventes, les stocks et les performances de votre bar depuis n'importe où. Notifications push en cas d'alerte stock ou de clôture caisse." data-en="Mobile app to track sales, inventory and your bar's performance from anywhere. Push notifications for stock alerts or register close.">Application mobile pour suivre les ventes, les stocks et les performances de votre bar depuis n'importe où. Notifications push en cas d'alerte stock ou de clôture caisse.</p>
           <div style="margin-top:auto; padding-top:14px;">
             <span style="display:inline-block; background:rgba(255,255,255,.06); color:var(--muted); font-size:.72rem; padding:3px 10px; border-radius:20px; border:1px solid rgba(255,255,255,.10);">iOS / Android</span>
           </div>
@@ -1809,10 +1845,10 @@ textarea.form-control { resize: vertical; min-height: 120px; }
             </svg>
           </div>
           <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:6px;">
-            <h4 style="margin:0;">Navigateur web</h4>
-            <span style="font-size:.68rem; background:rgba(212,160,23,.15); color:var(--gold); border:1px solid rgba(212,160,23,.30); padding:2px 9px; border-radius:6px; font-family:var(--font-h); font-weight:700; letter-spacing:.04em; white-space:nowrap;">Bientôt</span>
+            <h4 style="margin:0;" data-fr="Navigateur web" data-en="Web browser">Navigateur web</h4>
+            <span style="font-size:.68rem; background:rgba(212,160,23,.15); color:var(--gold); border:1px solid rgba(212,160,23,.30); padding:2px 9px; border-radius:6px; font-family:var(--font-h); font-weight:700; letter-spacing:.04em; white-space:nowrap;" data-fr="Bientôt" data-en="Soon">Bientôt</span>
           </div>
-          <p>Accédez à votre bar depuis n'importe quel ordinateur, sans installation. Idéal pour les chaînes multi-établissements et la consultation à distance.</p>
+          <p data-fr="Accédez à votre bar depuis n'importe quel ordinateur, sans installation. Idéal pour les chaînes multi-établissements et la consultation à distance." data-en="Access your bar from any computer, no installation needed. Perfect for multi-location chains and remote consultation.">Accédez à votre bar depuis n'importe quel ordinateur, sans installation. Idéal pour les chaînes multi-établissements et la consultation à distance.</p>
           <div style="margin-top:auto; padding-top:14px;">
             <span style="display:inline-block; background:rgba(255,255,255,.06); color:var(--muted); font-size:.72rem; padding:3px 10px; border-radius:20px; border:1px solid rgba(255,255,255,.10);">Chrome, Firefox, Safari, Edge</span>
           </div>
@@ -1832,9 +1868,9 @@ textarea.form-control { resize: vertical; min-height: 120px; }
 
   <div class="planning-hero">
     <div class="container">
-      <div class="pill" style="margin-bottom: 20px;">Roadmap de développement</div>
-      <h1 style="max-width: 16ch; margin-bottom: 20px;">10 phases.<br>~7 à 9 mois.</h1>
-      <p style="color: var(--muted); font-size: 1.1rem; max-width: 52ch;">Une approche Agile par phases itératives pour livrer de la valeur dès les premières semaines et ajuster selon les retours utilisateurs.</p>
+      <div class="pill" style="margin-bottom: 20px;" data-fr="Roadmap de développement" data-en="Development roadmap">Roadmap de développement</div>
+      <h1 style="max-width: 16ch; margin-bottom: 20px;" data-fr-html="10 phases.<br>~7 à 9 mois." data-en-html="10 phases.<br>~7 to 9 months.">10 phases.<br>~7 à 9 mois.</h1>
+      <p style="color: var(--muted); font-size: 1.1rem; max-width: 52ch;" data-fr="Une approche Agile par phases itératives pour livrer de la valeur dès les premières semaines et ajuster selon les retours utilisateurs." data-en="An Agile approach with iterative phases to deliver value from the first weeks and adjust based on user feedback.">Une approche Agile par phases itératives pour livrer de la valeur dès les premières semaines et ajuster selon les retours utilisateurs.</p>
     </div>
   </div>
 
@@ -1844,12 +1880,12 @@ textarea.form-control { resize: vertical; min-height: 120px; }
   <section class="section-sm">
     <div class="container">
       <div class="section-header">
-        <h2>Vue globale — 10 mois</h2>
-        <p style="color: var(--muted);">Chaque barre représente les mois d'activité de la phase.</p>
+        <h2 data-fr="Vue globale — 10 mois" data-en="Overview — 10 months">Vue globale — 10 mois</h2>
+        <p style="color: var(--muted);" data-fr="Chaque barre représente les mois d'activité de la phase." data-en="Each bar represents the months of activity for the phase.">Chaque barre représente les mois d'activité de la phase.</p>
       </div>
       <div class="gantt-container">
         <div class="gantt-header">
-          <div class="gantt-label">Phase</div>
+          <div class="gantt-label" data-fr="Phase" data-en="Phase">Phase</div>
           <div class="gantt-months">
             <div class="gantt-month">M1</div><div class="gantt-month">M2</div>
             <div class="gantt-month">M3</div><div class="gantt-month">M4</div>
@@ -1865,19 +1901,19 @@ textarea.form-control { resize: vertical; min-height: 120px; }
       <div style="display: flex; gap: 24px; flex-wrap: wrap; margin-top: 20px;">
         <div style="display:flex; align-items:center; gap: 8px; font-size: .82rem; color: var(--muted);">
           <div style="width:28px;height:12px;border-radius:3px;background:linear-gradient(90deg,#1D9E75,#2DBD7E)"></div>
-          Phases 1–4 MVP
+          <span data-fr="Phases 1–4 MVP" data-en="Phases 1–4 MVP">Phases 1–4 MVP</span>
         </div>
         <div style="display:flex; align-items:center; gap: 8px; font-size: .82rem; color: var(--muted);">
           <div style="width:28px;height:12px;border-radius:3px;background:linear-gradient(90deg,#1B5FA0,#2563A8)"></div>
-          Phases 5–6 Paiements
+          <span data-fr="Phases 5–6 Paiements" data-en="Phases 5–6 Payments">Phases 5–6 Paiements</span>
         </div>
         <div style="display:flex; align-items:center; gap: 8px; font-size: .82rem; color: var(--muted);">
           <div style="width:28px;height:12px;border-radius:3px;background:linear-gradient(90deg,#9A5E0E,#B87016)"></div>
-          Phases 7–8 RH & Fidélité
+          <span data-fr="Phases 7–8 RH & Fidélité" data-en="Phases 7–8 HR & Loyalty">Phases 7–8 RH & Fidélité</span>
         </div>
         <div style="display:flex; align-items:center; gap: 8px; font-size: .82rem; color: var(--muted);">
           <div style="width:28px;height:12px;border-radius:3px;background:linear-gradient(90deg,#5A54A8,#6B63C5)"></div>
-          Phases 9–10 Marketing & IA
+          <span data-fr="Phases 9–10 Marketing & IA" data-en="Phases 9–10 Marketing & AI">Phases 9–10 Marketing & IA</span>
         </div>
       </div>
     </div>
@@ -1889,8 +1925,8 @@ textarea.form-control { resize: vertical; min-height: 120px; }
   <section class="section">
     <div class="container">
       <div class="section-header">
-        <h2>Détail des 10 phases</h2>
-        <p style="color: var(--muted);">Chaque phase est autonome et livre un incrément fonctionnel testable en conditions réelles.</p>
+        <h2 data-fr="Détail des 10 phases" data-en="The 10 phases in detail">Détail des 10 phases</h2>
+        <p style="color: var(--muted);" data-fr="Chaque phase est autonome et livre un incrément fonctionnel testable en conditions réelles." data-en="Each phase is autonomous and delivers a functional increment that can be tested in real-world conditions.">Chaque phase est autonome et livre un incrément fonctionnel testable en conditions réelles.</p>
       </div>
       <div class="phase-list" id="phaseList"></div>
     </div>
@@ -1906,13 +1942,13 @@ textarea.form-control { resize: vertical; min-height: 120px; }
 
   <div class="pricing-hero">
     <div class="container text-c">
-      <div class="pill" style="margin-bottom: 20px; display: inline-flex;">Tarifs clairs & sans surprise</div>
-      <h1 style="margin-bottom: 20px;">Le bon plan pour<br>votre établissement.</h1>
-      <p style="color: var(--muted); font-size: 1.1rem; margin: 0 auto; max-width: 48ch;">Commencez gratuitement. Passez à un plan supérieur quand vous en avez besoin. Résiliez à tout moment.</p>
+      <div class="pill" style="margin-bottom: 20px; display: inline-flex;" data-fr="Tarifs clairs & sans surprise" data-en="Clear pricing & no surprises">Tarifs clairs & sans surprise</div>
+      <h1 style="margin-bottom: 20px;" data-fr-html="Le bon plan pour<br>votre établissement." data-en-html="The right plan for<br>your business.">Le bon plan pour<br>votre établissement.</h1>
+      <p style="color: var(--muted); font-size: 1.1rem; margin: 0 auto; max-width: 48ch;" data-fr="Commencez gratuitement. Passez à un plan supérieur quand vous en avez besoin. Résiliez à tout moment." data-en="Start free. Upgrade when you need to. Cancel anytime.">Commencez gratuitement. Passez à un plan supérieur quand vous en avez besoin. Résiliez à tout moment.</p>
       <div style="display: flex; justify-content: center; margin-top: 32px;">
         <div class="pricing-toggle">
-          <button class="active" id="toggleMonthly" onclick="setPricing('monthly')">Mensuel</button>
-          <button id="toggleAnnual" onclick="setPricing('annual')">Annuel (−20%)</button>
+          <button class="active" id="toggleMonthly" onclick="setPricing('monthly')" data-fr="Mensuel" data-en="Monthly">Mensuel</button>
+          <button id="toggleAnnual" onclick="setPricing('annual')" data-fr="Annuel (−20%)" data-en="Annual (−20%)">Annuel (−20%)</button>
         </div>
       </div>
     </div>
@@ -1928,62 +1964,62 @@ textarea.form-control { resize: vertical; min-height: 120px; }
         <div class="card plan-card">
           <div class="plan-name">Starter</div>
           <div class="plan-price" style="display:block; margin-bottom:6px;">
-            <strong style="font-family:var(--font-h); font-size:2.6rem; font-weight:800; color:var(--gold); letter-spacing:-.04em;">À définir</strong>
+            <strong style="font-family:var(--font-h); font-size:2.6rem; font-weight:800; color:var(--gold); letter-spacing:-.04em;" data-fr="À définir" data-en="TBD">À définir</strong>
           </div>
-          <div class="plan-desc">Idéal pour démarrer et tester l'application sur votre établissement.</div>
+          <div class="plan-desc" data-fr="Idéal pour démarrer et tester l'application sur votre établishment." data-en="Perfect to get started and try the app at your business.">Idéal pour démarrer et tester l'application sur votre établissement.</div>
           <ul class="plan-features">
-            <li><span class="plan-check">✓</span> Gestion des stocks (limité à 50 produits)</li>
-            <li><span class="plan-check">✓</span> Caisse basique & tickets</li>
-            <li><span class="plan-check">✓</span> 1 utilisateur (gérant)</li>
-            <li><span class="plan-check">✓</span> App mobile iOS & Android</li>
-            <li><span class="plan-cross">✗</span> Paiements Orange Money / MOMO</li>
-            <li><span class="plan-cross">✗</span> Commandes en ligne & QR</li>
-            <li><span class="plan-cross">✗</span> RH & Paie</li>
-            <li><span class="plan-cross">✗</span> Analytics avancés</li>
+            <li><span class="plan-check">✓</span> <span data-fr="Gestion des stocks (limité à 50 produits)" data-en="Inventory management (limited to 50 products)">Gestion des stocks (limité à 50 produits)</span></li>
+            <li><span class="plan-check">✓</span> <span data-fr="Caisse basique & tickets" data-en="Basic register & receipts">Caisse basique & tickets</span></li>
+            <li><span class="plan-check">✓</span> <span data-fr="1 utilisateur (gérant)" data-en="1 user (manager)">1 utilisateur (gérant)</span></li>
+            <li><span class="plan-check">✓</span> <span data-fr="App mobile iOS & Android" data-en="iOS & Android mobile app">App mobile iOS & Android</span></li>
+            <li><span class="plan-cross">✗</span> <span data-fr="Paiements Orange Money / MOMO" data-en="Orange Money / MOMO payments">Paiements Orange Money / MOMO</span></li>
+            <li><span class="plan-cross">✗</span> <span data-fr="Commandes en ligne & QR" data-en="Online orders & QR">Commandes en ligne & QR</span></li>
+            <li><span class="plan-cross">✗</span> <span data-fr="RH & Paie" data-en="HR & Payroll">RH & Paie</span></li>
+            <li><span class="plan-cross">✗</span> <span data-fr="Analytics avancés" data-en="Advanced analytics">Analytics avancés</span></li>
           </ul>
-          <a class="btn btn-outline" href="https://github.com/guylain237/barmanagerpro-download/releases/download/v1.0.2/BarManager.Pro_1.0.2_x64-setup.exe" target="_blank" rel="noopener noreferrer" style="width:100%; justify-content:center; text-decoration:none;">&#8659; Télécharger Desktop</a>
+          <a class="btn btn-outline" href="https://github.com/guylain237/barmanagerpro-download/releases/download/v1.0.2/BarManager.Pro_1.0.2_x64-setup.exe" rel="noopener" download onclick="trackDownload(event)" style="width:100%; justify-content:center; text-decoration:none;" data-fr="⇩ Télécharger Desktop" data-en="⇩ Download Desktop">&#8659; Télécharger Desktop</a>
         </div>
 
         <!-- Pro (featured) -->
         <div class="card plan-card featured" style="position: relative;">
-          <div class="plan-badge">⭐ Le plus populaire</div>
+          <div class="plan-badge" data-fr="⭐ Le plus populaire" data-en="⭐ Most popular">⭐ Le plus populaire</div>
           <div class="plan-name">Pro</div>
           <div class="plan-price" style="display:block; margin-bottom:6px;">
-            <strong style="font-family:var(--font-h); font-size:2.6rem; font-weight:800; color:var(--gold); letter-spacing:-.04em;">À définir</strong>
+            <strong style="font-family:var(--font-h); font-size:2.6rem; font-weight:800; color:var(--gold); letter-spacing:-.04em;" data-fr="À définir" data-en="TBD">À définir</strong>
           </div>
-          <div class="plan-desc">La solution complète pour un bar en pleine croissance avec toute l'équipe.</div>
+          <div class="plan-desc" data-fr="La solution complète pour un bar en pleine croissance avec toute l'équipe." data-en="The complete solution for a growing bar with the whole team.">La solution complète pour un bar en pleine croissance avec toute l'équipe.</div>
           <ul class="plan-features">
-            <li><span class="plan-check">✓</span> Stocks illimités + alertes push</li>
-            <li><span class="plan-check">✓</span> Caisse complète & TVA DGI</li>
-            <li><span class="plan-check">✓</span> Jusqu'à 10 utilisateurs</li>
-            <li><span class="plan-check">✓</span> Orange Money & MTN MOMO</li>
-            <li><span class="plan-check">✓</span> Commandes en ligne & QR code</li>
-            <li><span class="plan-check">✓</span> Programme de fidélité</li>
-            <li><span class="plan-check">✓</span> RH & Paie CNPS</li>
-            <li><span class="plan-cross">✗</span> Marketing réseaux sociaux</li>
-            <li><span class="plan-cross">✗</span> Prévisions IA & multi-sites</li>
+            <li><span class="plan-check">✓</span> <span data-fr="Stocks illimités + alertes push" data-en="Unlimited inventory + push alerts">Stocks illimités + alertes push</span></li>
+            <li><span class="plan-check">✓</span> <span data-fr="Caisse complète & TVA DGI" data-en="Full register & DGI VAT">Caisse complète & TVA DGI</span></li>
+            <li><span class="plan-check">✓</span> <span data-fr="Jusqu'à 10 utilisateurs" data-en="Up to 10 users">Jusqu'à 10 utilisateurs</span></li>
+            <li><span class="plan-check">✓</span> <span data-fr="Orange Money & MTN MOMO" data-en="Orange Money & MTN MOMO">Orange Money & MTN MOMO</span></li>
+            <li><span class="plan-check">✓</span> <span data-fr="Commandes en ligne & QR code" data-en="Online orders & QR code">Commandes en ligne & QR code</span></li>
+            <li><span class="plan-check">✓</span> <span data-fr="Programme de fidélité" data-en="Loyalty program">Programme de fidélité</span></li>
+            <li><span class="plan-check">✓</span> <span data-fr="RH & Paie CNPS" data-en="HR & CNPS payroll">RH & Paie CNPS</span></li>
+            <li><span class="plan-cross">✗</span> <span data-fr="Marketing réseaux sociaux" data-en="Social media marketing">Marketing réseaux sociaux</span></li>
+            <li><span class="plan-cross">✗</span> <span data-fr="Prévisions IA & multi-sites" data-en="AI forecasts & multi-site">Prévisions IA & multi-sites</span></li>
           </ul>
-          <button class="btn btn-primary" style="width:100%; opacity:.55; cursor:not-allowed; pointer-events:none;" disabled aria-disabled="true">Bientôt disponible</button>
+          <button class="btn btn-primary" style="width:100%; opacity:.55; cursor:not-allowed; pointer-events:none;" disabled aria-disabled="true" data-fr="Bientôt disponible" data-en="Coming soon">Bientôt disponible</button>
         </div>
 
         <!-- Enterprise -->
         <div class="card plan-card">
           <div class="plan-name">Enterprise</div>
           <div class="plan-price" style="display:block; margin-bottom:6px;">
-            <strong style="font-family:var(--font-h); font-size:2.6rem; font-weight:800; color:var(--gold); letter-spacing:-.04em;">À définir</strong>
+            <strong style="font-family:var(--font-h); font-size:2.6rem; font-weight:800; color:var(--gold); letter-spacing:-.04em;" data-fr="À définir" data-en="TBD">À définir</strong>
           </div>
-          <div class="plan-desc">Pour les groupes de bars, chaînes et établissements multiples avec IA intégrée.</div>
+          <div class="plan-desc" data-fr="Pour les groupes de bars, chaînes et établissements multiples avec IA intégrée." data-en="For bar groups, chains and multi-location businesses with integrated AI.">Pour les groupes de bars, chaînes et établissements multiples avec IA intégrée.</div>
           <ul class="plan-features">
-            <li><span class="plan-check">✓</span> Tout le plan Pro</li>
-            <li><span class="plan-check">✓</span> Utilisateurs illimités</li>
-            <li><span class="plan-check">✓</span> Marketing FB / IG / WhatsApp</li>
-            <li><span class="plan-check">✓</span> Prévisions IA & alertes anomalies</li>
-            <li><span class="plan-check">✓</span> Console multi-établissements</li>
-            <li><span class="plan-check">✓</span> Benchmarking inter-sites</li>
-            <li><span class="plan-check">✓</span> Support prioritaire 24/7</li>
-            <li><span class="plan-check">✓</span> Onboarding & formation équipe</li>
+            <li><span class="plan-check">✓</span> <span data-fr="Tout le plan Pro" data-en="Everything in Pro">Tout le plan Pro</span></li>
+            <li><span class="plan-check">✓</span> <span data-fr="Utilisateurs illimités" data-en="Unlimited users">Utilisateurs illimités</span></li>
+            <li><span class="plan-check">✓</span> <span data-fr="Marketing FB / IG / WhatsApp" data-en="FB / IG / WhatsApp marketing">Marketing FB / IG / WhatsApp</span></li>
+            <li><span class="plan-check">✓</span> <span data-fr="Prévisions IA & alertes anomalies" data-en="AI forecasts & anomaly alerts">Prévisions IA & alertes anomalies</span></li>
+            <li><span class="plan-check">✓</span> <span data-fr="Console multi-établissements" data-en="Multi-location console">Console multi-établissements</span></li>
+            <li><span class="plan-check">✓</span> <span data-fr="Benchmarking inter-sites" data-en="Cross-site benchmarking">Benchmarking inter-sites</span></li>
+            <li><span class="plan-check">✓</span> <span data-fr="Support prioritaire 24/7" data-en="24/7 priority support">Support prioritaire 24/7</span></li>
+            <li><span class="plan-check">✓</span> <span data-fr="Onboarding & formation équipe" data-en="Onboarding & team training">Onboarding & formation équipe</span></li>
           </ul>
-          <button class="btn btn-green" style="width:100%; opacity:.55; cursor:not-allowed; pointer-events:none;" disabled aria-disabled="true">Bientôt disponible</button>
+          <button class="btn btn-green" style="width:100%; opacity:.55; cursor:not-allowed; pointer-events:none;" disabled aria-disabled="true" data-fr="Bientôt disponible" data-en="Coming soon">Bientôt disponible</button>
         </div>
 
       </div>
@@ -1992,23 +2028,23 @@ textarea.form-control { resize: vertical; min-height: 120px; }
       <div class="grid-4" style="margin-top: 60px;">
         <div style="text-align: center; padding: 24px 16px;">
           <div style="font-size: 2rem; margin-bottom: 12px;">🔒</div>
-          <h4 style="margin-bottom: 8px;">Données sécurisées</h4>
-          <p style="font-size: .83rem; color: var(--muted); max-width: 100%;">Chiffrement AES-256, sauvegardes automatiques quotidiennes.</p>
+          <h4 style="margin-bottom: 8px;" data-fr="Données sécurisées" data-en="Secure data">Données sécurisées</h4>
+          <p style="font-size: .83rem; color: var(--muted); max-width: 100%;" data-fr="Chiffrement AES-256, sauvegardes automatiques quotidiennes." data-en="AES-256 encryption, daily automatic backups.">Chiffrement AES-256, sauvegardes automatiques quotidiennes.</p>
         </div>
         <div style="text-align: center; padding: 24px 16px;">
           <div style="font-size: 2rem; margin-bottom: 12px;">📡</div>
-          <h4 style="margin-bottom: 8px;">Offline garanti</h4>
-          <p style="font-size: .83rem; color: var(--muted); max-width: 100%;">Fonctionne sans connexion internet. Sync au retour.</p>
+          <h4 style="margin-bottom: 8px;" data-fr="Offline garanti" data-en="Offline guaranteed">Offline garanti</h4>
+          <p style="font-size: .83rem; color: var(--muted); max-width: 100%;" data-fr="Fonctionne sans connexion internet. Sync au retour." data-en="Works without internet. Syncs when back online.">Fonctionne sans connexion internet. Sync au retour.</p>
         </div>
         <div style="text-align: center; padding: 24px 16px;">
           <div style="font-size: 2rem; margin-bottom: 12px;">🇨🇲</div>
-          <h4 style="margin-bottom: 8px;">Conformité locale</h4>
-          <p style="font-size: .83rem; color: var(--muted); max-width: 100%;">TVA DGI, CNPS, numérotation fiscale Cameroun.</p>
+          <h4 style="margin-bottom: 8px;" data-fr="Conformité locale" data-en="Local compliance">Conformité locale</h4>
+          <p style="font-size: .83rem; color: var(--muted); max-width: 100%;" data-fr="TVA DGI, CNPS, numérotation fiscale Cameroun." data-en="DGI VAT, CNPS, Cameroon fiscal numbering.">TVA DGI, CNPS, numérotation fiscale Cameroun.</p>
         </div>
         <div style="text-align: center; padding: 24px 16px;">
           <div style="font-size: 2rem; margin-bottom: 12px;">🤝</div>
-          <h4 style="margin-bottom: 8px;">Support local</h4>
-          <p style="font-size: .83rem; color: var(--muted); max-width: 100%;">Équipe basée à Douala &amp; Yaoundé. Support en français 🇫🇷 et anglais 🇬🇧.</p>
+          <h4 style="margin-bottom: 8px;" data-fr="Support local" data-en="Local support">Support local</h4>
+          <p style="font-size: .83rem; color: var(--muted); max-width: 100%;" data-fr-html="Équipe basée à Douala &amp; Yaoundé. Support en français 🇫🇷 et anglais 🇬🇧." data-en-html="Team based in Douala &amp; Yaoundé. Support in French 🇫🇷 and English 🇬🇧.">Équipe basée à Douala &amp; Yaoundé. Support en français 🇫🇷 et anglais 🇬🇧.</p>
         </div>
       </div>
     </div>
@@ -2019,13 +2055,13 @@ textarea.form-control { resize: vertical; min-height: 120px; }
   <section class="section">
     <div class="container">
       <div class="section-header text-c">
-        <h2>Questions fréquentes</h2>
-        <p style="color:var(--muted);font-size:1.05rem;margin:0 auto;">Tout ce que vous devez savoir avant de commencer.</p>
+        <h2 data-fr="Questions fréquentes" data-en="Frequently asked questions">Questions fréquentes</h2>
+        <p style="color:var(--muted);font-size:1.05rem;margin:0 auto;" data-fr="Tout ce que vous devez savoir avant de commencer." data-en="Everything you need to know before getting started.">Tout ce que vous devez savoir avant de commencer.</p>
       </div>
       <div class="faq-list" id="faqList"></div>
       <div style="text-align:center;margin-top:48px;">
-        <p style="color:var(--muted);font-size:.95rem;margin-bottom:16px;">Vous ne trouvez pas la réponse à votre question ?</p>
-        <a href="mailto:contact@barmanagerpro.cm" class="btn btn-outline" style="min-height:44px;display:inline-flex;align-items:center;">Contacter le support</a>
+        <p style="color:var(--muted);font-size:.95rem;margin-bottom:16px;" data-fr="Vous ne trouvez pas la réponse à votre question ?" data-en="Can't find the answer to your question?">Vous ne trouvez pas la réponse à votre question ?</p>
+        <a href="mailto:contact@barmanagerpro.cm" class="btn btn-outline" style="min-height:44px;display:inline-flex;align-items:center;" data-fr="Contacter le support" data-en="Contact support">Contacter le support</a>
       </div>
     </div>
   </section>
@@ -2040,9 +2076,9 @@ textarea.form-control { resize: vertical; min-height: 120px; }
 
   <div class="contact-hero">
     <div class="container">
-      <div class="pill" style="margin-bottom: 20px;">Parlez-nous de votre projet</div>
-      <h1 style="max-width: 14ch; margin-bottom: 16px;">Démarrons<br>ensemble.</h1>
-      <p style="color: var(--muted); font-size: 1.1rem; max-width: 48ch;">Une démo personnalisée, une question sur les tarifs ou simplement envie d'en savoir plus — nous répondons sous 24h.</p>
+      <div class="pill" style="margin-bottom: 20px;" data-fr="Parlez-nous de votre projet" data-en="Tell us about your project">Parlez-nous de votre projet</div>
+      <h1 style="max-width: 14ch; margin-bottom: 16px;" data-fr-html="Démarrons<br>ensemble." data-en-html="Let's get<br>started.">Démarrons<br>ensemble.</h1>
+      <p style="color: var(--muted); font-size: 1.1rem; max-width: 48ch;" data-fr="Une démo personnalisée, une question sur les tarifs ou simplement envie d'en savoir plus — nous répondons sous 24h." data-en="A custom demo, a pricing question or just want to learn more — we reply within 24 hours.">Une démo personnalisée, une question sur les tarifs ou simplement envie d'en savoir plus — nous répondons sous 24h.</p>
     </div>
   </div>
 
@@ -2054,20 +2090,20 @@ textarea.form-control { resize: vertical; min-height: 120px; }
 
         <!-- Infos -->
         <div class="contact-info">
-          <h2 style="font-size: 2rem; margin-bottom: 16px;">On est là<br>pour vous.</h2>
-          <p>Que vous soyez gérant d'un bar à Douala, Yaoundé ou ailleurs au Cameroun, notre équipe vous accompagne dans la prise en main et le déploiement.</p>
+          <h2 style="font-size: 2rem; margin-bottom: 16px;" data-fr-html="On est là<br>pour vous." data-en-html="We're here<br>for you.">On est là<br>pour vous.</h2>
+          <p data-fr="Que vous soyez gérant d'un bar à Douala, Yaoundé ou ailleurs au Cameroun, notre équipe vous accompagne dans la prise en main et le déploiement." data-en="Whether you run a bar in Douala, Yaoundé or elsewhere in Cameroon, our team will help you with onboarding and deployment.">Que vous soyez gérant d'un bar à Douala, Yaoundé ou ailleurs au Cameroun, notre équipe vous accompagne dans la prise en main et le déploiement.</p>
           <div class="contact-items">
             <div class="contact-item">
               <div class="icon-box icon-box-gold">📍</div>
               <div>
-                <h4>Adresses</h4>
+                <h4 data-fr="Adresses" data-en="Addresses">Adresses</h4>
                 <p>Douala, Akwa — Yaoundé, Bastos</p>
               </div>
             </div>
             <div class="contact-item">
               <div class="icon-box icon-box-green">📞</div>
               <div>
-                <h4>Téléphone / WhatsApp</h4>
+                <h4 data-fr="Téléphone / WhatsApp" data-en="Phone / WhatsApp">Téléphone / WhatsApp</h4>
                 <p>+237 6 XX XX XX XX</p>
               </div>
             </div>
@@ -2081,8 +2117,8 @@ textarea.form-control { resize: vertical; min-height: 120px; }
             <div class="contact-item">
               <div class="icon-box icon-box-purple">🕐</div>
               <div>
-                <h4>Disponibilité</h4>
-                <p>Lun – Sam, 8h à 19h (WAT)</p>
+                <h4 data-fr="Disponibilité" data-en="Availability">Disponibilité</h4>
+                <p data-fr="Lun – Sam, 8h à 19h (WAT)" data-en="Mon – Sat, 8am to 7pm (WAT)">Lun – Sam, 8h à 19h (WAT)</p>
               </div>
             </div>
           </div>
@@ -2090,62 +2126,62 @@ textarea.form-control { resize: vertical; min-height: 120px; }
 
         <!-- Form -->
         <div class="contact-form">
-          <h3>Demande de démo ou d'information</h3>
+          <h3 data-fr="Demande de démo ou d'information" data-en="Demo or info request">Demande de démo ou d'information</h3>
           <div class="form-row">
             <div class="form-group">
-              <label>Prénom *</label>
-              <input type="text" class="form-control" placeholder="Jean">
+              <label data-fr="Prénom *" data-en="First name *">Prénom *</label>
+              <input type="text" class="form-control" placeholder="Jean" data-fr-placeholder="Jean" data-en-placeholder="John">
             </div>
             <div class="form-group">
-              <label>Nom *</label>
-              <input type="text" class="form-control" placeholder="Dupont">
+              <label data-fr="Nom *" data-en="Last name *">Nom *</label>
+              <input type="text" class="form-control" placeholder="Dupont" data-fr-placeholder="Dupont" data-en-placeholder="Smith">
             </div>
           </div>
           <div class="form-row">
             <div class="form-group">
-              <label>Email *</label>
-              <input type="email" class="form-control" placeholder="jean@monbar.cm">
+              <label data-fr="Email *" data-en="Email *">Email *</label>
+              <input type="email" class="form-control" placeholder="jean@monbar.cm" data-fr-placeholder="jean@monbar.cm" data-en-placeholder="john@mybar.cm">
             </div>
             <div class="form-group">
-              <label>Téléphone / WhatsApp</label>
+              <label data-fr="Téléphone / WhatsApp" data-en="Phone / WhatsApp">Téléphone / WhatsApp</label>
               <input type="tel" class="form-control" placeholder="+237 6 XX XX XX XX">
             </div>
           </div>
           <div class="form-group">
-            <label>Nom de votre établissement</label>
-            <input type="text" class="form-control" placeholder="Bar Le Rendez-vous">
+            <label data-fr="Nom de votre établissement" data-en="Business name">Nom de votre établissement</label>
+            <input type="text" class="form-control" placeholder="Bar Le Rendez-vous" data-fr-placeholder="Bar Le Rendez-vous" data-en-placeholder="The Meeting Point Bar">
           </div>
           <div class="form-row">
             <div class="form-group">
-              <label>Ville</label>
+              <label data-fr="Ville" data-en="City">Ville</label>
               <select class="form-control">
-                <option value="">— Sélectionner —</option>
+                <option value="" data-fr="— Sélectionner —" data-en="— Select —">— Sélectionner —</option>
                 <option>Douala</option>
                 <option>Yaoundé</option>
                 <option>Bafoussam</option>
                 <option>Garoua</option>
-                <option>Autre</option>
+                <option data-fr="Autre" data-en="Other">Autre</option>
               </select>
             </div>
             <div class="form-group">
-              <label>Plan souhaité</label>
+              <label data-fr="Plan souhaité" data-en="Desired plan">Plan souhaité</label>
               <select class="form-control">
-                <option value="">— Sélectionner —</option>
+                <option value="" data-fr="— Sélectionner —" data-en="— Select —">— Sélectionner —</option>
                 <option>Starter</option>
-                <option>Pro — tarif à venir</option>
-                <option>Enterprise — tarif à venir</option>
-                <option>Je ne sais pas encore</option>
+                <option data-fr="Pro — tarif à venir" data-en="Pro — price coming soon">Pro — tarif à venir</option>
+                <option data-fr="Enterprise — tarif à venir" data-en="Enterprise — price coming soon">Enterprise — tarif à venir</option>
+                <option data-fr="Je ne sais pas encore" data-en="I'm not sure yet">Je ne sais pas encore</option>
               </select>
             </div>
           </div>
           <div class="form-group">
-            <label>Message</label>
-            <textarea class="form-control" placeholder="Parlez-nous de votre bar, de vos besoins ou de vos questions..."></textarea>
+            <label data-fr="Message" data-en="Message">Message</label>
+            <textarea class="form-control" placeholder="Parlez-nous de votre bar, de vos besoins ou de vos questions..." data-fr-placeholder="Parlez-nous de votre bar, de vos besoins ou de vos questions..." data-en-placeholder="Tell us about your bar, your needs or your questions..."></textarea>
           </div>
-          <button class="btn btn-primary" style="width: 100%; justify-content: center; padding: 16px;" id="submitBtn" onclick="handleSubmit()">
+          <button class="btn btn-primary" style="width: 100%; justify-content: center; padding: 16px;" id="submitBtn" onclick="handleSubmit()" data-fr="Envoyer ma demande →" data-en="Send my request →">
             Envoyer ma demande →
           </button>
-          <p style="font-size: .78rem; color: var(--muted); margin-top: 12px; text-align: center; max-width: 100%;">
+          <p style="font-size: .78rem; color: var(--muted); margin-top: 12px; text-align: center; max-width: 100%;" data-fr="En soumettant ce formulaire, vous acceptez notre politique de confidentialité. Aucun spam, promis." data-en="By submitting this form, you agree to our privacy policy. No spam, promised.">
             En soumettant ce formulaire, vous acceptez notre politique de confidentialité. Aucun spam, promis.
           </p>
         </div>
@@ -2168,7 +2204,7 @@ textarea.form-control { resize: vertical; min-height: 120px; }
           <div class="nav-logo-mark">B</div>
           BarManager <span class="gold">Pro</span>
         </a>
-        <p>Solution de gestion intégrale pour bars au Cameroun et en Afrique Centrale. Offline-first, conforme DGI et CNPS.</p>
+        <p data-fr="Solution de gestion intégrale pour bars au Cameroun et en Afrique Centrale. Offline-first, conforme DGI et CNPS." data-en="All-in-one management solution for bars in Cameroon and Central Africa. Offline-first, DGI- and CNPS-compliant.">Solution de gestion intégrale pour bars au Cameroun et en Afrique Centrale. Offline-first, conforme DGI et CNPS.</p>
         <div class="social-links">
           <a href="#" class="social-link">f</a>
           <a href="#" class="social-link">in</a>
@@ -2177,39 +2213,39 @@ textarea.form-control { resize: vertical; min-height: 120px; }
         </div>
       </div>
       <div class="footer-col">
-        <h4>Produit</h4>
+        <h4 data-fr="Produit" data-en="Product">Produit</h4>
         <ul>
-          <li><a href="#" onclick="showPage('modules')">Fonctionnalités</a></li>
-          <li><a href="#" onclick="showPage('pricing')">Tarifs</a></li>
-          <li><a href="#" onclick="showPage('pricing')">FAQ</a></li>
-          <li><a href="https://github.com/guylain237/barmanagerpro-download/releases/download/v1.0.2/BarManager.Pro_1.0.2_x64-setup.exe" target="_blank" rel="noopener noreferrer">Téléchargement</a></li>
-          <li><a href="#">Changelog</a></li>
+          <li><a href="#" onclick="showPage('modules')" data-fr="Fonctionnalités" data-en="Features">Fonctionnalités</a></li>
+          <li><a href="#" onclick="showPage('pricing')" data-fr="Tarifs" data-en="Pricing">Tarifs</a></li>
+          <li><a href="#" onclick="showPage('pricing')" data-fr="FAQ" data-en="FAQ">FAQ</a></li>
+          <li><a href="https://github.com/guylain237/barmanagerpro-download/releases/download/v1.0.2/BarManager.Pro_1.0.2_x64-setup.exe" rel="noopener" download onclick="trackDownload(event)" data-fr="Téléchargement" data-en="Download">Téléchargement</a></li>
+          <li><a href="#" data-fr="Changelog" data-en="Changelog">Changelog</a></li>
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Entreprise</h4>
+        <h4 data-fr="Entreprise" data-en="Company">Entreprise</h4>
         <ul>
-          <li><a href="#">À propos</a></li>
-          <li><a href="#">Blog</a></li>
-          <li><a href="mailto:contact@barmanagerpro.cm">Partenaires</a></li>
-          <li><a href="mailto:contact@barmanagerpro.cm">Presse</a></li>
+          <li><a href="#" data-fr="À propos" data-en="About">À propos</a></li>
+          <li><a href="#" data-fr="Blog" data-en="Blog">Blog</a></li>
+          <li><a href="mailto:contact@barmanagerpro.cm" data-fr="Partenaires" data-en="Partners">Partenaires</a></li>
+          <li><a href="mailto:contact@barmanagerpro.cm" data-fr="Presse" data-en="Press">Presse</a></li>
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Support</h4>
+        <h4 data-fr="Support" data-en="Support">Support</h4>
         <ul>
-          <li><a href="mailto:contact@barmanagerpro.cm">Centre d'aide</a></li>
-          <li><a href="mailto:contact@barmanagerpro.cm">Contacter l'équipe</a></li>
-          <li><a href="#">Statut du service</a></li>
+          <li><a href="mailto:contact@barmanagerpro.cm" data-fr="Centre d'aide" data-en="Help center">Centre d'aide</a></li>
+          <li><a href="mailto:contact@barmanagerpro.cm" data-fr="Contacter l'équipe" data-en="Contact the team">Contacter l'équipe</a></li>
+          <li><a href="#" data-fr="Statut du service" data-en="Service status">Statut du service</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2026 BarManager Pro · Cameroun. Tous droits réservés.</span>
+      <span data-fr="© 2026 BarManager Pro · Cameroun. Tous droits réservés." data-en="© 2026 BarManager Pro · Cameroon. All rights reserved.">© 2026 BarManager Pro · Cameroun. Tous droits réservés.</span>
       <div style="display: flex; gap: 20px;">
-        <a href="/legal/mentions">Mentions légales</a>
-        <a href="/legal/cgu">CGU</a>
-        <a href="/legal/privacy">Politique de confidentialité</a>
+        <a href="/legal/mentions" data-fr="Mentions légales" data-en="Legal notice">Mentions légales</a>
+        <a href="/legal/cgu" data-fr="CGU" data-en="Terms">CGU</a>
+        <a href="/legal/privacy" data-fr="Politique de confidentialité" data-en="Privacy policy">Politique de confidentialité</a>
       </div>
     </div>
   </div>
@@ -2224,16 +2260,16 @@ textarea.form-control { resize: vertical; min-height: 120px; }
 // DATA
 // ============================================================
 const phaseData = [
-  { num:1, title:'Setup & Architecture technique', dur:'2–3 sem.', weeks:'S1–S3', tag:'MVP', color:'mvp', modules:['Electron / Tauri','Next.js','Node.js','SQLite','CI/CD','Auth JWT'], desc:'Initialisation du projet : monorepo, design system, base de données locale, CI/CD, authentification multi-rôles.' },
-  { num:2, title:'Gestion des stocks', dur:'3–4 sem.', weeks:'S4–S7', tag:'MVP', color:'mvp', modules:['Entrées/Sorties','Alertes push','Inventaire','Offline sync','Fournisseurs'], desc:'Module cœur : stocks, alertes de rupture, inventaire physique, synchronisation offline-first.' },
-  { num:3, title:'Caisse & Comptabilité', dur:'3–4 sem.', weeks:'S8–S11', tag:'MVP', color:'mvp', modules:['Fonds de caisse','TVA DGI','Tickets thermiques','Bilans'], desc:'Caisse journalière, bilans financiers, conformité fiscale Cameroun (TVA 19,25 %).' },
-  { num:4, title:'POS tactile & Facturation', dur:'3–4 sem.', weeks:'S12–S15', tag:'MVP', color:'mvp', modules:['POS tablette','Tables','Facturation','Dashboard gérant'], desc:'Interface POS tactile, plan de salle, facturation complète, dashboard gérant en temps réel.' },
-  { num:5, title:'Paiements multicanaux', dur:'2–3 sem.', weeks:'S16–S18', tag:'Paiements', color:'pay', modules:['Orange Money','MTN MOMO','Carte / Espèces','Réconciliation'], desc:'Intégration OM & MOMO, réconciliation automatique, reçus digitaux multi-canaux.' },
-  { num:6, title:'Commandes en ligne & QR code', dur:'3–4 sem.', weeks:'S19–S22', tag:'Paiements', color:'pay', modules:['PWA client','QR code table','Socket.io','Notifs push'], desc:'Application client PWA, QR codes par table, commandes en temps réel, notifications push.' },
-  { num:7, title:'Gestion RH & Paie', dur:'3–4 sem.', weeks:'S23–S26', tag:'RH & Fidélité', color:'rh', modules:['Fiches employés','CNPS Cameroun','Présences','Évaluations'], desc:'Module RH complet, bulletins de paie conformes CNPS, présences/absences, évaluations.' },
-  { num:8, title:'Programme de fidélité & Analytics', dur:'3–4 sem.', weeks:'S27–S30', tag:'RH & Fidélité', color:'rh', modules:['Points fidélité','Niveaux VIP','BI / KPIs','Rapports PDF'], desc:'Fidélité clients, tableaux de bord BI, KPIs et rapports exportables.' },
-  { num:9, title:'Marketing & Publications', dur:'2–3 sem.', weeks:'S31–S33', tag:'Marketing & IA', color:'mk', modules:['Facebook','Instagram','WhatsApp Business','Promos'], desc:'Publications réseaux sociaux, promotions, happy hours, notifications ciblées.' },
-  { num:10, title:'Prévisions IA & Multi-établissements', dur:'3–4 sem.', weeks:'S34–S37', tag:'Marketing & IA', color:'mk', modules:['IA prévisions','Anomalies','Multi-sites','Dashboard consolidé'], desc:'Machine learning pour les stocks, détection d\'anomalies, console multi-établissements.' }
+  { num:1, title:{fr:'Setup & Architecture technique', en:'Setup & Technical Architecture'}, dur:{fr:'2–3 sem.', en:'2–3 wk'}, weeks:{fr:'S1–S3', en:'W1–W3'}, tag:{fr:'MVP', en:'MVP'}, color:'mvp', modules:['Electron / Tauri','Next.js','Node.js','SQLite','CI/CD','Auth JWT'], desc:{fr:'Initialisation du projet : monorepo, design system, base de données locale, CI/CD, authentification multi-rôles.', en:'Project initialization: monorepo, design system, local database, CI/CD, multi-role authentication.'} },
+  { num:2, title:{fr:'Gestion des stocks', en:'Inventory management'}, dur:{fr:'3–4 sem.', en:'3–4 wk'}, weeks:{fr:'S4–S7', en:'W4–W7'}, tag:{fr:'MVP', en:'MVP'}, color:'mvp', modules:[{fr:'Entrées/Sorties', en:'In/Out'},{fr:'Alertes push', en:'Push alerts'},{fr:'Inventaire', en:'Inventory'},{fr:'Offline sync', en:'Offline sync'},{fr:'Fournisseurs', en:'Suppliers'}], desc:{fr:'Module cœur : stocks, alertes de rupture, inventaire physique, synchronisation offline-first.', en:'Core module: inventory, stock-out alerts, physical inventory, offline-first sync.'} },
+  { num:3, title:{fr:'Caisse & Comptabilité', en:'Cash register & Accounting'}, dur:{fr:'3–4 sem.', en:'3–4 wk'}, weeks:{fr:'S8–S11', en:'W8–W11'}, tag:{fr:'MVP', en:'MVP'}, color:'mvp', modules:[{fr:'Fonds de caisse', en:'Cash float'},{fr:'TVA DGI', en:'DGI VAT'},{fr:'Tickets thermiques', en:'Thermal receipts'},{fr:'Bilans', en:'Reports'}], desc:{fr:'Caisse journalière, bilans financiers, conformité fiscale Cameroun (TVA 19,25 %).', en:'Daily register, financial reports, Cameroon tax compliance (VAT 19.25%).'} },
+  { num:4, title:{fr:'POS tactile & Facturation', en:'Touch POS & Billing'}, dur:{fr:'3–4 sem.', en:'3–4 wk'}, weeks:{fr:'S12–S15', en:'W12–W15'}, tag:{fr:'MVP', en:'MVP'}, color:'mvp', modules:[{fr:'POS tablette', en:'Tablet POS'},{fr:'Tables', en:'Tables'},{fr:'Facturation', en:'Billing'},{fr:'Dashboard gérant', en:'Manager dashboard'}], desc:{fr:'Interface POS tactile, plan de salle, facturation complète, dashboard gérant en temps réel.', en:'Touch POS interface, floor plan, full billing, real-time manager dashboard.'} },
+  { num:5, title:{fr:'Paiements multicanaux', en:'Multi-channel payments'}, dur:{fr:'2–3 sem.', en:'2–3 wk'}, weeks:{fr:'S16–S18', en:'W16–W18'}, tag:{fr:'Paiements', en:'Payments'}, color:'pay', modules:['Orange Money','MTN MOMO',{fr:'Carte / Espèces', en:'Card / Cash'},{fr:'Réconciliation', en:'Reconciliation'}], desc:{fr:'Intégration OM & MOMO, réconciliation automatique, reçus digitaux multi-canaux.', en:'OM & MOMO integration, automatic reconciliation, multi-channel digital receipts.'} },
+  { num:6, title:{fr:'Commandes en ligne & QR code', en:'Online orders & QR code'}, dur:{fr:'3–4 sem.', en:'3–4 wk'}, weeks:{fr:'S19–S22', en:'W19–W22'}, tag:{fr:'Paiements', en:'Payments'}, color:'pay', modules:[{fr:'PWA client', en:'Customer PWA'},{fr:'QR code table', en:'Table QR code'},'Socket.io',{fr:'Notifs push', en:'Push notifs'}], desc:{fr:'Application client PWA, QR codes par table, commandes en temps réel, notifications push.', en:'Customer PWA app, per-table QR codes, real-time orders, push notifications.'} },
+  { num:7, title:{fr:'Gestion RH & Paie', en:'HR & Payroll management'}, dur:{fr:'3–4 sem.', en:'3–4 wk'}, weeks:{fr:'S23–S26', en:'W23–W26'}, tag:{fr:'RH & Fidélité', en:'HR & Loyalty'}, color:'rh', modules:[{fr:'Fiches employés', en:'Employee records'},{fr:'CNPS Cameroun', en:'CNPS Cameroon'},{fr:'Présences', en:'Attendance'},{fr:'Évaluations', en:'Reviews'}], desc:{fr:'Module RH complet, bulletins de paie conformes CNPS, présences/absences, évaluations.', en:'Complete HR module, CNPS-compliant payslips, attendance, reviews.'} },
+  { num:8, title:{fr:'Programme de fidélité & Analytics', en:'Loyalty program & Analytics'}, dur:{fr:'3–4 sem.', en:'3–4 wk'}, weeks:{fr:'S27–S30', en:'W27–W30'}, tag:{fr:'RH & Fidélité', en:'HR & Loyalty'}, color:'rh', modules:[{fr:'Points fidélité', en:'Loyalty points'},{fr:'Niveaux VIP', en:'VIP tiers'},'BI / KPIs',{fr:'Rapports PDF', en:'PDF reports'}], desc:{fr:'Fidélité clients, tableaux de bord BI, KPIs et rapports exportables.', en:'Customer loyalty, BI dashboards, KPIs and exportable reports.'} },
+  { num:9, title:{fr:'Marketing & Publications', en:'Marketing & Posts'}, dur:{fr:'2–3 sem.', en:'2–3 wk'}, weeks:{fr:'S31–S33', en:'W31–W33'}, tag:{fr:'Marketing & IA', en:'Marketing & AI'}, color:'mk', modules:['Facebook','Instagram','WhatsApp Business',{fr:'Promos', en:'Promos'}], desc:{fr:'Publications réseaux sociaux, promotions, happy hours, notifications ciblées.', en:'Social media posts, promotions, happy hours, targeted notifications.'} },
+  { num:10, title:{fr:'Prévisions IA & Multi-établissements', en:'AI forecasting & Multi-location'}, dur:{fr:'3–4 sem.', en:'3–4 wk'}, weeks:{fr:'S34–S37', en:'W34–W37'}, tag:{fr:'Marketing & IA', en:'Marketing & AI'}, color:'mk', modules:[{fr:'IA prévisions', en:'AI forecasts'},{fr:'Anomalies', en:'Anomalies'},{fr:'Multi-sites', en:'Multi-site'},{fr:'Dashboard consolidé', en:'Consolidated dashboard'}], desc:{fr:'Machine learning pour les stocks, détection d\'anomalies, console multi-établissements.', en:'Machine learning for inventory, anomaly detection, multi-location console.'} }
 ];
 
 const ganttMap = [
@@ -2252,17 +2288,27 @@ const ganttMap = [
 const colorClass = { mvp:'fill-mvp', pay:'fill-pay', rh:'fill-rh', mk:'fill-mk' };
 
 const faqData = [
-  { q:'Comment installer BarManager Pro ?', a:'Téléchargez l\'installateur Windows (.exe) depuis notre page de téléchargement. Double-cliquez sur le fichier, suivez l\'assistant en 3 étapes, et lancez l\'application. La configuration initiale de votre établissement prend moins de 10 minutes. Une version web est également disponible sans installation.' },
-  { q:'Puis-je l\'utiliser sans connexion internet ?', a:'Oui. BarManager Pro version desktop est conçu en mode offline-first. Toutes les opérations critiques — caisse, commandes, stocks — fonctionnent sans connexion grâce à la base de données SQLite embarquée et chiffrée. Les données se synchronisent automatiquement dès qu\'une connexion est disponible via Cloudflare Tunnel.' },
-  { q:'Quels modes de paiement sont supportés ?', a:'BarManager Pro supporte les espèces, Orange Money, MTN Mobile Money et les paiements mixtes (plusieurs modes sur une même transaction). Le calcul du rendu monnaie est automatique. La réconciliation avec la caisse est instantanée. Les plans Pro et Business incluent l\'intégration aux APIs officielles OM et MoMo.' },
-  { q:'Est-ce conforme à la réglementation DGI Cameroun ?', a:'Oui. L\'application intègre la TVA au taux de 19,25 %, la numérotation conforme DGI, et génère des rapports Z quotidiens exportables en PDF. Des mises à jour sont publiées à chaque changement réglementaire. L\'application est conçue pour passer les contrôles fiscaux sans préparation supplémentaire.' },
-  { q:'Combien d\'utilisateurs puis-je avoir ?', a:'Le plan Free inclut 1 utilisateur (gérant). Le plan Pro monte à 5 utilisateurs avec des rôles distincts : Propriétaire, Gérant, Caissier, Serveur — chacun avec ses permissions granulaires par module. Le plan Business offre des utilisateurs illimités et la gestion multi-établissements depuis un seul tableau de bord.' },
-  { q:'Comment fonctionne le mode offline ?', a:'La version desktop (Windows) embarque une base SQLite locale chiffrée avec SQLCipher. Toutes les transactions sont écrites localement d\'abord. Au retour en ligne, une synchronisation bidirectionnelle se déclenche automatiquement via WebSocket. Les conflits de données sont résolus avec une stratégie last-write-wins auditable.' },
-  { q:'Puis-je migrer depuis Excel ou un autre logiciel ?', a:'Oui. BarManager Pro supporte l\'import de produits et catégories depuis des fichiers Excel (.xlsx) et CSV. Un assistant de mapping des colonnes guide la migration. L\'historique de ventes depuis un ancien système n\'est pas importé mais reste accessible dans votre ancien outil pendant la transition.' },
-  { q:'Quel niveau de sécurité pour mes données ?', a:'Les données locales sont chiffrées avec SQLCipher (AES-256). Les échanges réseau utilisent HTTPS/TLS 1.3. L\'authentification est basée sur JWT avec tokens à courte durée de vie. Les mots de passe sont hashés avec bcrypt (salt=12). Un backup automatique chiffré est effectué toutes les 6 heures. Chaque action sensible est tracée dans l\'audit log.' },
-  { q:'Comment annuler mon abonnement ?', a:'Vous pouvez résilier votre abonnement à tout moment depuis votre espace client, sans frais ni pénalité. Votre accès reste actif jusqu\'à la fin de la période en cours. Vos données restent disponibles pour export pendant 90 jours après la résiliation. Aucune question posée, aucun frais caché.' },
-  { q:'Y a-t-il une formation ou un support en cas de problème ?', a:'Le plan Free inclut le support communautaire (forum + base de connaissances). Le plan Pro inclut le support email avec réponse en moins de 24h. Le plan Business inclut une formation équipe complète et un support prioritaire 24h/7j en français. Une documentation en ligne détaillée est disponible pour tous les plans.' }
+  { q:{fr:'Comment installer BarManager Pro ?', en:'How do I install BarManager Pro?'}, a:{fr:'Téléchargez l\'installateur Windows (.exe) depuis notre page de téléchargement. Double-cliquez sur le fichier, suivez l\'assistant en 3 étapes, et lancez l\'application. La configuration initiale de votre établissement prend moins de 10 minutes. Une version web est également disponible sans installation.', en:'Download the Windows installer (.exe) from our download page. Double-click the file, follow the 3-step wizard, and launch the app. Initial setup for your business takes less than 10 minutes. A web version is also available without installation.'} },
+  { q:{fr:'Puis-je l\'utiliser sans connexion internet ?', en:'Can I use it without an internet connection?'}, a:{fr:'Oui. BarManager Pro version desktop est conçu en mode offline-first. Toutes les opérations critiques — caisse, commandes, stocks — fonctionnent sans connexion grâce à la base de données SQLite embarquée et chiffrée. Les données se synchronisent automatiquement dès qu\'une connexion est disponible via Cloudflare Tunnel.', en:'Yes. The BarManager Pro desktop version is built offline-first. All critical operations — register, orders, inventory — work without a connection thanks to the embedded encrypted SQLite database. Data syncs automatically when a connection is available through Cloudflare Tunnel.'} },
+  { q:{fr:'Quels modes de paiement sont supportés ?', en:'Which payment methods are supported?'}, a:{fr:'BarManager Pro supporte les espèces, Orange Money, MTN Mobile Money et les paiements mixtes (plusieurs modes sur une même transaction). Le calcul du rendu monnaie est automatique. La réconciliation avec la caisse est instantanée. Les plans Pro et Business incluent l\'intégration aux APIs officielles OM et MoMo.', en:'BarManager Pro supports cash, Orange Money, MTN Mobile Money and mixed payments (multiple methods in a single transaction). Change calculation is automatic. Cash register reconciliation is instant. The Pro and Business plans include integration with the official OM and MoMo APIs.'} },
+  { q:{fr:'Est-ce conforme à la réglementation DGI Cameroun ?', en:'Is it compliant with DGI Cameroon regulations?'}, a:{fr:'Oui. L\'application intègre la TVA au taux de 19,25 %, la numérotation conforme DGI, et génère des rapports Z quotidiens exportables en PDF. Des mises à jour sont publiées à chaque changement réglementaire. L\'application est conçue pour passer les contrôles fiscaux sans préparation supplémentaire.', en:'Yes. The app includes VAT at the 19.25% rate, DGI-compliant numbering, and generates daily Z reports exportable as PDF. Updates are released with every regulatory change. The app is designed to pass tax audits without extra preparation.'} },
+  { q:{fr:'Combien d\'utilisateurs puis-je avoir ?', en:'How many users can I have?'}, a:{fr:'Le plan Free inclut 1 utilisateur (gérant). Le plan Pro monte à 5 utilisateurs avec des rôles distincts : Propriétaire, Gérant, Caissier, Serveur — chacun avec ses permissions granulaires par module. Le plan Business offre des utilisateurs illimités et la gestion multi-établissements depuis un seul tableau de bord.', en:'The Free plan includes 1 user (manager). The Pro plan goes up to 5 users with distinct roles: Owner, Manager, Cashier, Server — each with granular per-module permissions. The Business plan offers unlimited users and multi-location management from a single dashboard.'} },
+  { q:{fr:'Comment fonctionne le mode offline ?', en:'How does offline mode work?'}, a:{fr:'La version desktop (Windows) embarque une base SQLite locale chiffrée avec SQLCipher. Toutes les transactions sont écrites localement d\'abord. Au retour en ligne, une synchronisation bidirectionnelle se déclenche automatiquement via WebSocket. Les conflits de données sont résolus avec une stratégie last-write-wins auditable.', en:'The desktop version (Windows) ships with a local SQLite database encrypted with SQLCipher. All transactions are written locally first. When back online, two-way sync triggers automatically via WebSocket. Data conflicts are resolved with an auditable last-write-wins strategy.'} },
+  { q:{fr:'Puis-je migrer depuis Excel ou un autre logiciel ?', en:'Can I migrate from Excel or another software?'}, a:{fr:'Oui. BarManager Pro supporte l\'import de produits et catégories depuis des fichiers Excel (.xlsx) et CSV. Un assistant de mapping des colonnes guide la migration. L\'historique de ventes depuis un ancien système n\'est pas importé mais reste accessible dans votre ancien outil pendant la transition.', en:'Yes. BarManager Pro supports importing products and categories from Excel (.xlsx) and CSV files. A column-mapping wizard guides the migration. Sales history from an older system is not imported but remains accessible in your previous tool during the transition.'} },
+  { q:{fr:'Quel niveau de sécurité pour mes données ?', en:'What level of security applies to my data?'}, a:{fr:'Les données locales sont chiffrées avec SQLCipher (AES-256). Les échanges réseau utilisent HTTPS/TLS 1.3. L\'authentification est basée sur JWT avec tokens à courte durée de vie. Les mots de passe sont hashés avec bcrypt (salt=12). Un backup automatique chiffré est effectué toutes les 6 heures. Chaque action sensible est tracée dans l\'audit log.', en:'Local data is encrypted with SQLCipher (AES-256). Network exchanges use HTTPS/TLS 1.3. Authentication is based on JWT with short-lived tokens. Passwords are hashed with bcrypt (salt=12). An encrypted automatic backup runs every 6 hours. Every sensitive action is recorded in the audit log.'} },
+  { q:{fr:'Comment annuler mon abonnement ?', en:'How do I cancel my subscription?'}, a:{fr:'Vous pouvez résilier votre abonnement à tout moment depuis votre espace client, sans frais ni pénalité. Votre accès reste actif jusqu\'à la fin de la période en cours. Vos données restent disponibles pour export pendant 90 jours après la résiliation. Aucune question posée, aucun frais caché.', en:'You can cancel your subscription anytime from your customer area, with no fees or penalties. Your access stays active until the end of the current period. Your data remains available for export for 90 days after cancellation. No questions asked, no hidden fees.'} },
+  { q:{fr:'Y a-t-il une formation ou un support en cas de problème ?', en:'Is there training or support if I run into problems?'}, a:{fr:'Le plan Free inclut le support communautaire (forum + base de connaissances). Le plan Pro inclut le support email avec réponse en moins de 24h. Le plan Business inclut une formation équipe complète et un support prioritaire 24h/7j en français. Une documentation en ligne détaillée est disponible pour tous les plans.', en:'The Free plan includes community support (forum + knowledge base). The Pro plan includes email support with replies in under 24 hours. The Business plan includes full team training and 24/7 priority support in French and English. Detailed online documentation is available for all plans.'} }
 ];
+
+// Helper: returns translated value (string or {fr,en} object)
+function t(val, lang) {
+  if (val == null) return '';
+  if (typeof val === 'string') return val;
+  return val[lang] || val.fr || '';
+}
+
+// Langue courante (déclarée tôt pour éviter la zone morte temporelle)
+let currentLang = 'fr';
 
 // ============================================================
 // PAGE SYSTEM
@@ -2309,13 +2355,15 @@ function initReveal() {
 // GANTT RENDER
 // ============================================================
 function renderGantt() {
+  const lang = currentLang;
   const container = document.getElementById('ganttRows');
   if (!container) return;
   container.innerHTML = '';
+  const phaseLabel = lang === 'en' ? 'Phase' : 'Phase';
   phaseData.forEach((ph, idx) => {
     const row = document.createElement('div');
     row.className = 'gantt-row';
-    row.innerHTML = `<div class="gantt-row-label">Phase ${ph.num} — ${ph.title}</div>
+    row.innerHTML = `<div class="gantt-row-label">${phaseLabel} ${ph.num} — ${t(ph.title, lang)}</div>
       <div class="gantt-bars">${ganttMap[idx].map(active =>
         `<div class="gantt-cell ${active ? colorClass[ph.color] : ''}"></div>`
       ).join('')}</div>`;
@@ -2326,21 +2374,20 @@ function renderGantt() {
   const plist = document.getElementById('phaseList');
   if (!plist) return;
   plist.innerHTML = '';
-  const tagColors = { mvp:'badge-green', pay:'badge-blue', rh:'badge-gold', mk:'badge' };
   phaseData.forEach(ph => {
     const row = document.createElement('div');
     row.className = 'phase-row';
     row.innerHTML = `
       <div class="phase-num">0${ph.num > 9 ? ph.num : ph.num}</div>
       <div class="phase-info">
-        <h3>${ph.title}</h3>
-        <p>${ph.desc}</p>
-        <div class="phase-tags">${ph.modules.map(m => `<span class="phase-tag">${m}</span>`).join('')}</div>
+        <h3>${t(ph.title, lang)}</h3>
+        <p>${t(ph.desc, lang)}</p>
+        <div class="phase-tags">${ph.modules.map(m => `<span class="phase-tag">${t(m, lang)}</span>`).join('')}</div>
       </div>
       <div class="phase-meta">
-        <div class="phase-dur">${ph.dur}</div>
-        <div class="phase-weeks">${ph.weeks}</div>
-        <div class="phase-badge"><span class="badge badge-${ph.color === 'mvp' ? 'green' : ph.color === 'pay' ? 'blue' : 'gold'}">${ph.tag}</span></div>
+        <div class="phase-dur">${t(ph.dur, lang)}</div>
+        <div class="phase-weeks">${t(ph.weeks, lang)}</div>
+        <div class="phase-badge"><span class="badge badge-${ph.color === 'mvp' ? 'green' : ph.color === 'pay' ? 'blue' : 'gold'}">${t(ph.tag, lang)}</span></div>
       </div>`;
     plist.appendChild(row);
   });
@@ -2362,12 +2409,14 @@ function setPricing(mode) {
 // ============================================================
 function initFaq() {
   const container = document.getElementById('faqList');
-  if (!container || container.children.length) return;
+  if (!container) return;
+  const lang = currentLang;
+  container.innerHTML = '';
   faqData.forEach(item => {
     const el = document.createElement('div');
     el.className = 'faq-item';
-    el.innerHTML = `<div class="faq-q">${item.q}<span class="faq-icon">+</span></div>
-      <div class="faq-a">${item.a}</div>`;
+    el.innerHTML = `<div class="faq-q">${t(item.q, lang)}<span class="faq-icon">+</span></div>
+      <div class="faq-a">${t(item.a, lang)}</div>`;
     el.querySelector('.faq-q').addEventListener('click', () => el.classList.toggle('open'));
     container.appendChild(el);
   });
@@ -2378,7 +2427,9 @@ function initFaq() {
 // ============================================================
 function handleSubmit() {
   const btn = document.getElementById('submitBtn');
-  btn.textContent = '✓ Demande envoyée ! On vous répond sous 24h.';
+  btn.textContent = currentLang === 'en'
+    ? '✓ Request sent! We will reply within 24 hours.'
+    : '✓ Demande envoyée ! On vous répond sous 24h.';
   btn.style.background = 'var(--green)';
   btn.disabled = true;
 }
@@ -2394,11 +2445,86 @@ function closeBanner() {
   }
 }
 
+// ============================================================
+// DOWNLOAD TRACKING (assure le déclenchement direct)
+// ============================================================
+function trackDownload(e) {
+  // Garantit le téléchargement direct même si le navigateur tente d'ouvrir le lien.
+  // GitHub renvoie déjà Content-Disposition: attachment, donc le <a download> suffit.
+  // Cette fonction est conservée pour analytics et fallback futur.
+  try {
+    if (window.gtag) window.gtag('event', 'download_desktop', { version: 'v1.0.2', os: 'windows' });
+  } catch (err) { /* noop */ }
+  return true;
+}
+
+// ============================================================
+// LANGUE / I18N
+// ============================================================
+function applyLang(lang) {
+  currentLang = lang;
+  document.documentElement.lang = lang;
+
+  // textContent
+  document.querySelectorAll('[data-fr], [data-en]').forEach(el => {
+    const val = el.dataset[lang];
+    if (val !== undefined) el.textContent = val;
+  });
+
+  // innerHTML
+  document.querySelectorAll('[data-fr-html], [data-en-html]').forEach(el => {
+    const val = el.dataset[lang + 'Html'];
+    if (val !== undefined) el.innerHTML = val;
+  });
+
+  // placeholders
+  document.querySelectorAll('[data-fr-placeholder], [data-en-placeholder]').forEach(el => {
+    const val = el.dataset[lang + 'Placeholder'];
+    if (val !== undefined) el.placeholder = val;
+  });
+
+  // meta description
+  document.querySelectorAll('meta[name="description"][data-fr-content], meta[name="description"][data-en-content]').forEach(el => {
+    const val = el.dataset[lang + 'Content'];
+    if (val) el.setAttribute('content', val);
+  });
+
+  // Boutons du sélecteur
+  const btnFr = document.getElementById('langFr');
+  const btnEn = document.getElementById('langEn');
+  if (btnFr && btnEn) {
+    btnFr.classList.toggle('active', lang === 'fr');
+    btnEn.classList.toggle('active', lang === 'en');
+  }
+
+  // Re-rendu des sections dynamiques si elles ont été générées
+  if (document.getElementById('ganttRows') && document.getElementById('ganttRows').children.length) {
+    renderGantt();
+  }
+  if (document.getElementById('faqList') && document.getElementById('faqList').children.length) {
+    initFaq();
+  }
+}
+
+function setLang(lang) {
+  if (lang !== 'fr' && lang !== 'en') lang = 'fr';
+  localStorage.setItem('bmp_lang', lang);
+  applyLang(lang);
+}
+
+function detectInitialLang() {
+  const stored = localStorage.getItem('bmp_lang');
+  if (stored === 'fr' || stored === 'en') return stored;
+  const nav = (navigator.language || navigator.userLanguage || 'fr').toLowerCase();
+  return nav.startsWith('en') ? 'en' : 'fr';
+}
+
 
 // ============================================================
 // INIT
 // ============================================================
 document.addEventListener('DOMContentLoaded', () => {
+  applyLang(detectInitialLang());
   initReveal();
   document.getElementById('navbar').classList.add('scrolled');
 });
