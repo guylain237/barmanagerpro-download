@@ -1,0 +1,2407 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>BarManager Pro — Gestion intégrale de bar | Cameroun</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   RESET & TOKENS
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --black:  #0C0E0B;
+  --dark:   #111410;
+  --dark2:  #181B16;
+  --dark3:  #1F2419;
+  --card:   #232820;
+  --border: rgba(255,255,255,.08);
+  --border2: rgba(255,255,255,.14);
+  --gold:   #D4A017;
+  --gold2:  #E8B840;
+  --green:  #2DBD7E;
+  --green2: #38D491;
+  --muted:  #888C7A;
+  --text:   #D8DDD0;
+  --white:  #F2F5EC;
+  --font-h: 'Syne', sans-serif;
+  --font-b: 'Geist', 'DM Sans', ui-sans-serif, system-ui, sans-serif;
+  --nav-h:  68px;
+  --banner-h: 38px;
+  --r:      12px;
+  --r2:     20px;
+}
+
+html { scroll-behavior: smooth; font-size: 16px; }
+
+body {
+  background: var(--black);
+  color: var(--text);
+  font-family: var(--font-b);
+  font-weight: 300;
+  line-height: 1.65;
+  overflow-x: hidden;
+}
+
+/* ============================================================
+   TYPOGRAPHY
+   ============================================================ */
+h1, h2, h3, h4 {
+  font-family: var(--font-h);
+  font-weight: 800;
+  color: var(--white);
+  line-height: 1.1;
+}
+h1 { font-size: clamp(2.6rem, 6vw, 5.2rem); letter-spacing: -.03em; }
+h2 { font-size: clamp(2rem, 4vw, 3.2rem); letter-spacing: -.02em; }
+h3 { font-size: 1.35rem; font-weight: 700; }
+h4 { font-size: 1rem; font-weight: 600; }
+
+p { max-width: 62ch; }
+a { color: inherit; text-decoration: none; }
+
+.gold { color: var(--gold); }
+.green { color: var(--green); }
+.muted { color: var(--muted); }
+
+/* ============================================================
+   LAYOUT UTILS
+   ============================================================ */
+.container { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+.section { padding: 120px 0; }
+.section-sm { padding: 72px 0; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.flex { display: flex; }
+.flex-c { display: flex; flex-direction: column; }
+.items-c { align-items: center; }
+.gap-12 { gap: 12px; }
+.gap-16 { gap: 16px; }
+.gap-24 { gap: 24px; }
+.text-c { text-align: center; }
+.mt-12 { margin-top: 12px; }
+.mt-24 { margin-top: 24px; }
+.mt-48 { margin-top: 48px; }
+.mt-64 { margin-top: 64px; }
+
+/* ============================================================
+   REUSABLE COMPONENTS
+   ============================================================ */
+
+/* Pill label */
+.pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 14px;
+  border: 1px solid var(--border2);
+  border-radius: 100px;
+  font-size: .78rem;
+  font-family: var(--font-h);
+  font-weight: 600;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: rgba(255,255,255,.03);
+}
+.pill-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--green); animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%,100% { opacity: 1; transform: scale(1); }
+  50% { opacity: .5; transform: scale(.8); }
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 13px 28px;
+  border-radius: 10px;
+  font-family: var(--font-h);
+  font-size: .9rem;
+  font-weight: 700;
+  letter-spacing: .02em;
+  cursor: pointer;
+  transition: all .22s ease;
+  border: none;
+}
+.btn-primary {
+  background: var(--gold);
+  color: #0C0E0B;
+}
+.btn-primary:hover {
+  background: var(--gold2);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(212,160,23,.3);
+}
+.btn-outline {
+  background: transparent;
+  border: 1px solid var(--border2);
+  color: var(--text);
+}
+.btn-outline:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: rgba(212,160,23,.06);
+}
+.btn-ghost {
+  background: transparent;
+  color: var(--muted);
+  padding: 13px 20px;
+}
+.btn-ghost:hover { color: var(--white); }
+.btn-green {
+  background: var(--green);
+  color: #0C0E0B;
+}
+.btn-green:hover {
+  background: var(--green2);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(45,189,126,.3);
+}
+
+/* Card */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r2);
+  padding: 32px;
+  transition: border-color .25s, transform .25s;
+}
+.card:hover {
+  border-color: var(--border2);
+  transform: translateY(-3px);
+}
+.card-accent { border-top: 2px solid var(--gold); }
+.card-green  { border-top: 2px solid var(--green); }
+
+/* Section header */
+.section-header { margin-bottom: 64px; }
+.section-header .pill { margin-bottom: 20px; }
+.section-header p { color: var(--muted); font-size: 1.08rem; margin-top: 16px; max-width: 54ch; }
+
+/* Divider */
+.divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border2) 30%, var(--border2) 70%, transparent);
+}
+
+/* Icon box */
+.icon-box {
+  width: 48px; height: 48px;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+.icon-box-gold { background: rgba(212,160,23,.12); }
+.icon-box-green { background: rgba(45,189,126,.12); }
+.icon-box-blue { background: rgba(64,120,210,.12); }
+.icon-box-purple { background: rgba(150,80,220,.12); }
+
+/* Badge */
+.badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 6px;
+  font-size: .73rem;
+  font-weight: 700;
+  font-family: var(--font-h);
+  letter-spacing: .04em;
+}
+.badge-gold   { background: rgba(212,160,23,.15); color: var(--gold); }
+.badge-green  { background: rgba(45,189,126,.15); color: var(--green); }
+.badge-blue   { background: rgba(64,120,210,.15); color: #6CA0F7; }
+
+/* ============================================================
+   TOP BANNER (version web bientôt)
+   ============================================================ */
+.top-banner {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 1100;
+  background: linear-gradient(90deg, rgba(212,160,23,.12), rgba(232,184,64,.08), rgba(212,160,23,.12));
+  border-bottom: 1px solid rgba(212,160,23,.25);
+  padding: 9px 28px;
+  display: flex; align-items: center; justify-content: center; gap: 12px;
+  font-size: .82rem;
+  font-family: var(--font-h);
+  font-weight: 600;
+  color: var(--gold2);
+  letter-spacing: .01em;
+  text-align: center;
+  flex-wrap: wrap;
+}
+.top-banner-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--gold);
+  animation: pulse 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+.top-banner a {
+  color: var(--white);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color .2s;
+}
+.top-banner a:hover { color: var(--gold2); }
+.top-banner-close {
+  position: absolute; right: 16px;
+  background: none; border: none; cursor: pointer;
+  color: var(--muted); font-size: 1rem; padding: 4px 8px;
+  transition: color .2s;
+}
+.top-banner-close:hover { color: var(--white); }
+
+/* Badge "Web bientôt" dans le hero */
+.badge-web-soon {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 7px 16px;
+  background: rgba(212,160,23,.1);
+  border: 1px solid rgba(212,160,23,.3);
+  border-radius: 100px;
+  font-size: .78rem;
+  font-family: var(--font-h);
+  font-weight: 600;
+  letter-spacing: .04em;
+  color: var(--gold2);
+  margin-bottom: 18px;
+}
+.badge-web-soon-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--gold);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* Section téléchargement */
+#telechargement {
+  background: linear-gradient(135deg, rgba(212,160,23,.04), rgba(45,189,126,.03));
+}
+.dl-grid {
+  display: flex;
+  justify-content: center;
+  margin-top: 48px;
+}
+.dl-grid .dl-card {
+  width: 100%;
+  max-width: 480px;
+}
+.dl-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r2);
+  padding: 36px 28px;
+  text-align: center;
+  transition: border-color .25s, transform .25s;
+  display: flex; flex-direction: column; align-items: center; gap: 16px;
+}
+.dl-card:hover {
+  border-color: rgba(212,160,23,.4);
+  transform: translateY(-4px);
+}
+.dl-os-icon {
+  width: 64px; height: 64px;
+  border-radius: 16px;
+  background: rgba(212,160,23,.1);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+.dl-card h3 { font-size: 1.15rem; margin: 0; }
+.dl-card p { font-size: .85rem; color: var(--muted); margin: 0; max-width: 100%; }
+.dl-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 12px 24px;
+  background: var(--gold);
+  color: #0C0E0B;
+  border-radius: 10px;
+  font-family: var(--font-h);
+  font-size: .88rem;
+  font-weight: 700;
+  letter-spacing: .02em;
+  cursor: pointer;
+  transition: all .22s ease;
+  border: none;
+  text-decoration: none;
+  width: 100%;
+  justify-content: center;
+}
+.dl-btn:hover {
+  background: var(--gold2);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(212,160,23,.3);
+}
+.dl-version { font-size: .73rem; color: var(--muted); margin-top: -8px; }
+
+
+/* Noise overlay */
+.noise::after {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");
+  pointer-events: none; z-index: 0;
+}
+
+/* ============================================================
+   NAVBAR
+   ============================================================ */
+.nav {
+  position: fixed; top: var(--banner-h); left: 0; right: 0;
+  height: var(--nav-h);
+  z-index: 1000;
+  transition: all .3s ease;
+}
+body.banner-closed .nav { top: 0; }
+body.banner-closed { --banner-h: 0px; }
+.nav.scrolled {
+  background: rgba(12,14,11,.92);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-inner {
+  height: 100%;
+  display: flex; align-items: center; justify-content: space-between;
+}
+
+/* Logo */
+.nav-logo {
+  display: flex; align-items: center; gap: 10px;
+  font-family: var(--font-h);
+  font-weight: 800;
+  font-size: 1.18rem;
+  color: var(--white);
+  letter-spacing: -.01em;
+}
+.nav-logo-mark {
+  width: 36px; height: 36px;
+  background: var(--gold);
+  border-radius: 9px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem;
+  color: #0C0E0B;
+  font-weight: 900;
+}
+
+/* Nav links */
+.nav-links {
+  display: flex; align-items: center; gap: 4px;
+  list-style: none;
+}
+.nav-links a {
+  display: block;
+  padding: 7px 14px;
+  font-size: .88rem;
+  font-family: var(--font-h);
+  font-weight: 600;
+  color: var(--muted);
+  border-radius: 8px;
+  transition: all .2s;
+  letter-spacing: .01em;
+}
+.nav-links a:hover,
+.nav-links a.active {
+  color: var(--white);
+  background: rgba(255,255,255,.06);
+}
+.nav-links a.active { color: var(--gold); }
+
+.nav-cta { display: flex; align-items: center; gap: 8px; }
+
+/* Mobile menu */
+.hamburger {
+  display: none;
+  flex-direction: column; gap: 5px;
+  cursor: pointer; padding: 8px; background: none; border: none;
+}
+.hamburger span {
+  width: 22px; height: 2px;
+  background: var(--text);
+  border-radius: 2px;
+  transition: all .3s;
+}
+
+/* ============================================================
+   PAGE SYSTEM
+   ============================================================ */
+.page { display: none; }
+.page.active { display: block; }
+
+/* ============================================================
+   HERO (HOME)
+   ============================================================ */
+.hero {
+  min-height: 100vh;
+  display: flex; align-items: center;
+  position: relative;
+  overflow: hidden;
+  padding-top: calc(var(--nav-h) + var(--banner-h));
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 70% 40%, rgba(212,160,23,.07) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 20% 80%, rgba(45,189,126,.05) 0%, transparent 50%),
+    var(--black);
+}
+.hero-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
+}
+.hero-content { position: relative; z-index: 1; }
+.hero-eyebrow {
+  display: flex; align-items: center; gap: 16px;
+  margin-bottom: 32px;
+}
+.hero-title { margin-bottom: 24px; }
+.hero-title em {
+  font-style: normal;
+  position: relative;
+  color: var(--gold);
+}
+.hero-desc {
+  font-size: 1.15rem;
+  color: var(--muted);
+  margin-bottom: 40px;
+  max-width: 52ch;
+}
+.hero-cta { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.hero-social-proof {
+  margin-top: 56px;
+  display: flex; align-items: center; gap: 32px;
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+}
+.hero-stat strong {
+  display: block;
+  font-family: var(--font-h);
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--white);
+  letter-spacing: -.03em;
+}
+.hero-stat span { font-size: .83rem; color: var(--muted); }
+
+/* Dashboard preview */
+.hero-visual {
+  position: relative;
+  z-index: 1;
+}
+.dashboard-preview {
+  background: var(--dark2);
+  border: 1px solid var(--border2);
+  border-radius: var(--r2);
+  overflow: hidden;
+  box-shadow: 0 40px 120px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.04);
+  transform: perspective(1200px) rotateY(-8deg) rotateX(3deg);
+  transition: transform .4s ease;
+}
+.dashboard-preview:hover {
+  transform: perspective(1200px) rotateY(-3deg) rotateX(1deg);
+}
+.db-topbar {
+  background: var(--dark3);
+  padding: 14px 20px;
+  display: flex; align-items: center; gap: 14px;
+  border-bottom: 1px solid var(--border);
+}
+.db-dots { display: flex; gap: 6px; }
+.db-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+}
+.db-logo {
+  font-family: var(--font-h);
+  font-size: .8rem;
+  font-weight: 700;
+  color: var(--gold);
+  margin-left: 4px;
+}
+.db-body { padding: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.db-card {
+  background: var(--dark3);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px;
+}
+.db-card-label { font-size: .72rem; color: var(--muted); font-family: var(--font-h); font-weight: 600; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 6px; }
+.db-card-val { font-family: var(--font-h); font-size: 1.45rem; font-weight: 800; color: var(--white); }
+.db-card-delta { font-size: .72rem; color: var(--green); margin-top: 2px; }
+.db-chart { grid-column: 1 / -1; background: var(--dark3); border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
+.db-chart-bars {
+  display: flex; align-items: flex-end; gap: 6px;
+  height: 72px; margin-top: 12px;
+}
+.db-bar {
+  flex: 1; border-radius: 4px 4px 0 0;
+  background: rgba(212,160,23,.25);
+  transition: background .2s;
+}
+.db-bar.active { background: var(--gold); }
+.db-bar:hover { background: var(--gold2); }
+.db-chart-label { font-size: .7rem; color: var(--muted); font-family: var(--font-h); font-weight: 600; text-transform: uppercase; letter-spacing: .05em; }
+
+/* ============================================================
+   FEATURES (HOME SECTION)
+   ============================================================ */
+.feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.feature-card { padding: 28px; }
+.feature-card h3 { font-size: 1.1rem; margin: 16px 0 8px; }
+.feature-card p { font-size: .9rem; color: var(--muted); max-width: 100%; }
+
+/* ============================================================
+   MODULES PAGE
+   ============================================================ */
+.modules-hero {
+  padding: 160px 0 80px;
+  background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(212,160,23,.06) 0%, transparent 60%);
+}
+.modules-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.module-card { padding: 32px; }
+.module-card .badge { margin-bottom: 16px; }
+.module-card h3 { margin-bottom: 12px; }
+.module-card ul { list-style: none; padding: 0; }
+.module-card ul li {
+  display: flex; align-items: flex-start; gap: 8px;
+  padding: 7px 0;
+  font-size: .88rem;
+  color: var(--muted);
+  border-bottom: 1px solid var(--border);
+}
+.module-card ul li:last-child { border-bottom: none; }
+.module-card ul li::before { content: '→'; color: var(--gold); flex-shrink: 0; font-size: .8rem; margin-top: 2px; }
+
+/* Architecture section */
+.arch-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+.arch-card { padding: 24px; text-align: center; display: flex; flex-direction: column; }
+.arch-card .icon-box { margin: 0 auto 16px; }
+.arch-card h4 { margin-bottom: 8px; }
+.arch-card p { font-size: .82rem; color: var(--muted); max-width: 100%; }
+.arch-arrow {
+  position: relative;
+  display: flex; align-items: center; justify-content: center;
+}
+.arch-arrow::after {
+  content: '→';
+  font-size: 1.3rem; color: var(--border2);
+}
+
+/* ============================================================
+   PLANNING PAGE
+   ============================================================ */
+.planning-hero {
+  padding: 160px 0 80px;
+  background: radial-gradient(ellipse 50% 40% at 50% 0%, rgba(45,189,126,.05) 0%, transparent 60%);
+}
+.phase-list { display: flex; flex-direction: column; gap: 16px; }
+.phase-row {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r2);
+  padding: 28px 32px;
+  display: grid;
+  grid-template-columns: 80px 1fr 240px;
+  gap: 24px;
+  align-items: start;
+  transition: all .25s;
+  cursor: pointer;
+}
+.phase-row:hover { border-color: var(--border2); transform: translateX(4px); }
+.phase-num {
+  font-family: var(--font-h);
+  font-size: 2.2rem;
+  font-weight: 800;
+  line-height: 1;
+  color: rgba(255,255,255,.08);
+}
+.phase-row:hover .phase-num { color: rgba(212,160,23,.25); }
+.phase-info h3 { font-size: 1.1rem; margin-bottom: 6px; }
+.phase-info p { font-size: .88rem; color: var(--muted); max-width: 100%; }
+.phase-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+.phase-tag {
+  padding: 3px 10px; border-radius: 6px;
+  font-size: .73rem; font-family: var(--font-h); font-weight: 600;
+  background: rgba(255,255,255,.05); color: var(--muted);
+}
+.phase-meta { text-align: right; }
+.phase-dur { font-family: var(--font-h); font-size: 1rem; font-weight: 700; color: var(--white); }
+.phase-weeks { font-size: .8rem; color: var(--muted); margin-top: 4px; }
+.phase-badge { margin-top: 10px; }
+
+/* Gantt mini */
+.gantt-container {
+  background: var(--dark2);
+  border: 1px solid var(--border);
+  border-radius: var(--r2);
+  padding: 32px;
+  overflow-x: auto;
+}
+.gantt-header { display: flex; align-items: center; gap: 0; margin-bottom: 12px; }
+.gantt-label { width: 220px; flex-shrink: 0; font-size: .78rem; color: var(--muted); font-family: var(--font-h); font-weight: 600; text-transform: uppercase; letter-spacing: .05em; }
+.gantt-months { display: flex; flex: 1; }
+.gantt-month { flex: 1; text-align: center; font-size: .72rem; color: var(--muted); font-family: var(--font-h); font-weight: 600; padding: 4px 2px; }
+.gantt-row { display: flex; align-items: center; gap: 0; margin-bottom: 6px; }
+.gantt-row-label { width: 220px; flex-shrink: 0; font-size: .83rem; color: var(--text); padding-right: 16px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.gantt-bars { display: flex; flex: 1; gap: 3px; }
+.gantt-cell { flex: 1; height: 28px; border-radius: 4px; background: var(--dark3); }
+.gantt-cell.fill-mvp   { background: linear-gradient(90deg, #1D9E75, #2DBD7E); }
+.gantt-cell.fill-pay   { background: linear-gradient(90deg, #1B5FA0, #2563A8); }
+.gantt-cell.fill-rh    { background: linear-gradient(90deg, #9A5E0E, #B87016); }
+.gantt-cell.fill-mk    { background: linear-gradient(90deg, #5A54A8, #6B63C5); }
+
+/* ============================================================
+   PRICING PAGE
+   ============================================================ */
+.pricing-hero {
+  padding: 160px 0 80px;
+  background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(150,80,220,.04) 0%, transparent 60%);
+}
+.pricing-toggle {
+  display: inline-flex;
+  background: var(--dark2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 4px;
+}
+.pricing-toggle button {
+  padding: 8px 20px;
+  border-radius: 7px;
+  font-family: var(--font-h);
+  font-size: .85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .2s;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+}
+.pricing-toggle button.active { background: var(--card); color: var(--white); }
+.plans-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; align-items: start; }
+.plan-card { padding: 36px; position: relative; }
+.plan-card.featured {
+  border-color: var(--gold);
+  background: linear-gradient(135deg, rgba(212,160,23,.05), rgba(212,160,23,.02));
+}
+.plan-badge {
+  position: absolute; top: -13px; left: 50%; transform: translateX(-50%);
+  background: var(--gold); color: #0C0E0B;
+  padding: 4px 16px; border-radius: 20px;
+  font-family: var(--font-h); font-size: .72rem; font-weight: 800;
+  white-space: nowrap; letter-spacing: .04em;
+}
+.plan-name { font-family: var(--font-h); font-size: .88rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 8px; }
+.plan-price { display: flex; align-items: baseline; gap: 6px; margin-bottom: 6px; }
+.plan-price strong { font-family: var(--font-h); font-size: 2.6rem; font-weight: 800; color: var(--white); letter-spacing: -.04em; }
+.plan-price span { font-size: .85rem; color: var(--muted); }
+.plan-currency { font-family: var(--font-h); font-size: 1rem; font-weight: 600; color: var(--gold); align-self: flex-start; margin-top: 8px; }
+.plan-desc { font-size: .88rem; color: var(--muted); margin-bottom: 28px; }
+.plan-features { list-style: none; padding: 0; margin-bottom: 32px; }
+.plan-features li {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 9px 0; font-size: .88rem;
+  border-bottom: 1px solid var(--border);
+}
+.plan-features li:last-child { border-bottom: none; }
+.plan-check { color: var(--green); flex-shrink: 0; font-size: 1rem; }
+.plan-cross { color: var(--muted); flex-shrink: 0; font-size: 1rem; }
+
+/* FAQ */
+.faq-list { max-width: 760px; margin: 0 auto; }
+.faq-item {
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+}
+.faq-q {
+  padding: 22px 0;
+  display: flex; align-items: center; justify-content: space-between; gap: 20px;
+  cursor: pointer;
+  font-family: var(--font-h);
+  font-size: 1.02rem;
+  font-weight: 700;
+  color: var(--white);
+  transition: color .2s;
+}
+.faq-q:hover { color: var(--gold); }
+.faq-icon { flex-shrink: 0; font-size: 1.3rem; color: var(--muted); transition: transform .3s; }
+.faq-a {
+  max-height: 0; overflow: hidden;
+  font-size: .92rem; color: var(--muted); line-height: 1.7;
+  transition: max-height .35s ease, padding .35s;
+}
+.faq-item.open .faq-a { max-height: 200px; padding-bottom: 20px; }
+.faq-item.open .faq-icon { transform: rotate(45deg); }
+
+/* ============================================================
+   CONTACT PAGE
+   ============================================================ */
+.contact-hero {
+  padding: 160px 0 80px;
+  background: radial-gradient(ellipse 50% 40% at 50% 0%, rgba(64,120,210,.05) 0%, transparent 60%);
+}
+.contact-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 60px; align-items: start; }
+.contact-info h2 { margin-bottom: 20px; }
+.contact-info p { color: var(--muted); margin-bottom: 40px; }
+.contact-items { display: flex; flex-direction: column; gap: 20px; }
+.contact-item {
+  display: flex; align-items: flex-start; gap: 16px;
+  padding: 20px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+}
+.contact-item h4 { font-size: .85rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); margin-bottom: 4px; }
+.contact-item p { font-size: .95rem; color: var(--text); max-width: 100%; margin: 0; }
+
+/* Form */
+.contact-form { background: var(--dark2); border: 1px solid var(--border); border-radius: var(--r2); padding: 40px; }
+.contact-form h3 { margin-bottom: 28px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+.form-group { margin-bottom: 16px; }
+.form-group label { display: block; font-size: .82rem; font-family: var(--font-h); font-weight: 600; color: var(--muted); margin-bottom: 8px; letter-spacing: .03em; text-transform: uppercase; }
+.form-control {
+  width: 100%;
+  background: var(--dark3);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 13px 16px;
+  font-family: var(--font-b);
+  font-size: .92rem;
+  color: var(--white);
+  outline: none;
+  transition: border-color .2s, box-shadow .2s;
+}
+.form-control:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(212,160,23,.1);
+}
+.form-control::placeholder { color: var(--muted); }
+select.form-control { appearance: none; cursor: pointer; }
+textarea.form-control { resize: vertical; min-height: 120px; }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.footer {
+  background: var(--dark);
+  border-top: 1px solid var(--border);
+  padding: 72px 0 40px;
+}
+.footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 64px; }
+.footer-brand p { color: var(--muted); font-size: .88rem; margin-top: 16px; margin-bottom: 24px; max-width: 34ch; }
+.footer-col h4 { font-size: .82rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 20px; font-family: var(--font-h); font-weight: 700; }
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.footer-col ul li a { font-size: .88rem; color: var(--muted); transition: color .2s; }
+.footer-col ul li a:hover { color: var(--white); }
+.footer-bottom {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+  font-size: .82rem; color: var(--muted);
+}
+.footer-bottom a { color: var(--muted); transition: color .2s; }
+.footer-bottom a:hover { color: var(--gold); }
+
+/* Social links */
+.social-links { display: flex; gap: 8px; }
+.social-link {
+  width: 36px; height: 36px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .9rem;
+  color: var(--muted);
+  transition: all .2s;
+}
+.social-link:hover { border-color: var(--gold); color: var(--gold); background: rgba(212,160,23,.06); }
+
+/* ============================================================
+   ANIMATIONS
+   ============================================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity .6s ease, transform .6s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+.stagger .reveal:nth-child(1) { transition-delay: .05s; }
+.stagger .reveal:nth-child(2) { transition-delay: .12s; }
+.stagger .reveal:nth-child(3) { transition-delay: .19s; }
+.stagger .reveal:nth-child(4) { transition-delay: .26s; }
+
+/* ============================================================
+   MOBILE
+   ============================================================ */
+@media (max-width: 900px) {
+  .dl-grid { grid-template-columns: 1fr; }
+  .top-banner { font-size: .75rem; padding: 8px 40px 8px 16px; }
+  .top-banner-close { right: 8px; }
+  .grid-2, .grid-3, .grid-4, .feature-grid, .modules-grid, .arch-cards,
+  .plans-grid, .contact-grid, .footer-grid { grid-template-columns: 1fr; }
+  .hero .grid-2 { grid-template-columns: 1fr; }
+  .hero-visual { display: none; }
+  .phase-row { grid-template-columns: 60px 1fr; }
+  .phase-meta { display: none; }
+  .form-row { grid-template-columns: 1fr; }
+  .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+  .hamburger { display: flex; }
+  .nav-links, .nav-cta { display: none; }
+  .nav-links.open {
+    display: flex; flex-direction: column; align-items: flex-start;
+    position: fixed; top: var(--nav-h); left: 0; right: 0;
+    background: rgba(12,14,11,.97);
+    backdrop-filter: blur(20px);
+    padding: 20px 28px;
+    border-bottom: 1px solid var(--border);
+    gap: 4px;
+  }
+}
+
+/* ============================================================
+   MOBILE STRICT 375px
+   ============================================================ */
+@media (max-width: 600px) {
+  /* Container padding réduit */
+  .container { padding: 0 16px; }
+
+  /* Section vertical padding réduit */
+  .section { padding: 72px 0; }
+  .section-sm { padding: 48px 0; }
+
+  /* Titres : clamp déjà sur h1/h2 mais on s'assure du wrapping */
+  h1 { word-break: break-word; }
+  h2 { word-break: break-word; }
+
+  /* Hero social proof : empilé proprement */
+  .hero-social-proof {
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .hero-stat { min-width: 80px; }
+
+  /* Hero CTA : colonne sur très petit écran */
+  .hero-cta { flex-direction: column; align-items: stretch; }
+  .hero-cta .btn { justify-content: center; min-height: 48px; }
+
+  /* Ribbon de fonctionnalités sous le CTA */
+  [style*="ribbon"] { flex-wrap: wrap; }
+
+  /* Top banner : texte tronqué proprement, pas de débordement */
+  .top-banner { flex-wrap: wrap; gap: 6px; }
+
+  /* Plans grid : carte en pleine largeur */
+  .plan-card { padding: 24px 18px; }
+
+  /* Section téléchargement : card centrée */
+  .dl-card { padding: 28px 20px; }
+
+  /* Garanties (grid-4) : 2 colonnes sur mobile */
+  .grid-4 { grid-template-columns: 1fr 1fr; gap: 12px; }
+
+  /* FAQ : questions wrappent sans débordement */
+  .faq-q { font-size: .95rem; }
+
+  /* Footer colonnes : 2 cols sur mobile moyen */
+  .footer-grid { gap: 32px; }
+  .footer-bottom { gap: 10px; font-size: .78rem; }
+  .footer-bottom > div { flex-wrap: wrap; justify-content: center; gap: 12px; }
+
+  /* Contact grid : déjà 1 col, juste ajuster padding form */
+  .contact-form { padding: 24px 18px; }
+  .contact-grid { gap: 32px; }
+
+  /* Module cards */
+  .module-card { padding: 22px 18px; }
+
+  /* Planning phase rows */
+  .phase-row { padding: 20px 16px; }
+
+  /* Touch targets : s'assurer que les liens nav ont 44px min */
+  .nav-links a { min-height: 44px; display: flex; align-items: center; }
+
+  /* Gantt : scroll horizontal OK sur container dédié */
+  .gantt-container { padding: 20px 16px; }
+  .gantt-row-label { width: 140px; font-size: .75rem; }
+
+  /* Images/SVG responsive */
+  img, svg { max-width: 100%; height: auto; }
+
+  /* Prevent tout overflow horizontal */
+  .hero, section, footer { overflow-x: hidden; }
+}
+
+/* Tablette 768px : grilles 2 colonnes */
+@media (min-width: 601px) and (max-width: 900px) {
+  .feature-grid { grid-template-columns: repeat(2, 1fr); }
+  .modules-grid { grid-template-columns: repeat(2, 1fr); }
+  .arch-cards { grid-template-columns: repeat(2, 1fr); }
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+  .plans-grid { grid-template-columns: 1fr; }
+}
+
+/* Réduction de mouvement */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ============================================================
+   COMPARISON TABLE — Desktop vs Web/Mobile
+   ============================================================ */
+#comparaison {
+  background: linear-gradient(135deg, rgba(45,189,126,.03), rgba(64,120,210,.03));
+}
+.comparison-table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: var(--r2);
+  border: 1px solid var(--border);
+}
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 580px;
+  background: var(--card);
+}
+.comparison-table thead tr {
+  background: rgba(212,160,23,.07);
+  border-bottom: 1px solid var(--border2);
+}
+.comparison-table thead th {
+  padding: 18px 24px;
+  text-align: left;
+  font-family: var(--font-h);
+  font-size: .82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--gold2);
+  white-space: nowrap;
+}
+.comparison-table thead th:first-child {
+  color: var(--muted);
+  font-size: .78rem;
+  width: 44%;
+}
+.comparison-table thead th:nth-child(2),
+.comparison-table thead th:nth-child(3) {
+  text-align: center;
+  width: 28%;
+}
+.comparison-table tbody tr {
+  border-bottom: 1px solid var(--border);
+  transition: background .15s;
+}
+.comparison-table tbody tr:last-child { border-bottom: none; }
+.comparison-table tbody tr:hover { background: rgba(255,255,255,.025); }
+.comparison-table tbody td {
+  padding: 14px 24px;
+  font-size: .9rem;
+  color: var(--text);
+  vertical-align: middle;
+}
+.comparison-table tbody td:nth-child(2),
+.comparison-table tbody td:nth-child(3) {
+  text-align: center;
+}
+.cmp-feature-name {
+  font-weight: 500;
+  color: var(--white);
+  font-size: .88rem;
+}
+.cmp-yes {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: .82rem; font-weight: 600;
+  color: #4ade80;
+  font-family: var(--font-h);
+}
+.cmp-no {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: .82rem; font-weight: 600;
+  color: #f87171;
+  font-family: var(--font-h);
+}
+.cmp-badge-avail {
+  display: inline-block;
+  padding: 2px 10px; border-radius: 20px;
+  font-size: .7rem; font-weight: 700; font-family: var(--font-h);
+  letter-spacing: .04em; white-space: nowrap;
+  background: rgba(74,222,128,.12); color: #4ade80;
+  border: 1px solid rgba(74,222,128,.25);
+}
+.cmp-badge-soon {
+  display: inline-block;
+  padding: 2px 10px; border-radius: 20px;
+  font-size: .7rem; font-weight: 700; font-family: var(--font-h);
+  letter-spacing: .04em; white-space: nowrap;
+  background: rgba(212,160,23,.12); color: var(--gold2);
+  border: 1px solid rgba(212,160,23,.25);
+}
+.cmp-note {
+  margin-top: 28px;
+  padding: 18px 24px;
+  background: rgba(255,255,255,.03);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--gold);
+  border-radius: var(--r);
+  font-size: .88rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.cmp-note strong { color: var(--text); }
+
+/* Responsive comparaison : cartes empilées sous 600px */
+@media (max-width: 599px) {
+  .comparison-table-wrap { border: none; border-radius: 0; }
+  .comparison-table { display: none; }
+  .comparison-cards { display: flex; flex-direction: column; gap: 12px; }
+  .comparison-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    padding: 16px;
+  }
+  .comparison-card-name {
+    font-weight: 600; font-size: .9rem; color: var(--white);
+    margin-bottom: 12px; padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .comparison-card-row {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 8px; font-size: .82rem;
+  }
+  .comparison-card-col-label {
+    font-family: var(--font-h); font-size: .7rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .05em;
+    color: var(--muted); margin-bottom: 4px;
+  }
+}
+@media (min-width: 600px) {
+  .comparison-cards { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     BANDEAU VERSION WEB BIENTÔT
+     ============================================================ -->
+<div class="top-banner" id="topBanner">
+  <div class="top-banner-dot"></div>
+  <span>Version web SaaS en développement — <strong>Téléchargez la version Desktop dès maintenant</strong> et pilotez votre bar.</span>
+  <a href="https://github.com/guylain237/barmanagerpro-download/releases/download/v1.0.2/BarManager.Pro_1.0.2_x64-setup.exe" target="_blank" rel="noopener noreferrer">Télécharger gratuitement &darr;</a>
+  <button class="top-banner-close" onclick="closeBanner()" aria-label="Fermer le bandeau">✕</button>
+</div>
+
+<!-- ============================================================
+     NAVBAR
+     ============================================================ -->
+<nav class="nav" id="navbar">
+  <div class="container">
+    <div class="nav-inner">
+      <!-- Logo -->
+      <a href="#" class="nav-logo" onclick="showPage('home')">
+        <div class="nav-logo-mark">B</div>
+        BarManager <span class="gold">Pro</span>
+      </a>
+
+      <!-- Links -->
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#" onclick="showPage('home')" data-page="home" class="active">Accueil</a></li>
+        <li><a href="#" onclick="showPage('modules')" data-page="modules">Modules</a></li>
+        <li><a href="#" onclick="showPage('planning')" data-page="planning">Planning</a></li>
+        <li><a href="#" onclick="showPage('pricing')" data-page="pricing">Tarifs</a></li>
+        <li><a href="#" onclick="showPage('contact')" data-page="contact">Contact</a></li>
+      </ul>
+
+      <!-- CTA -->
+      <div class="nav-cta">
+        <button class="btn btn-ghost" onclick="showPage('contact')">Se connecter</button>
+        <a class="btn btn-primary" href="https://github.com/guylain237/barmanagerpro-download/releases/download/v1.0.2/BarManager.Pro_1.0.2_x64-setup.exe" target="_blank" rel="noopener noreferrer" style="text-decoration:none;">&#8659; Télécharger</a>
+      </div>
+
+      <!-- Hamburger -->
+      <button class="hamburger" id="hamburger" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+
+<!-- ============================================================
+     PAGE: HOME
+     ============================================================ -->
+<div class="page active" id="page-home">
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="container">
+      <div class="grid-2" style="gap: 64px;">
+        <div class="hero-content">
+          <div class="hero-eyebrow">
+            <span class="pill"><span class="pill-dot"></span> Version Desktop disponible</span>
+          </div>
+          <!-- Badge version web bientôt -->
+          <div class="badge-web-soon">
+            <div class="badge-web-soon-dot"></div>
+            Version web SaaS — Bientôt disponible
+          </div>
+          <h1 class="hero-title">
+            Gérez votre bar<br>comme un <em>pro</em>.
+          </h1>
+          <p class="hero-desc">
+            La solution tout-en-un pour les bars et restaurants du Cameroun
+            et d'Afrique Centrale — caisse, stocks, paiements MoMo,
+            conformité DGI.
+          </p>
+          <div class="hero-cta">
+            <a class="btn btn-primary" href="https://github.com/guylain237/barmanagerpro-download/releases/download/v1.0.2/BarManager.Pro_1.0.2_x64-setup.exe" target="_blank" rel="noopener noreferrer">
+              &#8659; Télécharger gratuitement (Windows)
+            </a>
+            <button class="btn btn-outline" onclick="showPage('modules')">
+              Voir les modules
+            </button>
+          </div>
+          <div class="hero-social-proof">
+            <div class="hero-stat"><strong>9</strong><span>Modules intégrés</span></div>
+            <div class="hero-stat"><strong>100%</strong><span>Offline-first</span></div>
+            <div class="hero-stat"><strong>OM + MoMo</strong><span>Paiements locaux</span></div>
+            <div class="hero-stat"><strong>DGI</strong><span>Conformité Cameroun</span></div>
+          </div>
+          <div style="margin-top:28px; padding:12px 20px; border-radius:10px; background:rgba(255,255,255,.03); border:1px solid var(--border); display:flex; align-items:center; gap:8px; flex-wrap:wrap; font-size:.8rem; color:var(--muted); font-family:var(--font-h); font-weight:600; letter-spacing:.01em;">
+            <span>9 modules</span>
+            <span style="width:3px;height:3px;border-radius:50%;background:var(--gold);display:inline-block;flex-shrink:0;"></span>
+            <span>100% offline disponible</span>
+            <span style="width:3px;height:3px;border-radius:50%;background:var(--gold);display:inline-block;flex-shrink:0;"></span>
+            <span>Orange Money &amp; MTN MoMo</span>
+            <span style="width:3px;height:3px;border-radius:50%;background:var(--gold);display:inline-block;flex-shrink:0;"></span>
+            <span>TVA DGI 19,25%</span>
+          </div>
+        </div>
+
+        <!-- Dashboard preview -->
+        <div class="hero-visual">
+          <div class="dashboard-preview">
+            <div class="db-topbar">
+              <div class="db-dots">
+                <div class="db-dot" style="background:#FF5F57"></div>
+                <div class="db-dot" style="background:#FFBD2E"></div>
+                <div class="db-dot" style="background:#28CA41"></div>
+              </div>
+              <div class="db-logo">BarManager Pro — Dashboard</div>
+            </div>
+            <div class="db-body">
+              <div class="db-card">
+                <div class="db-card-label">CA aujourd'hui</div>
+                <div class="db-card-val">487 500</div>
+                <div class="db-card-delta">↑ +12% vs hier</div>
+              </div>
+              <div class="db-card">
+                <div class="db-card-label">Commandes</div>
+                <div class="db-card-val">134</div>
+                <div class="db-card-delta">↑ +8 cette heure</div>
+              </div>
+              <div class="db-card">
+                <div class="db-card-label">Caisse ouverte</div>
+                <div class="db-card-val">75 000</div>
+                <div class="db-card-delta" style="color: var(--gold)">FCFA en caisse</div>
+              </div>
+              <div class="db-card">
+                <div class="db-card-label">Stock critique</div>
+                <div class="db-card-val">3</div>
+                <div class="db-card-delta" style="color:#F87171">⚠ alertes actives</div>
+              </div>
+              <div class="db-chart">
+                <div class="db-chart-label">Ventes — 7 derniers jours (FCFA)</div>
+                <div class="db-chart-bars">
+                  <div class="db-bar" style="height:55%"></div>
+                  <div class="db-bar" style="height:70%"></div>
+                  <div class="db-bar" style="height:48%"></div>
+                  <div class="db-bar" style="height:82%"></div>
+                  <div class="db-bar" style="height:65%"></div>
+                  <div class="db-bar" style="height:90%"></div>
+                  <div class="db-bar active" style="height:100%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Features overview -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header text-c stagger">
+        <div class="pill reveal">9 modules tout-en-un</div>
+        <h2 class="reveal">Tout ce dont votre bar a besoin,<br>dans une seule application</h2>
+        <p class="reveal" style="margin: 0 auto;">Conçu pour le contexte camerounais : paiements mobile money, connectivité limitée, TVA DGI — tout est intégré nativement.</p>
+      </div>
+      <div class="feature-grid stagger" style="grid-template-columns:repeat(3,1fr);">
+        <div class="card feature-card reveal" style="border-top:2px solid #D4A017;">
+          <div class="icon-box icon-box-gold">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#D4A017" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10h18M7 15h1m4 0h1m-7 4h12a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+          </div>
+          <h3>Caisse</h3>
+          <p style="font-size:.8rem;color:#D4A017;font-family:var(--font-h);font-weight:600;margin-bottom:8px;">Le coeur financier du bar</p>
+          <p>Ouverture / clôture avec fond initial, rapport Z PDF conforme DGI, alerte écart de caisse, audit log complet.</p>
+        </div>
+        <div class="card feature-card reveal" style="border-top:2px solid #2DBD7E;">
+          <div class="icon-box icon-box-green">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2DBD7E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+          </div>
+          <h3>POS & Commandes</h3>
+          <p style="font-size:.8rem;color:#2DBD7E;font-family:var(--font-h);font-weight:600;margin-bottom:8px;">Encaissement rapide, sans erreur</p>
+          <p>Plan de salle par table, multi-paiement (espèces, Orange Money, MoMo, mixte), transfert de table, remboursement partiel.</p>
+        </div>
+        <div class="card feature-card reveal" style="border-top:2px solid #6CA0F7;">
+          <div class="icon-box icon-box-blue">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6CA0F7" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+          </div>
+          <h3>Stocks & Magasin</h3>
+          <p style="font-size:.8rem;color:#6CA0F7;font-family:var(--font-h);font-weight:600;margin-bottom:8px;">Vision temps réel de l'inventaire</p>
+          <p>Étagères visuelles, mouvements avec historique, alertes de seuil, inventaires physiques, import Excel/CSV.</p>
+        </div>
+        <div class="card feature-card reveal" style="border-top:2px solid #F87171;">
+          <div class="icon-box" style="background:rgba(248,113,113,.12);">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F87171" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          </div>
+          <h3>Fournisseurs</h3>
+          <p style="font-size:.8rem;color:#F87171;font-family:var(--font-h);font-weight:600;margin-bottom:8px;">Annuaire et historique commandes</p>
+          <p>Fiche fournisseur complète, historique commandes, notes et tags libres, suggestions de réappro basées sur seuils.</p>
+        </div>
+        <div class="card feature-card reveal" style="border-top:2px solid #C084FC;">
+          <div class="icon-box icon-box-purple">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C084FC" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+          <h3>Dettes & Paiements</h3>
+          <p style="font-size:.8rem;color:#C084FC;font-family:var(--font-h);font-weight:600;margin-bottom:8px;">Suivi fournisseurs sans oubli</p>
+          <p>Dettes fournisseurs avec échéances, paiements partiels, génération PDF facture, alertes automatiques avant échéance.</p>
+        </div>
+        <div class="card feature-card reveal" style="border-top:2px solid #34D399;">
+          <div class="icon-box icon-box-green">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+          </div>
+          <h3>Équipe & Rôles</h3>
+          <p style="font-size:.8rem;color:#34D399;font-family:var(--font-h);font-weight:600;margin-bottom:8px;">Permissions granulaires par poste</p>
+          <p>4 rôles : Propriétaire, Gérant, Caissier, Serveur — permissions par module, auth sécurisée, audit log par utilisateur.</p>
+        </div>
+        <div class="card feature-card reveal" style="border-top:2px solid #FBBF24;">
+          <div class="icon-box icon-box-gold">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FBBF24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+          </div>
+          <h3>Analytics</h3>
+          <p style="font-size:.8rem;color:#FBBF24;font-family:var(--font-h);font-weight:600;margin-bottom:8px;">Pilotez par les chiffres</p>
+          <p>KPIs temps réel : CA jour/mois/année, top produits, heatmap horaire, comparaison de périodes, export PDF.</p>
+        </div>
+        <div class="card feature-card reveal" style="border-top:2px solid #38BDF8;">
+          <div class="icon-box icon-box-blue">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#38BDF8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+          </div>
+          <h3>Conformité DGI</h3>
+          <p style="font-size:.8rem;color:#38BDF8;font-family:var(--font-h);font-weight:600;margin-bottom:8px;">Toujours prêt pour un contrôle fiscal</p>
+          <p>TVA 19,25% intégrée nativement, rapport Z quotidien en PDF, numérotation fiscale conforme DGI Cameroun.</p>
+        </div>
+        <div class="card feature-card reveal" style="border-top:2px solid #A3E635;">
+          <div class="icon-box" style="background:rgba(163,230,53,.12);">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#A3E635" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+          </div>
+          <h3>Sécurité & Backup</h3>
+          <p style="font-size:.8rem;color:#A3E635;font-family:var(--font-h);font-weight:600;margin-bottom:8px;">Vos données protégées, toujours</p>
+          <p>Backup auto chiffré toutes les 6h, SQLCipher + JWT + RolesGuard, sync multi-appareils, mode offline-first.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- CTA Banner -->
+  <section class="section-sm">
+    <div class="container">
+      <div class="card card-accent text-c" style="padding: 56px; background: linear-gradient(135deg, rgba(212,160,23,.06), rgba(45,189,126,.04));">
+        <h2 style="margin-bottom: 16px;">Prêt à transformer la gestion<br>de votre bar ?</h2>
+        <p style="color: var(--muted); margin: 0 auto 32px; font-size: 1.05rem;">Téléchargez la version Desktop dès aujourd'hui — gratuit, sans carte bancaire. Version web SaaS en développement.</p>
+        <div style="display: flex; justify-content: center; gap: 14px; flex-wrap: wrap;">
+          <a class="btn btn-primary" href="https://github.com/guylain237/barmanagerpro-download/releases/download/v1.0.2/BarManager.Pro_1.0.2_x64-setup.exe" target="_blank" rel="noopener noreferrer">&#8659; Télécharger pour Desktop →</a>
+          <button class="btn btn-outline" onclick="showPage('pricing')">Voir les tarifs</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Section Comparaison Desktop vs Web/Mobile -->
+  <section class="section" id="comparaison">
+    <div class="container">
+      <div class="section-header text-c stagger">
+        <div class="pill reveal">Desktop · Web · Mobile</div>
+        <h2 class="reveal">Comparaison des versions</h2>
+        <p class="reveal" style="margin: 0 auto; color: var(--muted);">Découvrez ce qui est disponible aujourd'hui et ce qui arrive bientôt.</p>
+      </div>
+
+      <!-- Tableau desktop / tablette -->
+      <div class="comparison-table-wrap reveal">
+        <table class="comparison-table" role="table" aria-label="Comparaison des fonctionnalités Desktop vs Web / Mobile">
+          <thead>
+            <tr>
+              <th scope="col">Fonctionnalité</th>
+              <th scope="col">💻 Desktop<br><span style="font-weight:400;color:var(--muted);font-size:.72rem;text-transform:none;letter-spacing:0;">Disponible maintenant</span></th>
+              <th scope="col">🌐 Web / 📱 Mobile<br><span style="font-weight:400;color:var(--muted);font-size:.72rem;text-transform:none;letter-spacing:0;">Bientôt</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="cmp-feature-name">Caisse &amp; POS</td>
+              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-avail">Complet</span></td>
+              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-soon">Prévu</span></td>
+            </tr>
+            <tr>
+              <td class="cmp-feature-name">Mode hors-ligne (offline-first)</td>
+              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-avail">100% offline</span></td>
+              <td><span class="cmp-no">❌</span> <span style="font-size:.8rem;color:var(--muted);">Connexion requise</span></td>
+            </tr>
+            <tr>
+              <td class="cmp-feature-name">Gestion des stocks &amp; magasin</td>
+              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-avail">Complet</span></td>
+              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-soon">Prévu</span></td>
+            </tr>
+            <tr>
+              <td class="cmp-feature-name">Commandes fournisseurs</td>
+              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-avail">Complet</span></td>
+              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-soon">Prévu</span></td>
+            </tr>
+            <tr>
+              <td class="cmp-feature-name">Dettes &amp; paiements</td>
+              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-avail">Complet</span></td>
+              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-soon">Prévu</span></td>
+            </tr>
+            <tr>
+              <td class="cmp-feature-name">Équipe &amp; rôles (RH, paie)</td>
+              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-avail">Complet</span></td>
+              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-soon">Prévu</span></td>
+            </tr>
+            <tr>
+              <td class="cmp-feature-name">Analytics &amp; rapports</td>
+              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-avail">Complet</span></td>
+              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-soon">Prévu (temps réel)</span></td>
+            </tr>
+            <tr>
+              <td class="cmp-feature-name">Conformité DGI Cameroun</td>
+              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-avail">TVA 19,25%</span></td>
+              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-soon">Prévu</span></td>
+            </tr>
+            <tr>
+              <td class="cmp-feature-name">Paiements Orange Money &amp; MTN MoMo</td>
+              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-avail">Disponible</span></td>
+              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-soon">Prévu</span></td>
+            </tr>
+            <tr>
+              <td class="cmp-feature-name">Backup automatique</td>
+              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-avail">Local + cloud optionnel</span></td>
+              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-soon">Cloud natif</span></td>
+            </tr>
+            <tr>
+              <td class="cmp-feature-name">Multi-établissements (chaînes)</td>
+              <td><span class="cmp-no">❌</span> <span style="font-size:.8rem;color:var(--muted);">Non</span></td>
+              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-soon">Prévu — Enterprise</span></td>
+            </tr>
+            <tr>
+              <td class="cmp-feature-name">Accès distant (gérant en déplacement)</td>
+              <td><span class="cmp-no">❌</span> <span style="font-size:.8rem;color:var(--muted);">Local uniquement</span></td>
+              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-soon">Prévu</span></td>
+            </tr>
+            <tr>
+              <td class="cmp-feature-name">Application mobile native</td>
+              <td><span class="cmp-no">❌</span> <span style="font-size:.8rem;color:var(--muted);">N/A</span></td>
+              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-soon">Prévu (iOS + Android)</span></td>
+            </tr>
+            <tr>
+              <td class="cmp-feature-name">Synchronisation multi-appareils</td>
+              <td><span class="cmp-no">❌</span> <span style="font-size:.8rem;color:var(--muted);">Mono-poste</span></td>
+              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-soon">Prévu temps réel</span></td>
+            </tr>
+            <tr>
+              <td class="cmp-feature-name">API publique (intégrations tierces)</td>
+              <td><span class="cmp-no">❌</span> <span style="font-size:.8rem;color:var(--muted);">Non</span></td>
+              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-soon">Prévu (REST + webhooks)</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Cartes mobiles (< 600px) -->
+      <div class="comparison-cards" aria-hidden="true">
+        <!-- Caisse & POS -->
+        <div class="comparison-card">
+          <div class="comparison-card-name">Caisse &amp; POS</div>
+          <div class="comparison-card-row">
+            <div><div class="comparison-card-col-label">💻 Desktop</div><span class="cmp-yes">✅</span> <span class="cmp-badge-avail">Complet</span></div>
+            <div><div class="comparison-card-col-label">🌐 Web / 📱 Mobile</div><span class="cmp-yes">✅</span> <span class="cmp-badge-soon">Prévu</span></div>
+          </div>
+        </div>
+        <div class="comparison-card">
+          <div class="comparison-card-name">Mode hors-ligne (offline-first)</div>
+          <div class="comparison-card-row">
+            <div><div class="comparison-card-col-label">💻 Desktop</div><span class="cmp-yes">✅</span> <span class="cmp-badge-avail">100% offline</span></div>
+            <div><div class="comparison-card-col-label">🌐 Web / 📱 Mobile</div><span class="cmp-no">❌</span> <span style="font-size:.78rem;color:var(--muted);">Connexion requise</span></div>
+          </div>
+        </div>
+        <div class="comparison-card">
+          <div class="comparison-card-name">Gestion des stocks &amp; magasin</div>
+          <div class="comparison-card-row">
+            <div><div class="comparison-card-col-label">💻 Desktop</div><span class="cmp-yes">✅</span> <span class="cmp-badge-avail">Complet</span></div>
+            <div><div class="comparison-card-col-label">🌐 Web / 📱 Mobile</div><span class="cmp-yes">✅</span> <span class="cmp-badge-soon">Prévu</span></div>
+          </div>
+        </div>
+        <div class="comparison-card">
+          <div class="comparison-card-name">Commandes fournisseurs</div>
+          <div class="comparison-card-row">
+            <div><div class="comparison-card-col-label">💻 Desktop</div><span class="cmp-yes">✅</span> <span class="cmp-badge-avail">Complet</span></div>
+            <div><div class="comparison-card-col-label">🌐 Web / 📱 Mobile</div><span class="cmp-yes">✅</span> <span class="cmp-badge-soon">Prévu</span></div>
+          </div>
+        </div>
+        <div class="comparison-card">
+          <div class="comparison-card-name">Dettes &amp; paiements</div>
+          <div class="comparison-card-row">
+            <div><div class="comparison-card-col-label">💻 Desktop</div><span class="cmp-yes">✅</span> <span class="cmp-badge-avail">Complet</span></div>
+            <div><div class="comparison-card-col-label">🌐 Web / 📱 Mobile</div><span class="cmp-yes">✅</span> <span class="cmp-badge-soon">Prévu</span></div>
+          </div>
+        </div>
+        <div class="comparison-card">
+          <div class="comparison-card-name">Équipe &amp; rôles (RH, paie)</div>
+          <div class="comparison-card-row">
+            <div><div class="comparison-card-col-label">💻 Desktop</div><span class="cmp-yes">✅</span> <span class="cmp-badge-avail">Complet</span></div>
+            <div><div class="comparison-card-col-label">🌐 Web / 📱 Mobile</div><span class="cmp-yes">✅</span> <span class="cmp-badge-soon">Prévu</span></div>
+          </div>
+        </div>
+        <div class="comparison-card">
+          <div class="comparison-card-name">Analytics &amp; rapports</div>
+          <div class="comparison-card-row">
+            <div><div class="comparison-card-col-label">💻 Desktop</div><span class="cmp-yes">✅</span> <span class="cmp-badge-avail">Complet</span></div>
+            <div><div class="comparison-card-col-label">🌐 Web / 📱 Mobile</div><span class="cmp-yes">✅</span> <span class="cmp-badge-soon">Prévu (temps réel)</span></div>
+          </div>
+        </div>
+        <div class="comparison-card">
+          <div class="comparison-card-name">Conformité DGI Cameroun</div>
+          <div class="comparison-card-row">
+            <div><div class="comparison-card-col-label">💻 Desktop</div><span class="cmp-yes">✅</span> <span class="cmp-badge-avail">TVA 19,25%</span></div>
+            <div><div class="comparison-card-col-label">🌐 Web / 📱 Mobile</div><span class="cmp-yes">✅</span> <span class="cmp-badge-soon">Prévu</span></div>
+          </div>
+        </div>
+        <div class="comparison-card">
+          <div class="comparison-card-name">Paiements Orange Money &amp; MTN MoMo</div>
+          <div class="comparison-card-row">
+            <div><div class="comparison-card-col-label">💻 Desktop</div><span class="cmp-yes">✅</span> <span class="cmp-badge-avail">Disponible</span></div>
+            <div><div class="comparison-card-col-label">🌐 Web / 📱 Mobile</div><span class="cmp-yes">✅</span> <span class="cmp-badge-soon">Prévu</span></div>
+          </div>
+        </div>
+        <div class="comparison-card">
+          <div class="comparison-card-name">Backup automatique</div>
+          <div class="comparison-card-row">
+            <div><div class="comparison-card-col-label">💻 Desktop</div><span class="cmp-yes">✅</span> <span class="cmp-badge-avail">Local + cloud</span></div>
+            <div><div class="comparison-card-col-label">🌐 Web / 📱 Mobile</div><span class="cmp-yes">✅</span> <span class="cmp-badge-soon">Cloud natif</span></div>
+          </div>
+        </div>
+        <div class="comparison-card">
+          <div class="comparison-card-name">Multi-établissements (chaînes)</div>
+          <div class="comparison-card-row">
+            <div><div class="comparison-card-col-label">💻 Desktop</div><span class="cmp-no">❌</span> <span style="font-size:.78rem;color:var(--muted);">Non</span></div>
+            <div><div class="comparison-card-col-label">🌐 Web / 📱 Mobile</div><span class="cmp-yes">✅</span> <span class="cmp-badge-soon">Enterprise</span></div>
+          </div>
+        </div>
+        <div class="comparison-card">
+          <div class="comparison-card-name">Accès distant (gérant en déplacement)</div>
+          <div class="comparison-card-row">
+            <div><div class="comparison-card-col-label">💻 Desktop</div><span class="cmp-no">❌</span> <span style="font-size:.78rem;color:var(--muted);">Local uniquement</span></div>
+            <div><div class="comparison-card-col-label">🌐 Web / 📱 Mobile</div><span class="cmp-yes">✅</span> <span class="cmp-badge-soon">Prévu</span></div>
+          </div>
+        </div>
+        <div class="comparison-card">
+          <div class="comparison-card-name">Application mobile native</div>
+          <div class="comparison-card-row">
+            <div><div class="comparison-card-col-label">💻 Desktop</div><span class="cmp-no">❌</span> <span style="font-size:.78rem;color:var(--muted);">N/A</span></div>
+            <div><div class="comparison-card-col-label">📱 Mobile</div><span class="cmp-yes">✅</span> <span class="cmp-badge-soon">iOS + Android</span></div>
+          </div>
+        </div>
+        <div class="comparison-card">
+          <div class="comparison-card-name">Synchronisation multi-appareils</div>
+          <div class="comparison-card-row">
+            <div><div class="comparison-card-col-label">💻 Desktop</div><span class="cmp-no">❌</span> <span style="font-size:.78rem;color:var(--muted);">Mono-poste</span></div>
+            <div><div class="comparison-card-col-label">🌐 Web / 📱 Mobile</div><span class="cmp-yes">✅</span> <span class="cmp-badge-soon">Temps réel</span></div>
+          </div>
+        </div>
+        <div class="comparison-card">
+          <div class="comparison-card-name">API publique (intégrations tierces)</div>
+          <div class="comparison-card-row">
+            <div><div class="comparison-card-col-label">💻 Desktop</div><span class="cmp-no">❌</span> <span style="font-size:.78rem;color:var(--muted);">Non</span></div>
+            <div><div class="comparison-card-col-label">🌐 Web</div><span class="cmp-yes">✅</span> <span class="cmp-badge-soon">REST + webhooks</span></div>
+          </div>
+        </div>
+      </div>
+
+      <p class="cmp-note reveal">
+        <strong>La version Desktop fonctionne entièrement hors-ligne.</strong> La version Web SaaS et l'application Mobile sont en développement actif — inscription à la liste d'attente bientôt disponible.
+      </p>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Section Téléchargement Desktop -->
+  <section class="section" id="telechargement">
+    <div class="container">
+      <div class="section-header text-c stagger">
+        <div class="pill reveal">Disponible maintenant</div>
+        <h2 class="reveal">Téléchargez BarManager Pro<br><em>Desktop</em></h2>
+        <p class="reveal" style="margin: 0 auto; color: var(--muted);">Installez l'application sur votre ordinateur et gérez votre bar immédiatement, même sans connexion internet.</p>
+        <p class="reveal" style="margin: 12px auto 0; color: var(--muted); font-size: .85rem;">Disponible sur Windows 10 / 11 — 64 bits.</p>
+      </div>
+
+      <div class="dl-grid stagger">
+        <!-- Windows -->
+        <div class="dl-card reveal">
+          <div class="dl-os-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M3 5.557L10.078 4.6V11.5H3V5.557ZM10.955 4.48L21 3V11.5H10.955V4.48ZM3 12.5H10.078V19.38L3 18.41V12.5ZM10.955 12.5H21V21L10.955 19.5V12.5Z" fill="#D4A017"/>
+            </svg>
+          </div>
+          <h3>Windows</h3>
+          <p>Windows 10 / 11 — 64 bits</p>
+          <a class="dl-btn" href="https://github.com/guylain237/barmanagerpro-download/releases/download/v1.0.2/BarManager.Pro_1.0.2_x64-setup.exe" target="_blank" rel="noopener noreferrer">
+            &#8659; Télécharger .exe
+          </a>
+          <span class="dl-version">v1.0.2 — ~35 Mo</span>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+</div><!-- /page-home -->
+
+
+<!-- ============================================================
+     PAGE: MODULES
+     ============================================================ -->
+<div class="page" id="page-modules">
+
+  <div class="modules-hero">
+    <div class="container">
+      <div class="pill" style="margin-bottom: 20px;">9 modules fonctionnels</div>
+      <h1 style="max-width: 14ch; margin-bottom: 20px;">Chaque module,<br>pensé pour le terrain.</h1>
+      <p style="color: var(--muted); font-size: 1.1rem; max-width: 52ch;">Des modules P1 essentiels aux fonctions avancées, BarManager Pro couvre l'intégralité du cycle de vie d'un bar.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <div class="pill" style="margin-bottom: 20px;">Priorité P1 — Essentiels</div>
+        <h2>Fonctionnalités cœur</h2>
+        <p style="color: var(--muted);">Ces modules sont indispensables et constituent le MVP de l'application, livrés dans les 4 premières phases.</p>
+      </div>
+      <div class="modules-grid">
+        <div class="card module-card card-green">
+          <div class="badge badge-green">P1 — Essentiel</div>
+          <div class="icon-box icon-box-green" style="margin-bottom: 16px; width: 52px; height: 52px; font-size: 1.5rem;">📦</div>
+          <h3>Gestion des stocks</h3>
+          <ul>
+            <li>Entrées & sorties de produits</li>
+            <li>Catégories (boissons, consommables)</li>
+            <li>Seuils d'alerte configurables</li>
+            <li>Inventaire physique</li>
+            <li>Historique des mouvements</li>
+            <li>Mode offline + synchronisation auto</li>
+          </ul>
+        </div>
+        <div class="card module-card card-green">
+          <div class="badge badge-green">P1 — Essentiel</div>
+          <div class="icon-box icon-box-gold" style="margin-bottom: 16px; width: 52px; height: 52px; font-size: 1.5rem;">🧾</div>
+          <h3>Facturation & Comptabilité</h3>
+          <ul>
+            <li>Factures de vente et d'achat</li>
+            <li>Gestion des fournisseurs</li>
+            <li>TVA 19,25 % conforme DGI</li>
+            <li>Bilans quotidiens & hebdomadaires</li>
+            <li>Ouverture / Clôture de caisse</li>
+            <li>Impression tickets thermiques</li>
+          </ul>
+        </div>
+        <div class="card module-card card-green">
+          <div class="badge badge-green">P1 — Essentiel</div>
+          <div class="icon-box icon-box-blue" style="margin-bottom: 16px; width: 52px; height: 52px; font-size: 1.5rem;">🖥️</div>
+          <h3>POS tactile & Commandes</h3>
+          <ul>
+            <li>Interface tactile pour tablette</li>
+            <li>Gestion du plan de salle</li>
+            <li>QR code par table</li>
+            <li>App client PWA (sans installation)</li>
+            <li>Notifications push temps réel</li>
+            <li>Statut commandes en direct</li>
+          </ul>
+        </div>
+        <div class="card module-card card-green">
+          <div class="badge badge-green">P1 — Essentiel</div>
+          <div class="icon-box icon-box-green" style="margin-bottom: 16px; width: 52px; height: 52px; font-size: 1.5rem;">💳</div>
+          <h3>Paiements multicanaux</h3>
+          <ul>
+            <li>Orange Money (API officielle)</li>
+            <li>MTN Mobile Money (API officielle)</li>
+            <li>Espèces & carte bancaire</li>
+            <li>Reçus digitaux automatiques</li>
+            <li>Réconciliation avec la caisse</li>
+            <li>Gestion des remboursements</li>
+          </ul>
+        </div>
+        <div class="card module-card card-green">
+          <div class="badge badge-green">P1 — Essentiel</div>
+          <div class="icon-box icon-box-purple" style="margin-bottom: 16px; width: 52px; height: 52px; font-size: 1.5rem;">🔐</div>
+          <h3>Auth & Rôles multi-profils</h3>
+          <ul>
+            <li>Gérant — accès complet</li>
+            <li>Caissier — caisse & tickets</li>
+            <li>Serveur / Barman — commandes</li>
+            <li>Client — menu & fidélité</li>
+            <li>Fournisseur — bons de commande</li>
+            <li>Comptable externe — rapports</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="section-header" style="margin-top: 80px;">
+        <div class="pill" style="margin-bottom: 20px;">Priorité P2 — Importants</div>
+        <h2>Fonctionnalités avancées</h2>
+        <p style="color: var(--muted);">Ces modules enrichissent l'application et sont livrés en phases 3 et 4.</p>
+      </div>
+      <div class="modules-grid">
+        <div class="card module-card card-accent">
+          <div class="badge badge-gold">P2 — Important</div>
+          <div class="icon-box icon-box-gold" style="margin-bottom: 16px; width: 52px; height: 52px; font-size: 1.5rem;">👥</div>
+          <h3>RH & Paie</h3>
+          <ul>
+            <li>Fiches employés complètes</li>
+            <li>Bulletins de paie (CNPS Cameroun)</li>
+            <li>Présences & absences</li>
+            <li>Évaluations de performance</li>
+          </ul>
+        </div>
+        <div class="card module-card card-accent">
+          <div class="badge badge-gold">P2 — Important</div>
+          <div class="icon-box icon-box-gold" style="margin-bottom: 16px; width: 52px; height: 52px; font-size: 1.5rem;">⭐</div>
+          <h3>Programme de fidélité</h3>
+          <ul>
+            <li>Points attribués automatiquement</li>
+            <li>Niveaux VIP configurables</li>
+            <li>Récompenses paramétrables</li>
+            <li>Espace client dédié</li>
+          </ul>
+        </div>
+        <div class="card module-card card-accent">
+          <div class="badge badge-gold">P2 — Important</div>
+          <div class="icon-box icon-box-purple" style="margin-bottom: 16px; width: 52px; height: 52px; font-size: 1.5rem;">📢</div>
+          <h3>Marketing & Publications</h3>
+          <ul>
+            <li>Facebook & Instagram intégrés</li>
+            <li>WhatsApp Business</li>
+            <li>Promotions & happy hours</li>
+            <li>Notifications ciblées</li>
+          </ul>
+        </div>
+        <div class="card module-card card-accent">
+          <div class="badge badge-gold">P2 — Important</div>
+          <div class="icon-box icon-box-gold" style="margin-bottom: 16px; width: 52px; height: 52px; font-size: 1.5rem;">📈</div>
+          <h3>Analytics & BI</h3>
+          <ul>
+            <li>Tableaux de bord en temps réel</li>
+            <li>KPIs & rapports exportables</li>
+            <li>Prévisions IA sur les stocks</li>
+            <li>Multi-établissements</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Architecture technique -->
+  <div class="divider"></div>
+  <section class="section" style="background: var(--dark2);">
+    <div class="container">
+      <div class="section-header text-c">
+        <div class="pill" style="margin-bottom: 20px;">Compatibilité</div>
+        <h2>Fonctionne sur tous vos appareils</h2>
+        <p style="color: var(--muted); margin: 0 auto;">Aujourd'hui sur Windows, demain partout — votre bar avec vous, où que vous soyez.</p>
+      </div>
+      <div class="arch-cards">
+
+        <!-- Carte 1 : Ordinateur Windows — DISPONIBLE -->
+        <div class="card arch-card">
+          <div class="icon-box" style="background: rgba(0,120,212,.15); color: #3B9EFF;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/>
+            </svg>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:6px;">
+            <h4 style="margin:0;">Ordinateur Windows</h4>
+            <span style="font-size:.68rem; background:rgba(34,197,94,.15); color:#4ade80; border:1px solid rgba(34,197,94,.30); padding:2px 9px; border-radius:6px; font-family:var(--font-h); font-weight:700; letter-spacing:.04em; white-space:nowrap;">Disponible</span>
+          </div>
+          <p>Installation native sur Windows 10 et 11 (64 bits). Fonctionne entièrement hors-ligne. Idéal pour le comptoir, la caisse et la gestion quotidienne du bar.</p>
+          <div style="margin-top:auto; padding-top:14px;">
+            <span style="display:inline-block; background:rgba(255,255,255,.06); color:var(--muted); font-size:.72rem; padding:3px 10px; border-radius:20px; border:1px solid rgba(255,255,255,.10);">Windows 10 / 11</span>
+          </div>
+        </div>
+
+        <!-- Carte 2 : Tablette tactile — BIENTÔT -->
+        <div class="card arch-card">
+          <div class="icon-box" style="background: rgba(34,197,94,.12); color: #4ade80;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="4" y="2" width="16" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/>
+            </svg>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:6px;">
+            <h4 style="margin:0;">Tablette tactile</h4>
+            <span style="font-size:.68rem; background:rgba(212,160,23,.15); color:var(--gold); border:1px solid rgba(212,160,23,.30); padding:2px 9px; border-radius:6px; font-family:var(--font-h); font-weight:700; letter-spacing:.04em; white-space:nowrap;">Bientôt</span>
+          </div>
+          <p>Mode POS optimisé pour les tablettes Android et iPad. Saisie rapide des commandes en salle, synchronisation temps réel avec la caisse.</p>
+          <div style="margin-top:auto; padding-top:14px;">
+            <span style="display:inline-block; background:rgba(255,255,255,.06); color:var(--muted); font-size:.72rem; padding:3px 10px; border-radius:20px; border:1px solid rgba(255,255,255,.10);">Android / iPad</span>
+          </div>
+        </div>
+
+        <!-- Carte 3 : Smartphone — BIENTÔT -->
+        <div class="card arch-card">
+          <div class="icon-box" style="background: rgba(150,80,220,.12); color: #B870FA;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/>
+            </svg>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:6px;">
+            <h4 style="margin:0;">Smartphone</h4>
+            <span style="font-size:.68rem; background:rgba(212,160,23,.15); color:var(--gold); border:1px solid rgba(212,160,23,.30); padding:2px 9px; border-radius:6px; font-family:var(--font-h); font-weight:700; letter-spacing:.04em; white-space:nowrap;">Bientôt</span>
+          </div>
+          <p>Application mobile pour suivre les ventes, les stocks et les performances de votre bar depuis n'importe où. Notifications push en cas d'alerte stock ou de clôture caisse.</p>
+          <div style="margin-top:auto; padding-top:14px;">
+            <span style="display:inline-block; background:rgba(255,255,255,.06); color:var(--muted); font-size:.72rem; padding:3px 10px; border-radius:20px; border:1px solid rgba(255,255,255,.10);">iOS / Android</span>
+          </div>
+        </div>
+
+        <!-- Carte 4 : Navigateur web — BIENTÔT -->
+        <div class="card arch-card">
+          <div class="icon-box" style="background: rgba(56,189,248,.12); color: #38BDF8;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+            </svg>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:6px;">
+            <h4 style="margin:0;">Navigateur web</h4>
+            <span style="font-size:.68rem; background:rgba(212,160,23,.15); color:var(--gold); border:1px solid rgba(212,160,23,.30); padding:2px 9px; border-radius:6px; font-family:var(--font-h); font-weight:700; letter-spacing:.04em; white-space:nowrap;">Bientôt</span>
+          </div>
+          <p>Accédez à votre bar depuis n'importe quel ordinateur, sans installation. Idéal pour les chaînes multi-établissements et la consultation à distance.</p>
+          <div style="margin-top:auto; padding-top:14px;">
+            <span style="display:inline-block; background:rgba(255,255,255,.06); color:var(--muted); font-size:.72rem; padding:3px 10px; border-radius:20px; border:1px solid rgba(255,255,255,.10);">Chrome, Firefox, Safari, Edge</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</div><!-- /page-modules -->
+
+
+<!-- ============================================================
+     PAGE: PLANNING
+     ============================================================ -->
+<div class="page" id="page-planning">
+
+  <div class="planning-hero">
+    <div class="container">
+      <div class="pill" style="margin-bottom: 20px;">Roadmap de développement</div>
+      <h1 style="max-width: 16ch; margin-bottom: 20px;">10 phases.<br>~7 à 9 mois.</h1>
+      <p style="color: var(--muted); font-size: 1.1rem; max-width: 52ch;">Une approche Agile par phases itératives pour livrer de la valeur dès les premières semaines et ajuster selon les retours utilisateurs.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Gantt global -->
+  <section class="section-sm">
+    <div class="container">
+      <div class="section-header">
+        <h2>Vue globale — 10 mois</h2>
+        <p style="color: var(--muted);">Chaque barre représente les mois d'activité de la phase.</p>
+      </div>
+      <div class="gantt-container">
+        <div class="gantt-header">
+          <div class="gantt-label">Phase</div>
+          <div class="gantt-months">
+            <div class="gantt-month">M1</div><div class="gantt-month">M2</div>
+            <div class="gantt-month">M3</div><div class="gantt-month">M4</div>
+            <div class="gantt-month">M5</div><div class="gantt-month">M6</div>
+            <div class="gantt-month">M7</div><div class="gantt-month">M8</div>
+            <div class="gantt-month">M9</div><div class="gantt-month">M10</div>
+          </div>
+        </div>
+        <div id="ganttRows"></div>
+      </div>
+
+      <!-- Légende -->
+      <div style="display: flex; gap: 24px; flex-wrap: wrap; margin-top: 20px;">
+        <div style="display:flex; align-items:center; gap: 8px; font-size: .82rem; color: var(--muted);">
+          <div style="width:28px;height:12px;border-radius:3px;background:linear-gradient(90deg,#1D9E75,#2DBD7E)"></div>
+          Phases 1–4 MVP
+        </div>
+        <div style="display:flex; align-items:center; gap: 8px; font-size: .82rem; color: var(--muted);">
+          <div style="width:28px;height:12px;border-radius:3px;background:linear-gradient(90deg,#1B5FA0,#2563A8)"></div>
+          Phases 5–6 Paiements
+        </div>
+        <div style="display:flex; align-items:center; gap: 8px; font-size: .82rem; color: var(--muted);">
+          <div style="width:28px;height:12px;border-radius:3px;background:linear-gradient(90deg,#9A5E0E,#B87016)"></div>
+          Phases 7–8 RH & Fidélité
+        </div>
+        <div style="display:flex; align-items:center; gap: 8px; font-size: .82rem; color: var(--muted);">
+          <div style="width:28px;height:12px;border-radius:3px;background:linear-gradient(90deg,#5A54A8,#6B63C5)"></div>
+          Phases 9–10 Marketing & IA
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Phase list -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Détail des 10 phases</h2>
+        <p style="color: var(--muted);">Chaque phase est autonome et livre un incrément fonctionnel testable en conditions réelles.</p>
+      </div>
+      <div class="phase-list" id="phaseList"></div>
+    </div>
+  </section>
+
+</div><!-- /page-planning -->
+
+
+<!-- ============================================================
+     PAGE: PRICING
+     ============================================================ -->
+<div class="page" id="page-pricing">
+
+  <div class="pricing-hero">
+    <div class="container text-c">
+      <div class="pill" style="margin-bottom: 20px; display: inline-flex;">Tarifs clairs & sans surprise</div>
+      <h1 style="margin-bottom: 20px;">Le bon plan pour<br>votre établissement.</h1>
+      <p style="color: var(--muted); font-size: 1.1rem; margin: 0 auto; max-width: 48ch;">Commencez gratuitement. Passez à un plan supérieur quand vous en avez besoin. Résiliez à tout moment.</p>
+      <div style="display: flex; justify-content: center; margin-top: 32px;">
+        <div class="pricing-toggle">
+          <button class="active" id="toggleMonthly" onclick="setPricing('monthly')">Mensuel</button>
+          <button id="toggleAnnual" onclick="setPricing('annual')">Annuel (−20%)</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <section class="section">
+    <div class="container">
+      <div class="plans-grid">
+
+        <!-- Starter -->
+        <div class="card plan-card">
+          <div class="plan-name">Starter</div>
+          <div class="plan-price" style="display:block; margin-bottom:6px;">
+            <strong style="font-family:var(--font-h); font-size:2.6rem; font-weight:800; color:var(--gold); letter-spacing:-.04em;">À définir</strong>
+          </div>
+          <div class="plan-desc">Idéal pour démarrer et tester l'application sur votre établissement.</div>
+          <ul class="plan-features">
+            <li><span class="plan-check">✓</span> Gestion des stocks (limité à 50 produits)</li>
+            <li><span class="plan-check">✓</span> Caisse basique & tickets</li>
+            <li><span class="plan-check">✓</span> 1 utilisateur (gérant)</li>
+            <li><span class="plan-check">✓</span> App mobile iOS & Android</li>
+            <li><span class="plan-cross">✗</span> Paiements Orange Money / MOMO</li>
+            <li><span class="plan-cross">✗</span> Commandes en ligne & QR</li>
+            <li><span class="plan-cross">✗</span> RH & Paie</li>
+            <li><span class="plan-cross">✗</span> Analytics avancés</li>
+          </ul>
+          <a class="btn btn-outline" href="https://github.com/guylain237/barmanagerpro-download/releases/download/v1.0.2/BarManager.Pro_1.0.2_x64-setup.exe" target="_blank" rel="noopener noreferrer" style="width:100%; justify-content:center; text-decoration:none;">&#8659; Télécharger Desktop</a>
+        </div>
+
+        <!-- Pro (featured) -->
+        <div class="card plan-card featured" style="position: relative;">
+          <div class="plan-badge">⭐ Le plus populaire</div>
+          <div class="plan-name">Pro</div>
+          <div class="plan-price" style="display:block; margin-bottom:6px;">
+            <strong style="font-family:var(--font-h); font-size:2.6rem; font-weight:800; color:var(--gold); letter-spacing:-.04em;">À définir</strong>
+          </div>
+          <div class="plan-desc">La solution complète pour un bar en pleine croissance avec toute l'équipe.</div>
+          <ul class="plan-features">
+            <li><span class="plan-check">✓</span> Stocks illimités + alertes push</li>
+            <li><span class="plan-check">✓</span> Caisse complète & TVA DGI</li>
+            <li><span class="plan-check">✓</span> Jusqu'à 10 utilisateurs</li>
+            <li><span class="plan-check">✓</span> Orange Money & MTN MOMO</li>
+            <li><span class="plan-check">✓</span> Commandes en ligne & QR code</li>
+            <li><span class="plan-check">✓</span> Programme de fidélité</li>
+            <li><span class="plan-check">✓</span> RH & Paie CNPS</li>
+            <li><span class="plan-cross">✗</span> Marketing réseaux sociaux</li>
+            <li><span class="plan-cross">✗</span> Prévisions IA & multi-sites</li>
+          </ul>
+          <button class="btn btn-primary" style="width:100%; opacity:.55; cursor:not-allowed; pointer-events:none;" disabled aria-disabled="true">Bientôt disponible</button>
+        </div>
+
+        <!-- Enterprise -->
+        <div class="card plan-card">
+          <div class="plan-name">Enterprise</div>
+          <div class="plan-price" style="display:block; margin-bottom:6px;">
+            <strong style="font-family:var(--font-h); font-size:2.6rem; font-weight:800; color:var(--gold); letter-spacing:-.04em;">À définir</strong>
+          </div>
+          <div class="plan-desc">Pour les groupes de bars, chaînes et établissements multiples avec IA intégrée.</div>
+          <ul class="plan-features">
+            <li><span class="plan-check">✓</span> Tout le plan Pro</li>
+            <li><span class="plan-check">✓</span> Utilisateurs illimités</li>
+            <li><span class="plan-check">✓</span> Marketing FB / IG / WhatsApp</li>
+            <li><span class="plan-check">✓</span> Prévisions IA & alertes anomalies</li>
+            <li><span class="plan-check">✓</span> Console multi-établissements</li>
+            <li><span class="plan-check">✓</span> Benchmarking inter-sites</li>
+            <li><span class="plan-check">✓</span> Support prioritaire 24/7</li>
+            <li><span class="plan-check">✓</span> Onboarding & formation équipe</li>
+          </ul>
+          <button class="btn btn-green" style="width:100%; opacity:.55; cursor:not-allowed; pointer-events:none;" disabled aria-disabled="true">Bientôt disponible</button>
+        </div>
+
+      </div>
+
+      <!-- Garanties -->
+      <div class="grid-4" style="margin-top: 60px;">
+        <div style="text-align: center; padding: 24px 16px;">
+          <div style="font-size: 2rem; margin-bottom: 12px;">🔒</div>
+          <h4 style="margin-bottom: 8px;">Données sécurisées</h4>
+          <p style="font-size: .83rem; color: var(--muted); max-width: 100%;">Chiffrement AES-256, sauvegardes automatiques quotidiennes.</p>
+        </div>
+        <div style="text-align: center; padding: 24px 16px;">
+          <div style="font-size: 2rem; margin-bottom: 12px;">📡</div>
+          <h4 style="margin-bottom: 8px;">Offline garanti</h4>
+          <p style="font-size: .83rem; color: var(--muted); max-width: 100%;">Fonctionne sans connexion internet. Sync au retour.</p>
+        </div>
+        <div style="text-align: center; padding: 24px 16px;">
+          <div style="font-size: 2rem; margin-bottom: 12px;">🇨🇲</div>
+          <h4 style="margin-bottom: 8px;">Conformité locale</h4>
+          <p style="font-size: .83rem; color: var(--muted); max-width: 100%;">TVA DGI, CNPS, numérotation fiscale Cameroun.</p>
+        </div>
+        <div style="text-align: center; padding: 24px 16px;">
+          <div style="font-size: 2rem; margin-bottom: 12px;">🤝</div>
+          <h4 style="margin-bottom: 8px;">Support local</h4>
+          <p style="font-size: .83rem; color: var(--muted); max-width: 100%;">Équipe basée à Douala &amp; Yaoundé. Support en français 🇫🇷 et anglais 🇬🇧.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <div class="divider"></div>
+  <section class="section">
+    <div class="container">
+      <div class="section-header text-c">
+        <h2>Questions fréquentes</h2>
+        <p style="color:var(--muted);font-size:1.05rem;margin:0 auto;">Tout ce que vous devez savoir avant de commencer.</p>
+      </div>
+      <div class="faq-list" id="faqList"></div>
+      <div style="text-align:center;margin-top:48px;">
+        <p style="color:var(--muted);font-size:.95rem;margin-bottom:16px;">Vous ne trouvez pas la réponse à votre question ?</p>
+        <a href="mailto:contact@barmanagerpro.cm" class="btn btn-outline" style="min-height:44px;display:inline-flex;align-items:center;">Contacter le support</a>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /page-pricing -->
+
+
+<!-- ============================================================
+     PAGE: CONTACT
+     ============================================================ -->
+<div class="page" id="page-contact">
+
+  <div class="contact-hero">
+    <div class="container">
+      <div class="pill" style="margin-bottom: 20px;">Parlez-nous de votre projet</div>
+      <h1 style="max-width: 14ch; margin-bottom: 16px;">Démarrons<br>ensemble.</h1>
+      <p style="color: var(--muted); font-size: 1.1rem; max-width: 48ch;">Une démo personnalisée, une question sur les tarifs ou simplement envie d'en savoir plus — nous répondons sous 24h.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <section class="section">
+    <div class="container">
+      <div class="contact-grid">
+
+        <!-- Infos -->
+        <div class="contact-info">
+          <h2 style="font-size: 2rem; margin-bottom: 16px;">On est là<br>pour vous.</h2>
+          <p>Que vous soyez gérant d'un bar à Douala, Yaoundé ou ailleurs au Cameroun, notre équipe vous accompagne dans la prise en main et le déploiement.</p>
+          <div class="contact-items">
+            <div class="contact-item">
+              <div class="icon-box icon-box-gold">📍</div>
+              <div>
+                <h4>Adresses</h4>
+                <p>Douala, Akwa — Yaoundé, Bastos</p>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="icon-box icon-box-green">📞</div>
+              <div>
+                <h4>Téléphone / WhatsApp</h4>
+                <p>+237 6 XX XX XX XX</p>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="icon-box icon-box-blue">✉️</div>
+              <div>
+                <h4>Email</h4>
+                <p>contact@barmanagerpro.cm</p>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="icon-box icon-box-purple">🕐</div>
+              <div>
+                <h4>Disponibilité</h4>
+                <p>Lun – Sam, 8h à 19h (WAT)</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form -->
+        <div class="contact-form">
+          <h3>Demande de démo ou d'information</h3>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Prénom *</label>
+              <input type="text" class="form-control" placeholder="Jean">
+            </div>
+            <div class="form-group">
+              <label>Nom *</label>
+              <input type="text" class="form-control" placeholder="Dupont">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Email *</label>
+              <input type="email" class="form-control" placeholder="jean@monbar.cm">
+            </div>
+            <div class="form-group">
+              <label>Téléphone / WhatsApp</label>
+              <input type="tel" class="form-control" placeholder="+237 6 XX XX XX XX">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Nom de votre établissement</label>
+            <input type="text" class="form-control" placeholder="Bar Le Rendez-vous">
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Ville</label>
+              <select class="form-control">
+                <option value="">— Sélectionner —</option>
+                <option>Douala</option>
+                <option>Yaoundé</option>
+                <option>Bafoussam</option>
+                <option>Garoua</option>
+                <option>Autre</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Plan souhaité</label>
+              <select class="form-control">
+                <option value="">— Sélectionner —</option>
+                <option>Starter</option>
+                <option>Pro — tarif à venir</option>
+                <option>Enterprise — tarif à venir</option>
+                <option>Je ne sais pas encore</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Message</label>
+            <textarea class="form-control" placeholder="Parlez-nous de votre bar, de vos besoins ou de vos questions..."></textarea>
+          </div>
+          <button class="btn btn-primary" style="width: 100%; justify-content: center; padding: 16px;" id="submitBtn" onclick="handleSubmit()">
+            Envoyer ma demande →
+          </button>
+          <p style="font-size: .78rem; color: var(--muted); margin-top: 12px; text-align: center; max-width: 100%;">
+            En soumettant ce formulaire, vous acceptez notre politique de confidentialité. Aucun spam, promis.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</div><!-- /page-contact -->
+
+
+<!-- ============================================================
+     FOOTER (global)
+     ============================================================ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#" class="nav-logo" onclick="showPage('home')" style="display: inline-flex; margin-bottom: 4px;">
+          <div class="nav-logo-mark">B</div>
+          BarManager <span class="gold">Pro</span>
+        </a>
+        <p>Solution de gestion intégrale pour bars au Cameroun et en Afrique Centrale. Offline-first, conforme DGI et CNPS.</p>
+        <div class="social-links">
+          <a href="#" class="social-link">f</a>
+          <a href="#" class="social-link">in</a>
+          <a href="#" class="social-link">w</a>
+          <a href="#" class="social-link">wp</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Produit</h4>
+        <ul>
+          <li><a href="#" onclick="showPage('modules')">Fonctionnalités</a></li>
+          <li><a href="#" onclick="showPage('pricing')">Tarifs</a></li>
+          <li><a href="#" onclick="showPage('pricing')">FAQ</a></li>
+          <li><a href="https://github.com/guylain237/barmanagerpro-download/releases/download/v1.0.2/BarManager.Pro_1.0.2_x64-setup.exe" target="_blank" rel="noopener noreferrer">Téléchargement</a></li>
+          <li><a href="#">Changelog</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Entreprise</h4>
+        <ul>
+          <li><a href="#">À propos</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="mailto:contact@barmanagerpro.cm">Partenaires</a></li>
+          <li><a href="mailto:contact@barmanagerpro.cm">Presse</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="mailto:contact@barmanagerpro.cm">Centre d'aide</a></li>
+          <li><a href="mailto:contact@barmanagerpro.cm">Contacter l'équipe</a></li>
+          <li><a href="#">Statut du service</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 BarManager Pro · Cameroun. Tous droits réservés.</span>
+      <div style="display: flex; gap: 20px;">
+        <a href="/legal/mentions">Mentions légales</a>
+        <a href="/legal/cgu">CGU</a>
+        <a href="/legal/privacy">Politique de confidentialité</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ============================================================
+     SCRIPTS
+     ============================================================ -->
+<script>
+// ============================================================
+// DATA
+// ============================================================
+const phaseData = [
+  { num:1, title:'Setup & Architecture technique', dur:'2–3 sem.', weeks:'S1–S3', tag:'MVP', color:'mvp', modules:['Electron / Tauri','Next.js','Node.js','SQLite','CI/CD','Auth JWT'], desc:'Initialisation du projet : monorepo, design system, base de données locale, CI/CD, authentification multi-rôles.' },
+  { num:2, title:'Gestion des stocks', dur:'3–4 sem.', weeks:'S4–S7', tag:'MVP', color:'mvp', modules:['Entrées/Sorties','Alertes push','Inventaire','Offline sync','Fournisseurs'], desc:'Module cœur : stocks, alertes de rupture, inventaire physique, synchronisation offline-first.' },
+  { num:3, title:'Caisse & Comptabilité', dur:'3–4 sem.', weeks:'S8–S11', tag:'MVP', color:'mvp', modules:['Fonds de caisse','TVA DGI','Tickets thermiques','Bilans'], desc:'Caisse journalière, bilans financiers, conformité fiscale Cameroun (TVA 19,25 %).' },
+  { num:4, title:'POS tactile & Facturation', dur:'3–4 sem.', weeks:'S12–S15', tag:'MVP', color:'mvp', modules:['POS tablette','Tables','Facturation','Dashboard gérant'], desc:'Interface POS tactile, plan de salle, facturation complète, dashboard gérant en temps réel.' },
+  { num:5, title:'Paiements multicanaux', dur:'2–3 sem.', weeks:'S16–S18', tag:'Paiements', color:'pay', modules:['Orange Money','MTN MOMO','Carte / Espèces','Réconciliation'], desc:'Intégration OM & MOMO, réconciliation automatique, reçus digitaux multi-canaux.' },
+  { num:6, title:'Commandes en ligne & QR code', dur:'3–4 sem.', weeks:'S19–S22', tag:'Paiements', color:'pay', modules:['PWA client','QR code table','Socket.io','Notifs push'], desc:'Application client PWA, QR codes par table, commandes en temps réel, notifications push.' },
+  { num:7, title:'Gestion RH & Paie', dur:'3–4 sem.', weeks:'S23–S26', tag:'RH & Fidélité', color:'rh', modules:['Fiches employés','CNPS Cameroun','Présences','Évaluations'], desc:'Module RH complet, bulletins de paie conformes CNPS, présences/absences, évaluations.' },
+  { num:8, title:'Programme de fidélité & Analytics', dur:'3–4 sem.', weeks:'S27–S30', tag:'RH & Fidélité', color:'rh', modules:['Points fidélité','Niveaux VIP','BI / KPIs','Rapports PDF'], desc:'Fidélité clients, tableaux de bord BI, KPIs et rapports exportables.' },
+  { num:9, title:'Marketing & Publications', dur:'2–3 sem.', weeks:'S31–S33', tag:'Marketing & IA', color:'mk', modules:['Facebook','Instagram','WhatsApp Business','Promos'], desc:'Publications réseaux sociaux, promotions, happy hours, notifications ciblées.' },
+  { num:10, title:'Prévisions IA & Multi-établissements', dur:'3–4 sem.', weeks:'S34–S37', tag:'Marketing & IA', color:'mk', modules:['IA prévisions','Anomalies','Multi-sites','Dashboard consolidé'], desc:'Machine learning pour les stocks, détection d\'anomalies, console multi-établissements.' }
+];
+
+const ganttMap = [
+  [1,0,0,0,0,0,0,0,0,0],
+  [1,1,0,0,0,0,0,0,0,0],
+  [0,1,1,0,0,0,0,0,0,0],
+  [0,0,1,1,0,0,0,0,0,0],
+  [0,0,0,1,1,0,0,0,0,0],
+  [0,0,0,0,1,1,0,0,0,0],
+  [0,0,0,0,0,1,1,0,0,0],
+  [0,0,0,0,0,0,1,1,0,0],
+  [0,0,0,0,0,0,0,1,1,0],
+  [0,0,0,0,0,0,0,0,1,1]
+];
+
+const colorClass = { mvp:'fill-mvp', pay:'fill-pay', rh:'fill-rh', mk:'fill-mk' };
+
+const faqData = [
+  { q:'Comment installer BarManager Pro ?', a:'Téléchargez l\'installateur Windows (.exe) depuis notre page de téléchargement. Double-cliquez sur le fichier, suivez l\'assistant en 3 étapes, et lancez l\'application. La configuration initiale de votre établissement prend moins de 10 minutes. Une version web est également disponible sans installation.' },
+  { q:'Puis-je l\'utiliser sans connexion internet ?', a:'Oui. BarManager Pro version desktop est conçu en mode offline-first. Toutes les opérations critiques — caisse, commandes, stocks — fonctionnent sans connexion grâce à la base de données SQLite embarquée et chiffrée. Les données se synchronisent automatiquement dès qu\'une connexion est disponible via Cloudflare Tunnel.' },
+  { q:'Quels modes de paiement sont supportés ?', a:'BarManager Pro supporte les espèces, Orange Money, MTN Mobile Money et les paiements mixtes (plusieurs modes sur une même transaction). Le calcul du rendu monnaie est automatique. La réconciliation avec la caisse est instantanée. Les plans Pro et Business incluent l\'intégration aux APIs officielles OM et MoMo.' },
+  { q:'Est-ce conforme à la réglementation DGI Cameroun ?', a:'Oui. L\'application intègre la TVA au taux de 19,25 %, la numérotation conforme DGI, et génère des rapports Z quotidiens exportables en PDF. Des mises à jour sont publiées à chaque changement réglementaire. L\'application est conçue pour passer les contrôles fiscaux sans préparation supplémentaire.' },
+  { q:'Combien d\'utilisateurs puis-je avoir ?', a:'Le plan Free inclut 1 utilisateur (gérant). Le plan Pro monte à 5 utilisateurs avec des rôles distincts : Propriétaire, Gérant, Caissier, Serveur — chacun avec ses permissions granulaires par module. Le plan Business offre des utilisateurs illimités et la gestion multi-établissements depuis un seul tableau de bord.' },
+  { q:'Comment fonctionne le mode offline ?', a:'La version desktop (Windows) embarque une base SQLite locale chiffrée avec SQLCipher. Toutes les transactions sont écrites localement d\'abord. Au retour en ligne, une synchronisation bidirectionnelle se déclenche automatiquement via WebSocket. Les conflits de données sont résolus avec une stratégie last-write-wins auditable.' },
+  { q:'Puis-je migrer depuis Excel ou un autre logiciel ?', a:'Oui. BarManager Pro supporte l\'import de produits et catégories depuis des fichiers Excel (.xlsx) et CSV. Un assistant de mapping des colonnes guide la migration. L\'historique de ventes depuis un ancien système n\'est pas importé mais reste accessible dans votre ancien outil pendant la transition.' },
+  { q:'Quel niveau de sécurité pour mes données ?', a:'Les données locales sont chiffrées avec SQLCipher (AES-256). Les échanges réseau utilisent HTTPS/TLS 1.3. L\'authentification est basée sur JWT avec tokens à courte durée de vie. Les mots de passe sont hashés avec bcrypt (salt=12). Un backup automatique chiffré est effectué toutes les 6 heures. Chaque action sensible est tracée dans l\'audit log.' },
+  { q:'Comment annuler mon abonnement ?', a:'Vous pouvez résilier votre abonnement à tout moment depuis votre espace client, sans frais ni pénalité. Votre accès reste actif jusqu\'à la fin de la période en cours. Vos données restent disponibles pour export pendant 90 jours après la résiliation. Aucune question posée, aucun frais caché.' },
+  { q:'Y a-t-il une formation ou un support en cas de problème ?', a:'Le plan Free inclut le support communautaire (forum + base de connaissances). Le plan Pro inclut le support email avec réponse en moins de 24h. Le plan Business inclut une formation équipe complète et un support prioritaire 24h/7j en français. Une documentation en ligne détaillée est disponible pour tous les plans.' }
+];
+
+// ============================================================
+// PAGE SYSTEM
+// ============================================================
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const pg = document.getElementById('page-' + name);
+  if (pg) pg.classList.add('active');
+
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.classList.toggle('active', a.dataset.page === name);
+  });
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  initReveal();
+  if (name === 'planning') renderGantt();
+  if (name === 'pricing') initFaq();
+  return false;
+}
+
+// ============================================================
+// NAVBAR SCROLL
+// ============================================================
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 20);
+});
+
+function toggleMenu() {
+  document.getElementById('navLinks').classList.toggle('open');
+}
+
+// ============================================================
+// REVEAL ANIMATION
+// ============================================================
+function initReveal() {
+  setTimeout(() => {
+    document.querySelectorAll('.reveal').forEach((el, i) => {
+      setTimeout(() => el.classList.add('visible'), i * 60);
+    });
+  }, 50);
+}
+
+// ============================================================
+// GANTT RENDER
+// ============================================================
+function renderGantt() {
+  const container = document.getElementById('ganttRows');
+  if (!container) return;
+  container.innerHTML = '';
+  phaseData.forEach((ph, idx) => {
+    const row = document.createElement('div');
+    row.className = 'gantt-row';
+    row.innerHTML = `<div class="gantt-row-label">Phase ${ph.num} — ${ph.title}</div>
+      <div class="gantt-bars">${ganttMap[idx].map(active =>
+        `<div class="gantt-cell ${active ? colorClass[ph.color] : ''}"></div>`
+      ).join('')}</div>`;
+    container.appendChild(row);
+  });
+
+  // Phase list
+  const plist = document.getElementById('phaseList');
+  if (!plist) return;
+  plist.innerHTML = '';
+  const tagColors = { mvp:'badge-green', pay:'badge-blue', rh:'badge-gold', mk:'badge' };
+  phaseData.forEach(ph => {
+    const row = document.createElement('div');
+    row.className = 'phase-row';
+    row.innerHTML = `
+      <div class="phase-num">0${ph.num > 9 ? ph.num : ph.num}</div>
+      <div class="phase-info">
+        <h3>${ph.title}</h3>
+        <p>${ph.desc}</p>
+        <div class="phase-tags">${ph.modules.map(m => `<span class="phase-tag">${m}</span>`).join('')}</div>
+      </div>
+      <div class="phase-meta">
+        <div class="phase-dur">${ph.dur}</div>
+        <div class="phase-weeks">${ph.weeks}</div>
+        <div class="phase-badge"><span class="badge badge-${ph.color === 'mvp' ? 'green' : ph.color === 'pay' ? 'blue' : 'gold'}">${ph.tag}</span></div>
+      </div>`;
+    plist.appendChild(row);
+  });
+}
+
+// ============================================================
+// PRICING TOGGLE
+// ============================================================
+let pricingMode = 'monthly';
+function setPricing(mode) {
+  pricingMode = mode;
+  document.getElementById('toggleMonthly').classList.toggle('active', mode === 'monthly');
+  document.getElementById('toggleAnnual').classList.toggle('active', mode === 'annual');
+  // Tarifs non encore définis — toggle désactivé fonctionnellement
+}
+
+// ============================================================
+// FAQ
+// ============================================================
+function initFaq() {
+  const container = document.getElementById('faqList');
+  if (!container || container.children.length) return;
+  faqData.forEach(item => {
+    const el = document.createElement('div');
+    el.className = 'faq-item';
+    el.innerHTML = `<div class="faq-q">${item.q}<span class="faq-icon">+</span></div>
+      <div class="faq-a">${item.a}</div>`;
+    el.querySelector('.faq-q').addEventListener('click', () => el.classList.toggle('open'));
+    container.appendChild(el);
+  });
+}
+
+// ============================================================
+// CONTACT FORM
+// ============================================================
+function handleSubmit() {
+  const btn = document.getElementById('submitBtn');
+  btn.textContent = '✓ Demande envoyée ! On vous répond sous 24h.';
+  btn.style.background = 'var(--green)';
+  btn.disabled = true;
+}
+
+// ============================================================
+// BANNER
+// ============================================================
+function closeBanner() {
+  const banner = document.getElementById('topBanner');
+  if (banner) {
+    banner.style.display = 'none';
+    document.body.classList.add('banner-closed');
+  }
+}
+
+
+// ============================================================
+// INIT
+// ============================================================
+document.addEventListener('DOMContentLoaded', () => {
+  initReveal();
+  document.getElementById('navbar').classList.add('scrolled');
+});
+</script>
+</body>
+</html>
