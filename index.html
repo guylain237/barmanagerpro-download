@@ -623,69 +623,6 @@ body.banner-closed { --banner-h: 0px; }
 }
 
 /* ============================================================
-   PLANNING PAGE
-   ============================================================ */
-.planning-hero {
-  padding: 160px 0 80px;
-  background: radial-gradient(ellipse 50% 40% at 50% 0%, rgba(45,189,126,.05) 0%, transparent 60%);
-}
-.phase-list { display: flex; flex-direction: column; gap: 16px; }
-.phase-row {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--r2);
-  padding: 28px 32px;
-  display: grid;
-  grid-template-columns: 80px 1fr 240px;
-  gap: 24px;
-  align-items: start;
-  transition: all .25s;
-  cursor: pointer;
-}
-.phase-row:hover { border-color: var(--border2); transform: translateX(4px); }
-.phase-num {
-  font-family: var(--font-h);
-  font-size: 2.2rem;
-  font-weight: 800;
-  line-height: 1;
-  color: rgba(255,255,255,.08);
-}
-.phase-row:hover .phase-num { color: rgba(212,160,23,.25); }
-.phase-info h3 { font-size: 1.1rem; margin-bottom: 6px; }
-.phase-info p { font-size: .88rem; color: var(--muted); max-width: 100%; }
-.phase-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
-.phase-tag {
-  padding: 3px 10px; border-radius: 6px;
-  font-size: .73rem; font-family: var(--font-h); font-weight: 600;
-  background: rgba(255,255,255,.05); color: var(--muted);
-}
-.phase-meta { text-align: right; }
-.phase-dur { font-family: var(--font-h); font-size: 1rem; font-weight: 700; color: var(--white); }
-.phase-weeks { font-size: .8rem; color: var(--muted); margin-top: 4px; }
-.phase-badge { margin-top: 10px; }
-
-/* Gantt mini */
-.gantt-container {
-  background: var(--dark2);
-  border: 1px solid var(--border);
-  border-radius: var(--r2);
-  padding: 32px;
-  overflow-x: auto;
-}
-.gantt-header { display: flex; align-items: center; gap: 0; margin-bottom: 12px; }
-.gantt-label { width: 220px; flex-shrink: 0; font-size: .78rem; color: var(--muted); font-family: var(--font-h); font-weight: 600; text-transform: uppercase; letter-spacing: .05em; }
-.gantt-months { display: flex; flex: 1; }
-.gantt-month { flex: 1; text-align: center; font-size: .72rem; color: var(--muted); font-family: var(--font-h); font-weight: 600; padding: 4px 2px; }
-.gantt-row { display: flex; align-items: center; gap: 0; margin-bottom: 6px; }
-.gantt-row-label { width: 220px; flex-shrink: 0; font-size: .83rem; color: var(--text); padding-right: 16px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.gantt-bars { display: flex; flex: 1; gap: 3px; }
-.gantt-cell { flex: 1; height: 28px; border-radius: 4px; background: var(--dark3); }
-.gantt-cell.fill-mvp   { background: linear-gradient(90deg, #1D9E75, #2DBD7E); }
-.gantt-cell.fill-pay   { background: linear-gradient(90deg, #1B5FA0, #2563A8); }
-.gantt-cell.fill-rh    { background: linear-gradient(90deg, #9A5E0E, #B87016); }
-.gantt-cell.fill-mk    { background: linear-gradient(90deg, #5A54A8, #6B63C5); }
-
-/* ============================================================
    PRICING PAGE
    ============================================================ */
 .pricing-hero {
@@ -876,8 +813,6 @@ textarea.form-control { resize: vertical; min-height: 120px; }
   .plans-grid, .contact-grid, .footer-grid { grid-template-columns: 1fr; }
   .hero .grid-2 { grid-template-columns: 1fr; }
   .hero-visual { display: none; }
-  .phase-row { grid-template-columns: 60px 1fr; }
-  .phase-meta { display: none; }
   .form-row { grid-template-columns: 1fr; }
   .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
   .hamburger { display: flex; }
@@ -949,15 +884,8 @@ textarea.form-control { resize: vertical; min-height: 120px; }
   /* Module cards */
   .module-card { padding: 22px 18px; }
 
-  /* Planning phase rows */
-  .phase-row { padding: 20px 16px; }
-
   /* Touch targets : s'assurer que les liens nav ont 44px min */
   .nav-links a { min-height: 44px; display: flex; align-items: center; }
-
-  /* Gantt : scroll horizontal OK sur container dédié */
-  .gantt-container { padding: 20px 16px; }
-  .gantt-row-label { width: 140px; font-size: .75rem; }
 
   /* Images/SVG responsive */
   img, svg { max-width: 100%; height: auto; }
@@ -1147,7 +1075,6 @@ textarea.form-control { resize: vertical; min-height: 120px; }
       <ul class="nav-links" id="navLinks">
         <li><a href="#" onclick="showPage('home')" data-page="home" class="active" data-fr="Accueil" data-en="Home">Accueil</a></li>
         <li><a href="#" onclick="showPage('modules')" data-page="modules" data-fr="Modules" data-en="Modules">Modules</a></li>
-        <li><a href="#" onclick="showPage('planning')" data-page="planning" data-fr="Planning" data-en="Roadmap">Planning</a></li>
         <li><a href="#" onclick="showPage('pricing')" data-page="pricing" data-fr="Tarifs" data-en="Pricing">Tarifs</a></li>
         <li><a href="#" onclick="showPage('contact')" data-page="contact" data-fr="Contact" data-en="Contact">Contact</a></li>
       </ul>
@@ -1862,80 +1789,6 @@ textarea.form-control { resize: vertical; min-height: 120px; }
 
 
 <!-- ============================================================
-     PAGE: PLANNING
-     ============================================================ -->
-<div class="page" id="page-planning">
-
-  <div class="planning-hero">
-    <div class="container">
-      <div class="pill" style="margin-bottom: 20px;" data-fr="Roadmap de développement" data-en="Development roadmap">Roadmap de développement</div>
-      <h1 style="max-width: 16ch; margin-bottom: 20px;" data-fr-html="10 phases.<br>~7 à 9 mois." data-en-html="10 phases.<br>~7 to 9 months.">10 phases.<br>~7 à 9 mois.</h1>
-      <p style="color: var(--muted); font-size: 1.1rem; max-width: 52ch;" data-fr="Une approche Agile par phases itératives pour livrer de la valeur dès les premières semaines et ajuster selon les retours utilisateurs." data-en="An Agile approach with iterative phases to deliver value from the first weeks and adjust based on user feedback.">Une approche Agile par phases itératives pour livrer de la valeur dès les premières semaines et ajuster selon les retours utilisateurs.</p>
-    </div>
-  </div>
-
-  <div class="divider"></div>
-
-  <!-- Gantt global -->
-  <section class="section-sm">
-    <div class="container">
-      <div class="section-header">
-        <h2 data-fr="Vue globale — 10 mois" data-en="Overview — 10 months">Vue globale — 10 mois</h2>
-        <p style="color: var(--muted);" data-fr="Chaque barre représente les mois d'activité de la phase." data-en="Each bar represents the months of activity for the phase.">Chaque barre représente les mois d'activité de la phase.</p>
-      </div>
-      <div class="gantt-container">
-        <div class="gantt-header">
-          <div class="gantt-label" data-fr="Phase" data-en="Phase">Phase</div>
-          <div class="gantt-months">
-            <div class="gantt-month">M1</div><div class="gantt-month">M2</div>
-            <div class="gantt-month">M3</div><div class="gantt-month">M4</div>
-            <div class="gantt-month">M5</div><div class="gantt-month">M6</div>
-            <div class="gantt-month">M7</div><div class="gantt-month">M8</div>
-            <div class="gantt-month">M9</div><div class="gantt-month">M10</div>
-          </div>
-        </div>
-        <div id="ganttRows"></div>
-      </div>
-
-      <!-- Légende -->
-      <div style="display: flex; gap: 24px; flex-wrap: wrap; margin-top: 20px;">
-        <div style="display:flex; align-items:center; gap: 8px; font-size: .82rem; color: var(--muted);">
-          <div style="width:28px;height:12px;border-radius:3px;background:linear-gradient(90deg,#1D9E75,#2DBD7E)"></div>
-          <span data-fr="Phases 1–4 MVP" data-en="Phases 1–4 MVP">Phases 1–4 MVP</span>
-        </div>
-        <div style="display:flex; align-items:center; gap: 8px; font-size: .82rem; color: var(--muted);">
-          <div style="width:28px;height:12px;border-radius:3px;background:linear-gradient(90deg,#1B5FA0,#2563A8)"></div>
-          <span data-fr="Phases 5–6 Paiements" data-en="Phases 5–6 Payments">Phases 5–6 Paiements</span>
-        </div>
-        <div style="display:flex; align-items:center; gap: 8px; font-size: .82rem; color: var(--muted);">
-          <div style="width:28px;height:12px;border-radius:3px;background:linear-gradient(90deg,#9A5E0E,#B87016)"></div>
-          <span data-fr="Phases 7–8 RH & Fidélité" data-en="Phases 7–8 HR & Loyalty">Phases 7–8 RH & Fidélité</span>
-        </div>
-        <div style="display:flex; align-items:center; gap: 8px; font-size: .82rem; color: var(--muted);">
-          <div style="width:28px;height:12px;border-radius:3px;background:linear-gradient(90deg,#5A54A8,#6B63C5)"></div>
-          <span data-fr="Phases 9–10 Marketing & IA" data-en="Phases 9–10 Marketing & AI">Phases 9–10 Marketing & IA</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- Phase list -->
-  <section class="section">
-    <div class="container">
-      <div class="section-header">
-        <h2 data-fr="Détail des 10 phases" data-en="The 10 phases in detail">Détail des 10 phases</h2>
-        <p style="color: var(--muted);" data-fr="Chaque phase est autonome et livre un incrément fonctionnel testable en conditions réelles." data-en="Each phase is autonomous and delivers a functional increment that can be tested in real-world conditions.">Chaque phase est autonome et livre un incrément fonctionnel testable en conditions réelles.</p>
-      </div>
-      <div class="phase-list" id="phaseList"></div>
-    </div>
-  </section>
-
-</div><!-- /page-planning -->
-
-
-<!-- ============================================================
      PAGE: PRICING
      ============================================================ -->
 <div class="page" id="page-pricing">
@@ -2259,34 +2112,6 @@ textarea.form-control { resize: vertical; min-height: 120px; }
 // ============================================================
 // DATA
 // ============================================================
-const phaseData = [
-  { num:1, title:{fr:'Setup & Architecture technique', en:'Setup & Technical Architecture'}, dur:{fr:'2–3 sem.', en:'2–3 wk'}, weeks:{fr:'S1–S3', en:'W1–W3'}, tag:{fr:'MVP', en:'MVP'}, color:'mvp', modules:['Electron / Tauri','Next.js','Node.js','SQLite','CI/CD','Auth JWT'], desc:{fr:'Initialisation du projet : monorepo, design system, base de données locale, CI/CD, authentification multi-rôles.', en:'Project initialization: monorepo, design system, local database, CI/CD, multi-role authentication.'} },
-  { num:2, title:{fr:'Gestion des stocks', en:'Inventory management'}, dur:{fr:'3–4 sem.', en:'3–4 wk'}, weeks:{fr:'S4–S7', en:'W4–W7'}, tag:{fr:'MVP', en:'MVP'}, color:'mvp', modules:[{fr:'Entrées/Sorties', en:'In/Out'},{fr:'Alertes push', en:'Push alerts'},{fr:'Inventaire', en:'Inventory'},{fr:'Offline sync', en:'Offline sync'},{fr:'Fournisseurs', en:'Suppliers'}], desc:{fr:'Module cœur : stocks, alertes de rupture, inventaire physique, synchronisation offline-first.', en:'Core module: inventory, stock-out alerts, physical inventory, offline-first sync.'} },
-  { num:3, title:{fr:'Caisse & Comptabilité', en:'Cash register & Accounting'}, dur:{fr:'3–4 sem.', en:'3–4 wk'}, weeks:{fr:'S8–S11', en:'W8–W11'}, tag:{fr:'MVP', en:'MVP'}, color:'mvp', modules:[{fr:'Fonds de caisse', en:'Cash float'},{fr:'TVA DGI', en:'DGI VAT'},{fr:'Tickets thermiques', en:'Thermal receipts'},{fr:'Bilans', en:'Reports'}], desc:{fr:'Caisse journalière, bilans financiers, conformité fiscale Cameroun (TVA 19,25 %).', en:'Daily register, financial reports, Cameroon tax compliance (VAT 19.25%).'} },
-  { num:4, title:{fr:'POS tactile & Facturation', en:'Touch POS & Billing'}, dur:{fr:'3–4 sem.', en:'3–4 wk'}, weeks:{fr:'S12–S15', en:'W12–W15'}, tag:{fr:'MVP', en:'MVP'}, color:'mvp', modules:[{fr:'POS tablette', en:'Tablet POS'},{fr:'Tables', en:'Tables'},{fr:'Facturation', en:'Billing'},{fr:'Dashboard gérant', en:'Manager dashboard'}], desc:{fr:'Interface POS tactile, plan de salle, facturation complète, dashboard gérant en temps réel.', en:'Touch POS interface, floor plan, full billing, real-time manager dashboard.'} },
-  { num:5, title:{fr:'Paiements multicanaux', en:'Multi-channel payments'}, dur:{fr:'2–3 sem.', en:'2–3 wk'}, weeks:{fr:'S16–S18', en:'W16–W18'}, tag:{fr:'Paiements', en:'Payments'}, color:'pay', modules:['Orange Money','MTN MOMO',{fr:'Carte / Espèces', en:'Card / Cash'},{fr:'Réconciliation', en:'Reconciliation'}], desc:{fr:'Intégration OM & MOMO, réconciliation automatique, reçus digitaux multi-canaux.', en:'OM & MOMO integration, automatic reconciliation, multi-channel digital receipts.'} },
-  { num:6, title:{fr:'Commandes en ligne & QR code', en:'Online orders & QR code'}, dur:{fr:'3–4 sem.', en:'3–4 wk'}, weeks:{fr:'S19–S22', en:'W19–W22'}, tag:{fr:'Paiements', en:'Payments'}, color:'pay', modules:[{fr:'PWA client', en:'Customer PWA'},{fr:'QR code table', en:'Table QR code'},'Socket.io',{fr:'Notifs push', en:'Push notifs'}], desc:{fr:'Application client PWA, QR codes par table, commandes en temps réel, notifications push.', en:'Customer PWA app, per-table QR codes, real-time orders, push notifications.'} },
-  { num:7, title:{fr:'Gestion RH & Paie', en:'HR & Payroll management'}, dur:{fr:'3–4 sem.', en:'3–4 wk'}, weeks:{fr:'S23–S26', en:'W23–W26'}, tag:{fr:'RH & Fidélité', en:'HR & Loyalty'}, color:'rh', modules:[{fr:'Fiches employés', en:'Employee records'},{fr:'CNPS Cameroun', en:'CNPS Cameroon'},{fr:'Présences', en:'Attendance'},{fr:'Évaluations', en:'Reviews'}], desc:{fr:'Module RH complet, bulletins de paie conformes CNPS, présences/absences, évaluations.', en:'Complete HR module, CNPS-compliant payslips, attendance, reviews.'} },
-  { num:8, title:{fr:'Programme de fidélité & Analytics', en:'Loyalty program & Analytics'}, dur:{fr:'3–4 sem.', en:'3–4 wk'}, weeks:{fr:'S27–S30', en:'W27–W30'}, tag:{fr:'RH & Fidélité', en:'HR & Loyalty'}, color:'rh', modules:[{fr:'Points fidélité', en:'Loyalty points'},{fr:'Niveaux VIP', en:'VIP tiers'},'BI / KPIs',{fr:'Rapports PDF', en:'PDF reports'}], desc:{fr:'Fidélité clients, tableaux de bord BI, KPIs et rapports exportables.', en:'Customer loyalty, BI dashboards, KPIs and exportable reports.'} },
-  { num:9, title:{fr:'Marketing & Publications', en:'Marketing & Posts'}, dur:{fr:'2–3 sem.', en:'2–3 wk'}, weeks:{fr:'S31–S33', en:'W31–W33'}, tag:{fr:'Marketing & IA', en:'Marketing & AI'}, color:'mk', modules:['Facebook','Instagram','WhatsApp Business',{fr:'Promos', en:'Promos'}], desc:{fr:'Publications réseaux sociaux, promotions, happy hours, notifications ciblées.', en:'Social media posts, promotions, happy hours, targeted notifications.'} },
-  { num:10, title:{fr:'Prévisions IA & Multi-établissements', en:'AI forecasting & Multi-location'}, dur:{fr:'3–4 sem.', en:'3–4 wk'}, weeks:{fr:'S34–S37', en:'W34–W37'}, tag:{fr:'Marketing & IA', en:'Marketing & AI'}, color:'mk', modules:[{fr:'IA prévisions', en:'AI forecasts'},{fr:'Anomalies', en:'Anomalies'},{fr:'Multi-sites', en:'Multi-site'},{fr:'Dashboard consolidé', en:'Consolidated dashboard'}], desc:{fr:'Machine learning pour les stocks, détection d\'anomalies, console multi-établissements.', en:'Machine learning for inventory, anomaly detection, multi-location console.'} }
-];
-
-const ganttMap = [
-  [1,0,0,0,0,0,0,0,0,0],
-  [1,1,0,0,0,0,0,0,0,0],
-  [0,1,1,0,0,0,0,0,0,0],
-  [0,0,1,1,0,0,0,0,0,0],
-  [0,0,0,1,1,0,0,0,0,0],
-  [0,0,0,0,1,1,0,0,0,0],
-  [0,0,0,0,0,1,1,0,0,0],
-  [0,0,0,0,0,0,1,1,0,0],
-  [0,0,0,0,0,0,0,1,1,0],
-  [0,0,0,0,0,0,0,0,1,1]
-];
-
-const colorClass = { mvp:'fill-mvp', pay:'fill-pay', rh:'fill-rh', mk:'fill-mk' };
-
 const faqData = [
   { q:{fr:'Comment installer BarManager Pro ?', en:'How do I install BarManager Pro?'}, a:{fr:'Téléchargez l\'installateur Windows (.exe) depuis notre page de téléchargement. Double-cliquez sur le fichier, suivez l\'assistant en 3 étapes, et lancez l\'application. La configuration initiale de votre établissement prend moins de 10 minutes. Une version web est également disponible sans installation.', en:'Download the Windows installer (.exe) from our download page. Double-click the file, follow the 3-step wizard, and launch the app. Initial setup for your business takes less than 10 minutes. A web version is also available without installation.'} },
   { q:{fr:'Puis-je l\'utiliser sans connexion internet ?', en:'Can I use it without an internet connection?'}, a:{fr:'Oui. BarManager Pro version desktop est conçu en mode offline-first. Toutes les opérations critiques — caisse, commandes, stocks — fonctionnent sans connexion grâce à la base de données SQLite embarquée et chiffrée. Les données se synchronisent automatiquement dès qu\'une connexion est disponible via Cloudflare Tunnel.', en:'Yes. The BarManager Pro desktop version is built offline-first. All critical operations — register, orders, inventory — work without a connection thanks to the embedded encrypted SQLite database. Data syncs automatically when a connection is available through Cloudflare Tunnel.'} },
@@ -2324,7 +2149,6 @@ function showPage(name) {
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
   initReveal();
-  if (name === 'planning') renderGantt();
   if (name === 'pricing') initFaq();
   return false;
 }
@@ -2349,48 +2173,6 @@ function initReveal() {
       setTimeout(() => el.classList.add('visible'), i * 60);
     });
   }, 50);
-}
-
-// ============================================================
-// GANTT RENDER
-// ============================================================
-function renderGantt() {
-  const lang = currentLang;
-  const container = document.getElementById('ganttRows');
-  if (!container) return;
-  container.innerHTML = '';
-  const phaseLabel = lang === 'en' ? 'Phase' : 'Phase';
-  phaseData.forEach((ph, idx) => {
-    const row = document.createElement('div');
-    row.className = 'gantt-row';
-    row.innerHTML = `<div class="gantt-row-label">${phaseLabel} ${ph.num} — ${t(ph.title, lang)}</div>
-      <div class="gantt-bars">${ganttMap[idx].map(active =>
-        `<div class="gantt-cell ${active ? colorClass[ph.color] : ''}"></div>`
-      ).join('')}</div>`;
-    container.appendChild(row);
-  });
-
-  // Phase list
-  const plist = document.getElementById('phaseList');
-  if (!plist) return;
-  plist.innerHTML = '';
-  phaseData.forEach(ph => {
-    const row = document.createElement('div');
-    row.className = 'phase-row';
-    row.innerHTML = `
-      <div class="phase-num">0${ph.num > 9 ? ph.num : ph.num}</div>
-      <div class="phase-info">
-        <h3>${t(ph.title, lang)}</h3>
-        <p>${t(ph.desc, lang)}</p>
-        <div class="phase-tags">${ph.modules.map(m => `<span class="phase-tag">${t(m, lang)}</span>`).join('')}</div>
-      </div>
-      <div class="phase-meta">
-        <div class="phase-dur">${t(ph.dur, lang)}</div>
-        <div class="phase-weeks">${t(ph.weeks, lang)}</div>
-        <div class="phase-badge"><span class="badge badge-${ph.color === 'mvp' ? 'green' : ph.color === 'pay' ? 'blue' : 'gold'}">${t(ph.tag, lang)}</span></div>
-      </div>`;
-    plist.appendChild(row);
-  });
 }
 
 // ============================================================
@@ -2498,9 +2280,6 @@ function applyLang(lang) {
   }
 
   // Re-rendu des sections dynamiques si elles ont été générées
-  if (document.getElementById('ganttRows') && document.getElementById('ganttRows').children.length) {
-    renderGantt();
-  }
   if (document.getElementById('faqList') && document.getElementById('faqList').children.length) {
     initFaq();
   }
