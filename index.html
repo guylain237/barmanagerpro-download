@@ -6,6 +6,7 @@
 <title data-fr="BarManager Pro — Gestion intégrale de bar | Cameroun" data-en="BarManager Pro — All-in-one bar management | Cameroon">BarManager Pro — Gestion intégrale de bar | Cameroun</title>
 <meta name="description" data-fr-content="La solution tout-en-un pour les bars et restaurants du Cameroun et d'Afrique Centrale — caisse, stocks, paiements MoMo, conformité DGI." data-en-content="The all-in-one solution for bars and restaurants in Cameroon and Central Africa — POS, inventory, MoMo payments, DGI compliance." content="La solution tout-en-un pour les bars et restaurants du Cameroun et d'Afrique Centrale — caisse, stocks, paiements MoMo, conformité DGI."/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://images.unsplash.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <style>
 /* ============================================================
@@ -1060,10 +1061,92 @@ body.banner-closed { --banner-h: 0px; }
 /* ============================================================
    FEATURES (HOME SECTION)
    ============================================================ */
-.feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-.feature-card { padding: 28px; }
-.feature-card h3 { font-size: 1.1rem; margin: 16px 0 8px; }
-.feature-card p { font-size: .9rem; color: var(--muted); max-width: 100%; }
+.feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.feature-card {
+  padding: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r2);
+  transition: border-color .3s ease, transform .3s ease, box-shadow .3s ease;
+}
+.feature-card:hover {
+  border-color: rgba(212,160,23,.3);
+  transform: translateY(-6px);
+  box-shadow:
+    0 20px 50px rgba(0,0,0,.4),
+    0 0 0 1px rgba(212,160,23,.08);
+}
+/* Image en haut, ratio 16:10, cover */
+.feature-card-image {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: var(--dark3);
+}
+.feature-card-image img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform .7s cubic-bezier(.22,.61,.36,1);
+  filter: saturate(.95);
+}
+.feature-card:hover .feature-card-image img {
+  transform: scale(1.06);
+  filter: saturate(1.05);
+}
+/* Fondu vers le fond de la carte en bas de l'image */
+.feature-card-image::after {
+  content: '';
+  position: absolute; left: 0; right: 0; bottom: 0;
+  height: 55%;
+  background: linear-gradient(180deg, transparent 0%, rgba(35,40,32,.4) 60%, var(--card) 100%);
+  pointer-events: none;
+}
+/* Badge de catégorie en overlay top-left */
+.feature-card-badge {
+  position: absolute;
+  top: 14px; left: 14px;
+  z-index: 2;
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 11px;
+  background: rgba(12,14,11,.78);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 100px;
+  font-family: var(--font-h);
+  font-size: .66rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--white);
+}
+.feature-card-badge-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+}
+/* Corps texte sous l'image */
+.feature-card-body {
+  padding: 24px 26px 28px;
+  display: flex; flex-direction: column;
+  flex: 1;
+}
+.feature-card-tag {
+  font-size: .76rem;
+  font-family: var(--font-h);
+  font-weight: 600;
+  letter-spacing: .02em;
+  margin-bottom: 8px;
+}
+.feature-card h3 { font-size: 1.12rem; margin: 0 0 10px; line-height: 1.25; }
+.feature-card p { font-size: .9rem; color: var(--muted); max-width: 100%; line-height: 1.55; }
+
+@media (max-width: 600px) {
+  .feature-card-body { padding: 20px 20px 22px; }
+  .feature-card-image { aspect-ratio: 16 / 9; }
+}
 
 /* ============================================================
    MODULES PAGE
@@ -1835,78 +1918,124 @@ textarea.form-control { resize: vertical; min-height: 120px; }
         <p class="reveal" style="margin: 0 auto;" data-fr="Conçu pour le contexte camerounais : paiements mobile money, connectivité limitée, TVA DGI — tout est intégré nativement." data-en="Designed for the Cameroonian context: mobile money payments, limited connectivity, DGI VAT — everything is natively integrated.">Conçu pour le contexte camerounais : paiements mobile money, connectivité limitée, TVA DGI — tout est intégré nativement.</p>
       </div>
       <div class="feature-grid stagger">
-        <div class="card feature-card reveal" style="border-top:2px solid #D4A017;">
-          <div class="icon-box icon-box-gold">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#D4A017" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10h18M7 15h1m4 0h1m-7 4h12a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+
+        <!-- 1. Caisse -->
+        <div class="card feature-card reveal">
+          <div class="feature-card-image">
+            <img src="https://images.unsplash.com/photo-1572116469696-31de0f17cc34?w=800&amp;q=80&amp;auto=format&amp;fit=crop" alt="Bar counter and cash register" loading="lazy" decoding="async">
+            <span class="feature-card-badge"><span class="feature-card-badge-dot" style="background:#D4A017"></span><span data-fr="Caisse" data-en="Cash register">Caisse</span></span>
           </div>
-          <h3 data-fr="Caisse" data-en="Cash register">Caisse</h3>
-          <p style="font-size:.8rem;color:#D4A017;font-family:var(--font-h);font-weight:600;margin-bottom:8px;" data-fr="Le coeur financier du bar" data-en="The financial heart of the bar">Le coeur financier du bar</p>
-          <p data-fr="Ouverture / clôture avec fond initial, rapport Z PDF conforme DGI, alerte écart de caisse, audit log complet." data-en="Open / close with initial float, DGI-compliant Z report PDF, cash discrepancy alerts, full audit log.">Ouverture / clôture avec fond initial, rapport Z PDF conforme DGI, alerte écart de caisse, audit log complet.</p>
-        </div>
-        <div class="card feature-card reveal" style="border-top:2px solid #2DBD7E;">
-          <div class="icon-box icon-box-green">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2DBD7E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+          <div class="feature-card-body">
+            <p class="feature-card-tag" style="color:#D4A017" data-fr="Le coeur financier du bar" data-en="The financial heart of the bar">Le coeur financier du bar</p>
+            <h3 data-fr="Caisse" data-en="Cash register">Caisse</h3>
+            <p data-fr="Ouverture / clôture avec fond initial, rapport Z PDF conforme DGI, alerte écart de caisse, audit log complet." data-en="Open / close with initial float, DGI-compliant Z report PDF, cash discrepancy alerts, full audit log.">Ouverture / clôture avec fond initial, rapport Z PDF conforme DGI, alerte écart de caisse, audit log complet.</p>
           </div>
-          <h3 data-fr="POS & Commandes" data-en="POS & Orders">POS & Commandes</h3>
-          <p style="font-size:.8rem;color:#2DBD7E;font-family:var(--font-h);font-weight:600;margin-bottom:8px;" data-fr="Encaissement rapide, sans erreur" data-en="Fast checkout, no errors">Encaissement rapide, sans erreur</p>
-          <p data-fr="Plan de salle par table, multi-paiement (espèces, Orange Money, MoMo, mixte), transfert de table, remboursement partiel." data-en="Floor plan with tables, multi-payment (cash, Orange Money, MoMo, mixed), table transfer, partial refund.">Plan de salle par table, multi-paiement (espèces, Orange Money, MoMo, mixte), transfert de table, remboursement partiel.</p>
         </div>
-        <div class="card feature-card reveal" style="border-top:2px solid #6CA0F7;">
-          <div class="icon-box icon-box-blue">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6CA0F7" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+
+        <!-- 2. POS & Commandes -->
+        <div class="card feature-card reveal">
+          <div class="feature-card-image">
+            <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?w=800&amp;q=80&amp;auto=format&amp;fit=crop" alt="Waiter taking order on tablet POS" loading="lazy" decoding="async">
+            <span class="feature-card-badge"><span class="feature-card-badge-dot" style="background:#2DBD7E"></span><span data-fr="POS & Commandes" data-en="POS & Orders">POS &amp; Commandes</span></span>
           </div>
-          <h3 data-fr="Stocks & Magasin" data-en="Inventory & Warehouse">Stocks & Magasin</h3>
-          <p style="font-size:.8rem;color:#6CA0F7;font-family:var(--font-h);font-weight:600;margin-bottom:8px;" data-fr="Vision temps réel de l'inventaire" data-en="Real-time inventory view">Vision temps réel de l'inventaire</p>
-          <p data-fr="Étagères visuelles, mouvements avec historique, alertes de seuil, inventaires physiques, import Excel/CSV." data-en="Visual shelves, movements with history, threshold alerts, physical inventories, Excel/CSV import.">Étagères visuelles, mouvements avec historique, alertes de seuil, inventaires physiques, import Excel/CSV.</p>
-        </div>
-        <div class="card feature-card reveal" style="border-top:2px solid #F87171;">
-          <div class="icon-box" style="background:rgba(248,113,113,.12);">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F87171" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          <div class="feature-card-body">
+            <p class="feature-card-tag" style="color:#2DBD7E" data-fr="Encaissement rapide, sans erreur" data-en="Fast checkout, no errors">Encaissement rapide, sans erreur</p>
+            <h3 data-fr="POS & Commandes" data-en="POS & Orders">POS & Commandes</h3>
+            <p data-fr="Plan de salle par table, multi-paiement (espèces, Orange Money, MoMo, mixte), transfert de table, remboursement partiel." data-en="Floor plan with tables, multi-payment (cash, Orange Money, MoMo, mixed), table transfer, partial refund.">Plan de salle par table, multi-paiement (espèces, Orange Money, MoMo, mixte), transfert de table, remboursement partiel.</p>
           </div>
-          <h3 data-fr="Fournisseurs" data-en="Suppliers">Fournisseurs</h3>
-          <p style="font-size:.8rem;color:#F87171;font-family:var(--font-h);font-weight:600;margin-bottom:8px;" data-fr="Annuaire et historique commandes" data-en="Directory and order history">Annuaire et historique commandes</p>
-          <p data-fr="Fiche fournisseur complète, historique commandes, notes et tags libres, suggestions de réappro basées sur seuils." data-en="Complete supplier profile, order history, free notes and tags, restocking suggestions based on thresholds.">Fiche fournisseur complète, historique commandes, notes et tags libres, suggestions de réappro basées sur seuils.</p>
         </div>
-        <div class="card feature-card reveal" style="border-top:2px solid #C084FC;">
-          <div class="icon-box icon-box-purple">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C084FC" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+
+        <!-- 3. Stocks & Magasin -->
+        <div class="card feature-card reveal">
+          <div class="feature-card-image">
+            <img src="https://images.unsplash.com/photo-1574096145006-2dcfd6db4b54?w=800&amp;q=80&amp;auto=format&amp;fit=crop" alt="Bottles arranged on bar shelves" loading="lazy" decoding="async">
+            <span class="feature-card-badge"><span class="feature-card-badge-dot" style="background:#6CA0F7"></span><span data-fr="Stocks" data-en="Inventory">Stocks</span></span>
           </div>
-          <h3 data-fr="Dettes & Paiements" data-en="Debts & Payments">Dettes & Paiements</h3>
-          <p style="font-size:.8rem;color:#C084FC;font-family:var(--font-h);font-weight:600;margin-bottom:8px;" data-fr="Suivi fournisseurs sans oubli" data-en="Supplier tracking without oversight">Suivi fournisseurs sans oubli</p>
-          <p data-fr="Dettes fournisseurs avec échéances, paiements partiels, génération PDF facture, alertes automatiques avant échéance." data-en="Supplier debts with due dates, partial payments, PDF invoice generation, automatic alerts before deadlines.">Dettes fournisseurs avec échéances, paiements partiels, génération PDF facture, alertes automatiques avant échéance.</p>
-        </div>
-        <div class="card feature-card reveal" style="border-top:2px solid #34D399;">
-          <div class="icon-box icon-box-green">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+          <div class="feature-card-body">
+            <p class="feature-card-tag" style="color:#6CA0F7" data-fr="Vision temps réel de l'inventaire" data-en="Real-time inventory view">Vision temps réel de l'inventaire</p>
+            <h3 data-fr="Stocks & Magasin" data-en="Inventory & Warehouse">Stocks & Magasin</h3>
+            <p data-fr="Étagères visuelles, mouvements avec historique, alertes de seuil, inventaires physiques, import Excel/CSV." data-en="Visual shelves, movements with history, threshold alerts, physical inventories, Excel/CSV import.">Étagères visuelles, mouvements avec historique, alertes de seuil, inventaires physiques, import Excel/CSV.</p>
           </div>
-          <h3 data-fr="Équipe & Rôles" data-en="Team & Roles">Équipe & Rôles</h3>
-          <p style="font-size:.8rem;color:#34D399;font-family:var(--font-h);font-weight:600;margin-bottom:8px;" data-fr="Permissions granulaires par poste" data-en="Granular permissions per role">Permissions granulaires par poste</p>
-          <p data-fr="4 rôles : Propriétaire, Gérant, Caissier, Serveur — permissions par module, auth sécurisée, audit log par utilisateur." data-en="4 roles: Owner, Manager, Cashier, Server — per-module permissions, secure auth, per-user audit log.">4 rôles : Propriétaire, Gérant, Caissier, Serveur — permissions par module, auth sécurisée, audit log par utilisateur.</p>
         </div>
-        <div class="card feature-card reveal" style="border-top:2px solid #FBBF24;">
-          <div class="icon-box icon-box-gold">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FBBF24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+
+        <!-- 4. Fournisseurs -->
+        <div class="card feature-card reveal">
+          <div class="feature-card-image">
+            <img src="https://images.unsplash.com/photo-1553413077-190dd305871c?w=800&amp;q=80&amp;auto=format&amp;fit=crop" alt="Supplier warehouse with crates" loading="lazy" decoding="async">
+            <span class="feature-card-badge"><span class="feature-card-badge-dot" style="background:#F87171"></span><span data-fr="Fournisseurs" data-en="Suppliers">Fournisseurs</span></span>
           </div>
-          <h3 data-fr="Analytics" data-en="Analytics">Analytics</h3>
-          <p style="font-size:.8rem;color:#FBBF24;font-family:var(--font-h);font-weight:600;margin-bottom:8px;" data-fr="Pilotez par les chiffres" data-en="Drive decisions with data">Pilotez par les chiffres</p>
-          <p data-fr="KPIs temps réel : CA jour/mois/année, top produits, heatmap horaire, comparaison de périodes, export PDF." data-en="Real-time KPIs: revenue day/month/year, top products, hourly heatmap, period comparison, PDF export.">KPIs temps réel : CA jour/mois/année, top produits, heatmap horaire, comparaison de périodes, export PDF.</p>
-        </div>
-        <div class="card feature-card reveal" style="border-top:2px solid #38BDF8;">
-          <div class="icon-box icon-box-blue">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#38BDF8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+          <div class="feature-card-body">
+            <p class="feature-card-tag" style="color:#F87171" data-fr="Annuaire et historique commandes" data-en="Directory and order history">Annuaire et historique commandes</p>
+            <h3 data-fr="Fournisseurs" data-en="Suppliers">Fournisseurs</h3>
+            <p data-fr="Fiche fournisseur complète, historique commandes, notes et tags libres, suggestions de réappro basées sur seuils." data-en="Complete supplier profile, order history, free notes and tags, restocking suggestions based on thresholds.">Fiche fournisseur complète, historique commandes, notes et tags libres, suggestions de réappro basées sur seuils.</p>
           </div>
-          <h3 data-fr="Conformité DGI" data-en="DGI Compliance">Conformité DGI</h3>
-          <p style="font-size:.8rem;color:#38BDF8;font-family:var(--font-h);font-weight:600;margin-bottom:8px;" data-fr="Toujours prêt pour un contrôle fiscal" data-en="Always ready for a tax audit">Toujours prêt pour un contrôle fiscal</p>
-          <p data-fr="TVA 19,25% intégrée nativement, rapport Z quotidien en PDF, numérotation fiscale conforme DGI Cameroun." data-en="VAT 19.25% natively integrated, daily Z report in PDF, DGI Cameroon-compliant fiscal numbering.">TVA 19,25% intégrée nativement, rapport Z quotidien en PDF, numérotation fiscale conforme DGI Cameroun.</p>
         </div>
-        <div class="card feature-card reveal" style="border-top:2px solid #A3E635;">
-          <div class="icon-box" style="background:rgba(163,230,53,.12);">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#A3E635" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+
+        <!-- 5. Dettes & Paiements -->
+        <div class="card feature-card reveal">
+          <div class="feature-card-image">
+            <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&amp;q=80&amp;auto=format&amp;fit=crop" alt="Calculator and invoices for accounting" loading="lazy" decoding="async">
+            <span class="feature-card-badge"><span class="feature-card-badge-dot" style="background:#C084FC"></span><span data-fr="Dettes" data-en="Debts">Dettes</span></span>
           </div>
-          <h3 data-fr="Sécurité & Backup" data-en="Security & Backup">Sécurité & Backup</h3>
-          <p style="font-size:.8rem;color:#A3E635;font-family:var(--font-h);font-weight:600;margin-bottom:8px;" data-fr="Vos données protégées, toujours" data-en="Your data protected, always">Vos données protégées, toujours</p>
-          <p data-fr="Backup auto chiffré toutes les 6h, SQLCipher + JWT + RolesGuard, sync multi-appareils, mode offline-first." data-en="Encrypted auto-backup every 6h, SQLCipher + JWT + RolesGuard, multi-device sync, offline-first mode.">Backup auto chiffré toutes les 6h, SQLCipher + JWT + RolesGuard, sync multi-appareils, mode offline-first.</p>
+          <div class="feature-card-body">
+            <p class="feature-card-tag" style="color:#C084FC" data-fr="Suivi fournisseurs sans oubli" data-en="Supplier tracking without oversight">Suivi fournisseurs sans oubli</p>
+            <h3 data-fr="Dettes & Paiements" data-en="Debts & Payments">Dettes & Paiements</h3>
+            <p data-fr="Dettes fournisseurs avec échéances, paiements partiels, génération PDF facture, alertes automatiques avant échéance." data-en="Supplier debts with due dates, partial payments, PDF invoice generation, automatic alerts before deadlines.">Dettes fournisseurs avec échéances, paiements partiels, génération PDF facture, alertes automatiques avant échéance.</p>
+          </div>
         </div>
+
+        <!-- 6. Équipe & Rôles -->
+        <div class="card feature-card reveal">
+          <div class="feature-card-image">
+            <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=800&amp;q=80&amp;auto=format&amp;fit=crop" alt="Team working together in office" loading="lazy" decoding="async">
+            <span class="feature-card-badge"><span class="feature-card-badge-dot" style="background:#34D399"></span><span data-fr="Équipe" data-en="Team">Équipe</span></span>
+          </div>
+          <div class="feature-card-body">
+            <p class="feature-card-tag" style="color:#34D399" data-fr="Permissions granulaires par poste" data-en="Granular permissions per role">Permissions granulaires par poste</p>
+            <h3 data-fr="Équipe & Rôles" data-en="Team & Roles">Équipe & Rôles</h3>
+            <p data-fr="4 rôles : Propriétaire, Gérant, Caissier, Serveur — permissions par module, auth sécurisée, audit log par utilisateur." data-en="4 roles: Owner, Manager, Cashier, Server — per-module permissions, secure auth, per-user audit log.">4 rôles : Propriétaire, Gérant, Caissier, Serveur — permissions par module, auth sécurisée, audit log par utilisateur.</p>
+          </div>
+        </div>
+
+        <!-- 7. Analytics -->
+        <div class="card feature-card reveal">
+          <div class="feature-card-image">
+            <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&amp;q=80&amp;auto=format&amp;fit=crop" alt="Laptop displaying analytics dashboard" loading="lazy" decoding="async">
+            <span class="feature-card-badge"><span class="feature-card-badge-dot" style="background:#FBBF24"></span><span data-fr="Analytics" data-en="Analytics">Analytics</span></span>
+          </div>
+          <div class="feature-card-body">
+            <p class="feature-card-tag" style="color:#FBBF24" data-fr="Pilotez par les chiffres" data-en="Drive decisions with data">Pilotez par les chiffres</p>
+            <h3 data-fr="Analytics" data-en="Analytics">Analytics</h3>
+            <p data-fr="KPIs temps réel : CA jour/mois/année, top produits, heatmap horaire, comparaison de périodes, export PDF." data-en="Real-time KPIs: revenue day/month/year, top products, hourly heatmap, period comparison, PDF export.">KPIs temps réel : CA jour/mois/année, top produits, heatmap horaire, comparaison de périodes, export PDF.</p>
+          </div>
+        </div>
+
+        <!-- 8. Conformité DGI -->
+        <div class="card feature-card reveal">
+          <div class="feature-card-image">
+            <img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&amp;q=80&amp;auto=format&amp;fit=crop" alt="Fiscal documents and paperwork" loading="lazy" decoding="async">
+            <span class="feature-card-badge"><span class="feature-card-badge-dot" style="background:#38BDF8"></span><span data-fr="DGI" data-en="Tax">DGI</span></span>
+          </div>
+          <div class="feature-card-body">
+            <p class="feature-card-tag" style="color:#38BDF8" data-fr="Toujours prêt pour un contrôle fiscal" data-en="Always ready for a tax audit">Toujours prêt pour un contrôle fiscal</p>
+            <h3 data-fr="Conformité DGI" data-en="DGI Compliance">Conformité DGI</h3>
+            <p data-fr="TVA 19,25% intégrée nativement, rapport Z quotidien en PDF, numérotation fiscale conforme DGI Cameroun." data-en="VAT 19.25% natively integrated, daily Z report in PDF, DGI Cameroon-compliant fiscal numbering.">TVA 19,25% intégrée nativement, rapport Z quotidien en PDF, numérotation fiscale conforme DGI Cameroun.</p>
+          </div>
+        </div>
+
+        <!-- 9. Sécurité & Backup -->
+        <div class="card feature-card reveal">
+          <div class="feature-card-image">
+            <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&amp;q=80&amp;auto=format&amp;fit=crop" alt="Data center server racks" loading="lazy" decoding="async">
+            <span class="feature-card-badge"><span class="feature-card-badge-dot" style="background:#A3E635"></span><span data-fr="Sécurité" data-en="Security">Sécurité</span></span>
+          </div>
+          <div class="feature-card-body">
+            <p class="feature-card-tag" style="color:#A3E635" data-fr="Vos données protégées, toujours" data-en="Your data protected, always">Vos données protégées, toujours</p>
+            <h3 data-fr="Sécurité & Backup" data-en="Security & Backup">Sécurité & Backup</h3>
+            <p data-fr="Backup auto chiffré toutes les 6h, SQLCipher + JWT + RolesGuard, sync multi-appareils, mode offline-first." data-en="Encrypted auto-backup every 6h, SQLCipher + JWT + RolesGuard, multi-device sync, offline-first mode.">Backup auto chiffré toutes les 6h, SQLCipher + JWT + RolesGuard, sync multi-appareils, mode offline-first.</p>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
