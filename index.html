@@ -35,7 +35,7 @@
   --r2:     20px;
 }
 
-html { scroll-behavior: smooth; font-size: 16px; }
+html { scroll-behavior: smooth; font-size: 16px; overflow-x: hidden; }
 
 body {
   background: var(--black);
@@ -44,7 +44,12 @@ body {
   font-weight: 300;
   line-height: 1.65;
   overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
 }
+
+/* Tout image / iframe / svg doit s'auto-contraindre */
+img, iframe, svg, video { max-width: 100%; }
 
 /* ============================================================
    TYPOGRAPHY
@@ -638,9 +643,10 @@ a { color: inherit; text-decoration: none; }
   border-radius: 9px;
   background: rgba(212,160,23,.12);
   display: flex; align-items: center; justify-content: center;
-  font-size: 1rem;
   flex-shrink: 0;
+  color: var(--gold2);
 }
+.video-highlight-icon svg { width: 18px; height: 18px; }
 .video-highlight-text strong {
   display: block;
   font-family: var(--font-h);
@@ -1508,12 +1514,27 @@ textarea.form-control { resize: vertical; min-height: 120px; }
   .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
 
   /* Navbar mobile : flex simple, hamburger + lang switch visibles */
-  .nav-inner { display: flex; justify-content: space-between; gap: 12px; }
+  .nav-inner {
+    display: flex !important;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+  }
   .nav-vegetal { display: none; }
   .hamburger { display: flex; }
   .nav-links { display: none; }
   .nav-cta { gap: 8px; }
-  .nav-cta .btn-primary { display: none; }
+  .nav-cta .btn-primary { display: none !important; }
+  /* Texte du logo masqué : seulement la pastille "B" reste */
+  .nav-logo-text { display: none; }
+  .nav-logo { gap: 0; }
+  .nav-logo-mark { width: 34px; height: 34px; font-size: 1rem; }
+  /* Container compact */
+  .nav .container { padding: 0 14px; }
+  /* Sélecteur langue plus serré */
+  .lang-switch button { padding: 4px 9px; font-size: .68rem; }
+  .hamburger { padding: 6px; }
+  .hamburger span { width: 20px; }
   .nav-links.open {
     display: flex; flex-direction: column; align-items: stretch;
     position: fixed; top: calc(var(--banner-h) + var(--nav-h)); left: 0; right: 0;
@@ -1743,9 +1764,12 @@ textarea.form-control { resize: vertical; min-height: 120px; }
   box-shadow: 0 12px 32px rgba(64,120,210,.15);
 }
 .tree-branch-icon {
-  font-size: 2rem;
-  line-height: 1;
+  display: flex; align-items: center; justify-content: center;
+  height: 36px;
 }
+.tree-branch-icon svg { height: 36px; width: auto; display: block; }
+.tree-branch-desktop .tree-branch-icon { color: var(--green2); }
+.tree-branch-web .tree-branch-icon { color: #6CA0F7; }
 .tree-branch-name {
   font-family: var(--font-h);
   font-size: 1.15rem;
@@ -1834,6 +1858,7 @@ textarea.form-control { resize: vertical; min-height: 120px; }
   font-size: .85rem;
   font-weight: 800;
 }
+.tree-leaf-icon svg { width: 16px; height: 16px; display: block; }
 .tree-leaf-yes .tree-leaf-icon {
   background: rgba(45,189,126,.15);
   color: var(--green2);
@@ -1881,6 +1906,26 @@ textarea.form-control { resize: vertical; min-height: 120px; }
   line-height: 1.6;
 }
 .cmp-note strong { color: var(--text); }
+
+/* Garanties (4 colonnes pricing) */
+.guarantee-item {
+  text-align: center;
+  padding: 24px 16px;
+}
+.guarantee-icon {
+  width: 56px; height: 56px;
+  border-radius: 14px;
+  margin: 0 auto 14px;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(212,160,23,.1);
+  border: 1px solid rgba(212,160,23,.2);
+  color: var(--gold2);
+  overflow: hidden;
+}
+.guarantee-icon svg { width: 26px; height: 26px; }
+.guarantee-icon svg[viewBox="0 0 36 24"] { width: 36px; height: 24px; border-radius: 3px; }
+.guarantee-item h4 { margin-bottom: 8px; }
+.guarantee-item p { font-size: .83rem; color: var(--muted); max-width: 100%; }
 
 /* Responsive : tablette */
 @media (max-width: 900px) {
@@ -1979,7 +2024,7 @@ textarea.form-control { resize: vertical; min-height: 120px; }
       <!-- Logo -->
       <a href="#" class="nav-logo" onclick="showPage('home')">
         <div class="nav-logo-mark">B</div>
-        BarManager <span class="gold">Pro</span>
+        <span class="nav-logo-text">BarManager <span class="gold">Pro</span></span>
       </a>
 
       <!-- Links -->
@@ -2111,7 +2156,7 @@ textarea.form-control { resize: vertical; min-height: 120px; }
   <section class="section" id="video-demo">
     <div class="container">
       <div class="section-header text-c stagger">
-        <div class="pill reveal" data-fr="🎬 Démo en direct" data-en="🎬 Live demo">🎬 Démo en direct</div>
+        <div class="pill reveal" data-fr="Démo en direct" data-en="Live demo">Démo en direct</div>
         <h2 class="reveal" data-fr-html="Voyez BarManager Pro<br>en <em class=&quot;gold&quot;>action réelle</em>" data-en-html="See BarManager Pro<br>in <em class=&quot;gold&quot;>real action</em>">Voyez BarManager Pro<br>en <em class="gold">action réelle</em></h2>
         <p class="reveal" style="margin: 0 auto; color: var(--muted);" data-fr="Une démonstration complète enregistrée sur un vrai établissement — caisse, stocks, paiements MoMo, équipe et plus encore." data-en="A complete walkthrough recorded on a real business — POS, inventory, MoMo payments, team and more.">Une démonstration complète enregistrée sur un vrai établissement — caisse, stocks, paiements MoMo, équipe et plus encore.</p>
       </div>
@@ -2146,28 +2191,54 @@ textarea.form-control { resize: vertical; min-height: 120px; }
       <!-- Ce que vous allez voir : 4 highlights -->
       <div class="video-highlights reveal">
         <div class="video-highlight">
-          <div class="video-highlight-icon">💵</div>
+          <div class="video-highlight-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="6" width="20" height="12" rx="2"/>
+              <circle cx="12" cy="12" r="2.5"/>
+              <line x1="6" y1="12" x2="6.01" y2="12"/>
+              <line x1="18" y1="12" x2="18.01" y2="12"/>
+            </svg>
+          </div>
           <div class="video-highlight-text">
             <strong data-fr="Caisse complète" data-en="Full register">Caisse complète</strong>
             <span data-fr="Ouverture, ventes, clôture & Z" data-en="Open, sales, close & Z report">Ouverture, ventes, clôture & Z</span>
           </div>
         </div>
         <div class="video-highlight">
-          <div class="video-highlight-icon">📦</div>
+          <div class="video-highlight-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+              <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+              <line x1="12" y1="22.08" x2="12" y2="12"/>
+            </svg>
+          </div>
           <div class="video-highlight-text">
             <strong data-fr="Stocks en temps réel" data-en="Real-time inventory">Stocks en temps réel</strong>
             <span data-fr="Entrées, sorties, alertes seuils" data-en="In, out, threshold alerts">Entrées, sorties, alertes seuils</span>
           </div>
         </div>
         <div class="video-highlight">
-          <div class="video-highlight-icon">💳</div>
+          <div class="video-highlight-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="5" width="20" height="14" rx="2"/>
+              <line x1="2" y1="10" x2="22" y2="10"/>
+              <line x1="6" y1="15" x2="9" y2="15"/>
+            </svg>
+          </div>
           <div class="video-highlight-text">
             <strong data-fr="Paiements MoMo & OM" data-en="MoMo & OM payments">Paiements MoMo & OM</strong>
             <span data-fr="Encaissement multi-canaux" data-en="Multi-channel checkout">Encaissement multi-canaux</span>
           </div>
         </div>
         <div class="video-highlight">
-          <div class="video-highlight-icon">📊</div>
+          <div class="video-highlight-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="20" x2="18" y2="10"/>
+              <line x1="12" y1="20" x2="12" y2="4"/>
+              <line x1="6" y1="20" x2="6" y2="14"/>
+              <line x1="3" y1="20" x2="21" y2="20"/>
+            </svg>
+          </div>
           <div class="video-highlight-text">
             <strong data-fr="Analytics & rapports" data-en="Analytics & reports">Analytics & rapports</strong>
             <span data-fr="KPIs et PDF DGI exportables" data-en="KPIs and exportable DGI PDFs">KPIs et PDF DGI exportables</span>
@@ -2452,7 +2523,12 @@ textarea.form-control { resize: vertical; min-height: 120px; }
           <!-- BRANCHE DESKTOP -->
           <div class="tree-branch tree-branch-desktop">
             <div class="tree-branch-card">
-              <div class="tree-branch-icon">💻</div>
+              <div class="tree-branch-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="3" width="20" height="14" rx="2"/>
+                  <path d="M8 21h8M12 17v4"/>
+                </svg>
+              </div>
               <div class="tree-branch-name" data-fr="Desktop" data-en="Desktop">Desktop</div>
               <div class="tree-branch-status">
                 <span class="tree-branch-status-dot" aria-hidden="true"></span>
@@ -2461,56 +2537,56 @@ textarea.form-control { resize: vertical; min-height: 120px; }
             </div>
             <ul class="tree-leaves">
               <li class="tree-leaf tree-leaf-yes">
-                <div class="tree-leaf-icon">✓</div>
+                <div class="tree-leaf-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12.5 10 17.5 19 7.5"/></svg></div>
                 <div class="tree-leaf-content">
                   <span class="tree-leaf-title" data-fr="Caisse & POS complets" data-en="Full register & POS">Caisse &amp; POS complets</span>
                   <span class="tree-leaf-meta" data-fr="Encaissement multi-paiements" data-en="Multi-payment checkout">Encaissement multi-paiements</span>
                 </div>
               </li>
               <li class="tree-leaf tree-leaf-yes">
-                <div class="tree-leaf-icon">✓</div>
+                <div class="tree-leaf-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12.5 10 17.5 19 7.5"/></svg></div>
                 <div class="tree-leaf-content">
                   <span class="tree-leaf-title" data-fr="100% offline-first" data-en="100% offline-first">100% offline-first</span>
                   <span class="tree-leaf-meta" data-fr="Aucune connexion requise" data-en="No connection needed">Aucune connexion requise</span>
                 </div>
               </li>
               <li class="tree-leaf tree-leaf-yes">
-                <div class="tree-leaf-icon">✓</div>
+                <div class="tree-leaf-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12.5 10 17.5 19 7.5"/></svg></div>
                 <div class="tree-leaf-content">
                   <span class="tree-leaf-title" data-fr="Stocks & fournisseurs" data-en="Inventory & suppliers">Stocks &amp; fournisseurs</span>
                   <span class="tree-leaf-meta" data-fr="Module complet, import Excel" data-en="Full module, Excel import">Module complet, import Excel</span>
                 </div>
               </li>
               <li class="tree-leaf tree-leaf-yes">
-                <div class="tree-leaf-icon">✓</div>
+                <div class="tree-leaf-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12.5 10 17.5 19 7.5"/></svg></div>
                 <div class="tree-leaf-content">
                   <span class="tree-leaf-title" data-fr="Conformité DGI Cameroun" data-en="DGI Cameroon compliance">Conformité DGI Cameroun</span>
                   <span class="tree-leaf-meta" data-fr="TVA 19,25% · Rapport Z PDF" data-en="VAT 19.25% · Z report PDF">TVA 19,25% · Rapport Z PDF</span>
                 </div>
               </li>
               <li class="tree-leaf tree-leaf-yes">
-                <div class="tree-leaf-icon">✓</div>
+                <div class="tree-leaf-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12.5 10 17.5 19 7.5"/></svg></div>
                 <div class="tree-leaf-content">
                   <span class="tree-leaf-title" data-fr="Orange Money & MTN MoMo" data-en="Orange Money & MTN MoMo">Orange Money &amp; MTN MoMo</span>
                   <span class="tree-leaf-meta" data-fr="Paiements mobile natifs" data-en="Native mobile payments">Paiements mobile natifs</span>
                 </div>
               </li>
               <li class="tree-leaf tree-leaf-yes">
-                <div class="tree-leaf-icon">✓</div>
+                <div class="tree-leaf-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12.5 10 17.5 19 7.5"/></svg></div>
                 <div class="tree-leaf-content">
                   <span class="tree-leaf-title" data-fr="Backup chiffré local" data-en="Encrypted local backup">Backup chiffré local</span>
                   <span class="tree-leaf-meta" data-fr="Toutes les 6h · cloud optionnel" data-en="Every 6h · optional cloud">Toutes les 6h · cloud optionnel</span>
                 </div>
               </li>
               <li class="tree-leaf tree-leaf-no">
-                <div class="tree-leaf-icon">✕</div>
+                <div class="tree-leaf-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><line x1="6.5" y1="6.5" x2="17.5" y2="17.5"/><line x1="17.5" y1="6.5" x2="6.5" y2="17.5"/></svg></div>
                 <div class="tree-leaf-content">
                   <span class="tree-leaf-title" data-fr="Multi-établissements" data-en="Multi-location">Multi-établissements</span>
                   <span class="tree-leaf-meta" data-fr="Mono-poste uniquement" data-en="Single device only">Mono-poste uniquement</span>
                 </div>
               </li>
               <li class="tree-leaf tree-leaf-no">
-                <div class="tree-leaf-icon">✕</div>
+                <div class="tree-leaf-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><line x1="6.5" y1="6.5" x2="17.5" y2="17.5"/><line x1="17.5" y1="6.5" x2="6.5" y2="17.5"/></svg></div>
                 <div class="tree-leaf-content">
                   <span class="tree-leaf-title" data-fr="Accès distant & mobile" data-en="Remote & mobile access">Accès distant &amp; mobile</span>
                   <span class="tree-leaf-meta" data-fr="Local uniquement" data-en="Local only">Local uniquement</span>
@@ -2522,7 +2598,15 @@ textarea.form-control { resize: vertical; min-height: 120px; }
           <!-- BRANCHE WEB / MOBILE -->
           <div class="tree-branch tree-branch-web">
             <div class="tree-branch-card">
-              <div class="tree-branch-icon">🌐 📱</div>
+              <div class="tree-branch-icon" aria-hidden="true">
+                <svg viewBox="0 0 40 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="10" cy="12" r="8"/>
+                  <line x1="2" y1="12" x2="18" y2="12"/>
+                  <path d="M10 4a12 12 0 0 1 3 8 12 12 0 0 1-3 8 12 12 0 0 1-3-8 12 12 0 0 1 3-8"/>
+                  <rect x="26" y="5" width="11" height="15" rx="1.5"/>
+                  <line x1="31.5" y1="17" x2="31.51" y2="17"/>
+                </svg>
+              </div>
               <div class="tree-branch-name" data-fr="Web SaaS & Mobile" data-en="Web SaaS & Mobile">Web SaaS &amp; Mobile</div>
               <div class="tree-branch-status">
                 <span class="tree-branch-status-dot" aria-hidden="true"></span>
@@ -2531,49 +2615,49 @@ textarea.form-control { resize: vertical; min-height: 120px; }
             </div>
             <ul class="tree-leaves">
               <li class="tree-leaf tree-leaf-soon">
-                <div class="tree-leaf-icon">⏳</div>
+                <div class="tree-leaf-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/></svg></div>
                 <div class="tree-leaf-content">
                   <span class="tree-leaf-title" data-fr="Tous les modules Desktop" data-en="All Desktop modules">Tous les modules Desktop</span>
                   <span class="tree-leaf-meta" data-fr="Caisse, stocks, fournisseurs, RH…" data-en="Register, inventory, suppliers, HR…">Caisse, stocks, fournisseurs, RH…</span>
                 </div>
               </li>
               <li class="tree-leaf tree-leaf-soon">
-                <div class="tree-leaf-icon">⏳</div>
+                <div class="tree-leaf-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/></svg></div>
                 <div class="tree-leaf-content">
                   <span class="tree-leaf-title" data-fr="Cloud natif & synchronisation" data-en="Native cloud & sync">Cloud natif &amp; synchronisation</span>
                   <span class="tree-leaf-meta" data-fr="Multi-appareils en temps réel" data-en="Multi-device real-time">Multi-appareils en temps réel</span>
                 </div>
               </li>
               <li class="tree-leaf tree-leaf-soon">
-                <div class="tree-leaf-icon">⏳</div>
+                <div class="tree-leaf-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/></svg></div>
                 <div class="tree-leaf-content">
                   <span class="tree-leaf-title" data-fr="Accès distant" data-en="Remote access">Accès distant</span>
                   <span class="tree-leaf-meta" data-fr="Gérez votre bar de partout" data-en="Run your bar from anywhere">Gérez votre bar de partout</span>
                 </div>
               </li>
               <li class="tree-leaf tree-leaf-soon">
-                <div class="tree-leaf-icon">⏳</div>
+                <div class="tree-leaf-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/></svg></div>
                 <div class="tree-leaf-content">
                   <span class="tree-leaf-title" data-fr="App mobile iOS & Android" data-en="Mobile app iOS & Android">App mobile iOS &amp; Android</span>
                   <span class="tree-leaf-meta" data-fr="Notifications push & POS tablette" data-en="Push notifications & tablet POS">Notifications push &amp; POS tablette</span>
                 </div>
               </li>
               <li class="tree-leaf tree-leaf-soon">
-                <div class="tree-leaf-icon">⏳</div>
+                <div class="tree-leaf-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/></svg></div>
                 <div class="tree-leaf-content">
                   <span class="tree-leaf-title" data-fr="Multi-établissements" data-en="Multi-location">Multi-établissements</span>
                   <span class="tree-leaf-meta" data-fr="Console pour chaînes (Enterprise)" data-en="Chain console (Enterprise)">Console pour chaînes (Enterprise)</span>
                 </div>
               </li>
               <li class="tree-leaf tree-leaf-soon">
-                <div class="tree-leaf-icon">⏳</div>
+                <div class="tree-leaf-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/></svg></div>
                 <div class="tree-leaf-content">
                   <span class="tree-leaf-title" data-fr="API publique REST + webhooks" data-en="Public REST API + webhooks">API publique REST + webhooks</span>
                   <span class="tree-leaf-meta" data-fr="Intégrations tierces" data-en="Third-party integrations">Intégrations tierces</span>
                 </div>
               </li>
               <li class="tree-leaf tree-leaf-no">
-                <div class="tree-leaf-icon">✕</div>
+                <div class="tree-leaf-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><line x1="6.5" y1="6.5" x2="17.5" y2="17.5"/><line x1="17.5" y1="6.5" x2="6.5" y2="17.5"/></svg></div>
                 <div class="tree-leaf-content">
                   <span class="tree-leaf-title" data-fr="Mode 100% offline" data-en="100% offline mode">Mode 100% offline</span>
                   <span class="tree-leaf-meta" data-fr="Connexion internet requise" data-en="Internet connection required">Connexion internet requise</span>
@@ -2653,7 +2737,9 @@ textarea.form-control { resize: vertical; min-height: 120px; }
       <div class="modules-grid">
         <div class="card module-card card-green">
           <div class="badge badge-green" data-fr="P1 — Essentiel" data-en="P1 — Essential">P1 — Essentiel</div>
-          <div class="icon-box icon-box-green" style="margin-bottom: 16px; width: 52px; height: 52px; font-size: 1.5rem;">📦</div>
+          <div class="icon-box icon-box-green" style="margin-bottom: 16px; width: 52px; height: 52px; color:#2DBD7E;" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+          </div>
           <h3 data-fr="Gestion des stocks" data-en="Inventory management">Gestion des stocks</h3>
           <ul>
             <li data-fr="Entrées & sorties de produits" data-en="Product inflows & outflows">Entrées & sorties de produits</li>
@@ -2666,7 +2752,9 @@ textarea.form-control { resize: vertical; min-height: 120px; }
         </div>
         <div class="card module-card card-green">
           <div class="badge badge-green" data-fr="P1 — Essentiel" data-en="P1 — Essential">P1 — Essentiel</div>
-          <div class="icon-box icon-box-gold" style="margin-bottom: 16px; width: 52px; height: 52px; font-size: 1.5rem;">🧾</div>
+          <div class="icon-box icon-box-gold" style="margin-bottom: 16px; width: 52px; height: 52px; color:#D4A017;" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          </div>
           <h3 data-fr="Facturation & Comptabilité" data-en="Billing & Accounting">Facturation & Comptabilité</h3>
           <ul>
             <li data-fr="Factures de vente et d'achat" data-en="Sales and purchase invoices">Factures de vente et d'achat</li>
@@ -2679,7 +2767,9 @@ textarea.form-control { resize: vertical; min-height: 120px; }
         </div>
         <div class="card module-card card-green">
           <div class="badge badge-green" data-fr="P1 — Essentiel" data-en="P1 — Essential">P1 — Essentiel</div>
-          <div class="icon-box icon-box-blue" style="margin-bottom: 16px; width: 52px; height: 52px; font-size: 1.5rem;">🖥️</div>
+          <div class="icon-box icon-box-blue" style="margin-bottom: 16px; width: 52px; height: 52px; color:#6CA0F7;" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
           <h3 data-fr="POS tactile & Commandes" data-en="Touch POS & Orders">POS tactile & Commandes</h3>
           <ul>
             <li data-fr="Interface tactile pour tablette" data-en="Touch interface for tablet">Interface tactile pour tablette</li>
@@ -2692,7 +2782,9 @@ textarea.form-control { resize: vertical; min-height: 120px; }
         </div>
         <div class="card module-card card-green">
           <div class="badge badge-green" data-fr="P1 — Essentiel" data-en="P1 — Essential">P1 — Essentiel</div>
-          <div class="icon-box icon-box-green" style="margin-bottom: 16px; width: 52px; height: 52px; font-size: 1.5rem;">💳</div>
+          <div class="icon-box icon-box-green" style="margin-bottom: 16px; width: 52px; height: 52px; color:#2DBD7E;" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+          </div>
           <h3 data-fr="Paiements multicanaux" data-en="Multi-channel payments">Paiements multicanaux</h3>
           <ul>
             <li data-fr="Orange Money (API officielle)" data-en="Orange Money (official API)">Orange Money (API officielle)</li>
@@ -2705,7 +2797,9 @@ textarea.form-control { resize: vertical; min-height: 120px; }
         </div>
         <div class="card module-card card-green">
           <div class="badge badge-green" data-fr="P1 — Essentiel" data-en="P1 — Essential">P1 — Essentiel</div>
-          <div class="icon-box icon-box-purple" style="margin-bottom: 16px; width: 52px; height: 52px; font-size: 1.5rem;">🔐</div>
+          <div class="icon-box icon-box-purple" style="margin-bottom: 16px; width: 52px; height: 52px; color:#C084FC;" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/><circle cx="12" cy="16" r="1"/></svg>
+          </div>
           <h3 data-fr="Auth & Rôles multi-profils" data-en="Auth & Multi-profile Roles">Auth & Rôles multi-profils</h3>
           <ul>
             <li data-fr="Gérant — accès complet" data-en="Manager — full access">Gérant — accès complet</li>
@@ -2726,7 +2820,9 @@ textarea.form-control { resize: vertical; min-height: 120px; }
       <div class="modules-grid">
         <div class="card module-card card-accent">
           <div class="badge badge-gold" data-fr="P2 — Important" data-en="P2 — Important">P2 — Important</div>
-          <div class="icon-box icon-box-gold" style="margin-bottom: 16px; width: 52px; height: 52px; font-size: 1.5rem;">👥</div>
+          <div class="icon-box icon-box-gold" style="margin-bottom: 16px; width: 52px; height: 52px; color:#D4A017;" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
           <h3 data-fr="RH & Paie" data-en="HR & Payroll">RH & Paie</h3>
           <ul>
             <li data-fr="Fiches employés complètes" data-en="Complete employee records">Fiches employés complètes</li>
@@ -2737,7 +2833,9 @@ textarea.form-control { resize: vertical; min-height: 120px; }
         </div>
         <div class="card module-card card-accent">
           <div class="badge badge-gold" data-fr="P2 — Important" data-en="P2 — Important">P2 — Important</div>
-          <div class="icon-box icon-box-gold" style="margin-bottom: 16px; width: 52px; height: 52px; font-size: 1.5rem;">⭐</div>
+          <div class="icon-box icon-box-gold" style="margin-bottom: 16px; width: 52px; height: 52px; color:#D4A017;" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
           <h3 data-fr="Programme de fidélité" data-en="Loyalty program">Programme de fidélité</h3>
           <ul>
             <li data-fr="Points attribués automatiquement" data-en="Automatically awarded points">Points attribués automatiquement</li>
@@ -2748,7 +2846,9 @@ textarea.form-control { resize: vertical; min-height: 120px; }
         </div>
         <div class="card module-card card-accent">
           <div class="badge badge-gold" data-fr="P2 — Important" data-en="P2 — Important">P2 — Important</div>
-          <div class="icon-box icon-box-purple" style="margin-bottom: 16px; width: 52px; height: 52px; font-size: 1.5rem;">📢</div>
+          <div class="icon-box icon-box-purple" style="margin-bottom: 16px; width: 52px; height: 52px; color:#C084FC;" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+          </div>
           <h3 data-fr="Marketing & Publications" data-en="Marketing & Posts">Marketing & Publications</h3>
           <ul>
             <li data-fr="Facebook & Instagram intégrés" data-en="Facebook & Instagram integrated">Facebook & Instagram intégrés</li>
@@ -2759,7 +2859,9 @@ textarea.form-control { resize: vertical; min-height: 120px; }
         </div>
         <div class="card module-card card-accent">
           <div class="badge badge-gold" data-fr="P2 — Important" data-en="P2 — Important">P2 — Important</div>
-          <div class="icon-box icon-box-gold" style="margin-bottom: 16px; width: 52px; height: 52px; font-size: 1.5rem;">📈</div>
+          <div class="icon-box icon-box-gold" style="margin-bottom: 16px; width: 52px; height: 52px; color:#D4A017;" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+          </div>
           <h3 data-fr="Analytics & BI" data-en="Analytics & BI">Analytics & BI</h3>
           <ul>
             <li data-fr="Tableaux de bord en temps réel" data-en="Real-time dashboards">Tableaux de bord en temps réel</li>
@@ -2905,7 +3007,7 @@ textarea.form-control { resize: vertical; min-height: 120px; }
 
         <!-- Pro (featured) -->
         <div class="card plan-card featured" style="position: relative;">
-          <div class="plan-badge" data-fr="⭐ Le plus populaire" data-en="⭐ Most popular">⭐ Le plus populaire</div>
+          <div class="plan-badge" data-fr="Le plus populaire" data-en="Most popular">Le plus populaire</div>
           <div class="plan-name">Pro</div>
           <div class="plan-price" style="display:block; margin-bottom:6px;">
             <strong style="font-family:var(--font-h); font-size:2.6rem; font-weight:800; color:var(--gold); letter-spacing:-.04em;" data-fr="À définir" data-en="TBD">À définir</strong>
@@ -2949,25 +3051,54 @@ textarea.form-control { resize: vertical; min-height: 120px; }
 
       <!-- Garanties -->
       <div class="grid-4" style="margin-top: 60px;">
-        <div style="text-align: center; padding: 24px 16px;">
-          <div style="font-size: 2rem; margin-bottom: 12px;">🔒</div>
-          <h4 style="margin-bottom: 8px;" data-fr="Données sécurisées" data-en="Secure data">Données sécurisées</h4>
-          <p style="font-size: .83rem; color: var(--muted); max-width: 100%;" data-fr="Chiffrement AES-256, sauvegardes automatiques quotidiennes." data-en="AES-256 encryption, daily automatic backups.">Chiffrement AES-256, sauvegardes automatiques quotidiennes.</p>
+        <div class="guarantee-item">
+          <div class="guarantee-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="11" width="18" height="11" rx="2"/>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+            </svg>
+          </div>
+          <h4 data-fr="Données sécurisées" data-en="Secure data">Données sécurisées</h4>
+          <p data-fr="Chiffrement AES-256, sauvegardes automatiques quotidiennes." data-en="AES-256 encryption, daily automatic backups.">Chiffrement AES-256, sauvegardes automatiques quotidiennes.</p>
         </div>
-        <div style="text-align: center; padding: 24px 16px;">
-          <div style="font-size: 2rem; margin-bottom: 12px;">📡</div>
-          <h4 style="margin-bottom: 8px;" data-fr="Offline garanti" data-en="Offline guaranteed">Offline garanti</h4>
-          <p style="font-size: .83rem; color: var(--muted); max-width: 100%;" data-fr="Fonctionne sans connexion internet. Sync au retour." data-en="Works without internet. Syncs when back online.">Fonctionne sans connexion internet. Sync au retour.</p>
+        <div class="guarantee-item">
+          <div class="guarantee-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12a7 7 0 0 1 14 0"/>
+              <path d="M8.5 12a3.5 3.5 0 0 1 7 0"/>
+              <circle cx="12" cy="12" r="1"/>
+              <line x1="12" y1="17" x2="12" y2="21"/>
+              <line x1="8" y1="21" x2="16" y2="21"/>
+            </svg>
+          </div>
+          <h4 data-fr="Offline garanti" data-en="Offline guaranteed">Offline garanti</h4>
+          <p data-fr="Fonctionne sans connexion internet. Sync au retour." data-en="Works without internet. Syncs when back online.">Fonctionne sans connexion internet. Sync au retour.</p>
         </div>
-        <div style="text-align: center; padding: 24px 16px;">
-          <div style="font-size: 2rem; margin-bottom: 12px;">🇨🇲</div>
-          <h4 style="margin-bottom: 8px;" data-fr="Conformité locale" data-en="Local compliance">Conformité locale</h4>
-          <p style="font-size: .83rem; color: var(--muted); max-width: 100%;" data-fr="TVA DGI, CNPS, numérotation fiscale Cameroun." data-en="DGI VAT, CNPS, Cameroon fiscal numbering.">TVA DGI, CNPS, numérotation fiscale Cameroun.</p>
+        <div class="guarantee-item">
+          <div class="guarantee-icon" aria-hidden="true">
+            <!-- Drapeau Cameroun stylisé -->
+            <svg viewBox="0 0 36 24" fill="none">
+              <rect width="12" height="24" fill="#2DBD7E"/>
+              <rect x="12" width="12" height="24" fill="#C8132F"/>
+              <rect x="24" width="12" height="24" fill="#FBBF24"/>
+              <polygon points="18,9 19.5,12.5 23,12.5 20,14.5 21,18 18,16 15,18 16,14.5 13,12.5 16.5,12.5" fill="#FBBF24"/>
+              <rect width="36" height="24" fill="none" stroke="rgba(255,255,255,.2)" stroke-width="1"/>
+            </svg>
+          </div>
+          <h4 data-fr="Conformité locale" data-en="Local compliance">Conformité locale</h4>
+          <p data-fr="TVA DGI, CNPS, numérotation fiscale Cameroun." data-en="DGI VAT, CNPS, Cameroon fiscal numbering.">TVA DGI, CNPS, numérotation fiscale Cameroun.</p>
         </div>
-        <div style="text-align: center; padding: 24px 16px;">
-          <div style="font-size: 2rem; margin-bottom: 12px;">🤝</div>
-          <h4 style="margin-bottom: 8px;" data-fr="Support local" data-en="Local support">Support local</h4>
-          <p style="font-size: .83rem; color: var(--muted); max-width: 100%;" data-fr-html="Équipe basée à Douala &amp; Yaoundé. Support en français 🇫🇷 et anglais 🇬🇧." data-en-html="Team based in Douala &amp; Yaoundé. Support in French 🇫🇷 and English 🇬🇧.">Équipe basée à Douala &amp; Yaoundé. Support en français 🇫🇷 et anglais 🇬🇧.</p>
+        <div class="guarantee-item">
+          <div class="guarantee-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+          </div>
+          <h4 data-fr="Support local" data-en="Local support">Support local</h4>
+          <p data-fr="Équipe basée à Douala &amp; Yaoundé. Support en français et anglais." data-en="Team based in Douala &amp; Yaoundé. Support in French and English.">Équipe basée à Douala &amp; Yaoundé. Support en français et anglais.</p>
         </div>
       </div>
     </div>
@@ -3017,28 +3148,47 @@ textarea.form-control { resize: vertical; min-height: 120px; }
           <p data-fr="Que vous soyez gérant d'un bar à Douala, Yaoundé ou ailleurs au Cameroun, notre équipe vous accompagne dans la prise en main et le déploiement." data-en="Whether you run a bar in Douala, Yaoundé or elsewhere in Cameroon, our team will help you with onboarding and deployment.">Que vous soyez gérant d'un bar à Douala, Yaoundé ou ailleurs au Cameroun, notre équipe vous accompagne dans la prise en main et le déploiement.</p>
           <div class="contact-items">
             <div class="contact-item">
-              <div class="icon-box icon-box-gold">📍</div>
+              <div class="icon-box icon-box-gold" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#D4A017" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="20" height="20">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                  <circle cx="12" cy="10" r="3"/>
+                </svg>
+              </div>
               <div>
                 <h4 data-fr="Adresses" data-en="Addresses">Adresses</h4>
                 <p>Douala, Akwa — Yaoundé, Bastos</p>
               </div>
             </div>
             <div class="contact-item">
-              <div class="icon-box icon-box-green">📞</div>
+              <div class="icon-box icon-box-green" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#2DBD7E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="20" height="20">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                </svg>
+              </div>
               <div>
                 <h4 data-fr="Téléphone / WhatsApp" data-en="Phone / WhatsApp">Téléphone / WhatsApp</h4>
                 <p>+237 6 XX XX XX XX</p>
               </div>
             </div>
             <div class="contact-item">
-              <div class="icon-box icon-box-blue">✉️</div>
+              <div class="icon-box icon-box-blue" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#6CA0F7" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="20" height="20">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                  <polyline points="22,6 12,13 2,6"/>
+                </svg>
+              </div>
               <div>
                 <h4>Email</h4>
                 <p>contact@barmanagerpro.cm</p>
               </div>
             </div>
             <div class="contact-item">
-              <div class="icon-box icon-box-purple">🕐</div>
+              <div class="icon-box icon-box-purple" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#C084FC" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="20" height="20">
+                  <circle cx="12" cy="12" r="10"/>
+                  <polyline points="12 6 12 12 16 14"/>
+                </svg>
+              </div>
               <div>
                 <h4 data-fr="Disponibilité" data-en="Availability">Disponibilité</h4>
                 <p data-fr="Lun – Sam, 8h à 19h (WAT)" data-en="Mon – Sat, 8am to 7pm (WAT)">Lun – Sam, 8h à 19h (WAT)</p>
