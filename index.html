@@ -519,12 +519,41 @@ a { color: inherit; text-decoration: none; }
   pointer-events: none;
   z-index: 2;
 }
-.video-wrapper iframe {
+.video-wrapper iframe,
+.video-wrapper video {
   position: absolute; inset: 0;
   width: 100%; height: 100%;
   border: none;
   display: block;
+  object-fit: cover;
+  background: #000;
 }
+/* Indicateur "Muet — Cliquez pour activer le son" */
+.video-unmute {
+  position: absolute;
+  bottom: 16px; right: 16px;
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 14px;
+  background: rgba(12,14,11,.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(212,160,23,.4);
+  border-radius: 100px;
+  color: var(--white);
+  font-family: var(--font-h);
+  font-size: .76rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .2s ease;
+  z-index: 3;
+}
+.video-unmute:hover {
+  background: var(--gold);
+  color: #0C0E0B;
+  border-color: var(--gold);
+  transform: translateY(-1px);
+}
+.video-unmute.hidden { opacity: 0; pointer-events: none; transform: translateY(8px); }
 .video-caption {
   text-align: center;
   margin-top: 24px;
@@ -1423,14 +1452,35 @@ textarea.form-control { resize: vertical; min-height: 120px; }
         <p class="reveal" style="margin: 0 auto; color: var(--muted);" data-fr="Une démonstration complète des modules essentiels — caisse, stocks, paiements et plus encore." data-en="A complete walkthrough of the essential modules — POS, inventory, payments and more.">Une démonstration complète des modules essentiels — caisse, stocks, paiements et plus encore.</p>
       </div>
       <div class="video-wrapper reveal">
-        <iframe
-          src="https://drive.google.com/file/d/1G3aEM7xTejMIpE0bYimrv6Zip2ztQZ0l/preview"
-          allow="autoplay; fullscreen"
-          allowfullscreen
-          loading="lazy"
-          title="BarManager Pro — Démonstration"></iframe>
+        <video
+          id="demoVideo"
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="auto"
+          controls
+          poster=""
+          title="BarManager Pro — Démonstration">
+          <source src="https://drive.google.com/uc?export=download&amp;id=1G3aEM7xTejMIpE0bYimrv6Zip2ztQZ0l" type="video/mp4">
+          <!-- Fallback iframe si la balise video ne peut pas charger le fichier Drive -->
+          <iframe
+            src="https://drive.google.com/file/d/1G3aEM7xTejMIpE0bYimrv6Zip2ztQZ0l/preview"
+            allow="autoplay; fullscreen"
+            allowfullscreen
+            loading="lazy"
+            title="BarManager Pro — Démonstration"></iframe>
+        </video>
+        <button class="video-unmute" id="videoUnmute" onclick="unmuteVideo()" aria-label="Activer le son">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+            <line x1="23" y1="9" x2="17" y2="15"/>
+            <line x1="17" y1="9" x2="23" y2="15"/>
+          </svg>
+          <span data-fr="Activer le son" data-en="Unmute">Activer le son</span>
+        </button>
       </div>
-      <p class="video-caption reveal" data-fr-html="Astuce : cliquez sur l'icône plein écran de la vidéo pour profiter de la démo en <strong>grand format</strong>." data-en-html="Tip: click the video's fullscreen icon to enjoy the demo in <strong>large format</strong>.">Astuce : cliquez sur l'icône plein écran de la vidéo pour profiter de la démo en <strong>grand format</strong>.</p>
+      <p class="video-caption reveal" data-fr-html="La vidéo se lance automatiquement en mode silencieux. Cliquez sur <strong>« Activer le son »</strong> pour entendre la voix-off." data-en-html="The video plays automatically muted. Click <strong>"Unmute"</strong> to enable sound.">La vidéo se lance automatiquement en mode silencieux. Cliquez sur <strong>« Activer le son »</strong> pour entendre la voix-off.</p>
     </div>
   </section>
 
@@ -2457,6 +2507,20 @@ function closeBanner() {
     banner.style.display = 'none';
     document.body.classList.add('banner-closed');
   }
+}
+
+// ============================================================
+// VIDÉO DÉMO — gestion du son
+// ============================================================
+function unmuteVideo() {
+  const v = document.getElementById('demoVideo');
+  const btn = document.getElementById('videoUnmute');
+  if (!v) return;
+  v.muted = false;
+  v.volume = 1;
+  // Si la lecture s'est mise en pause par sécurité du navigateur, on relance
+  if (v.paused) v.play().catch(() => {});
+  if (btn) btn.classList.add('hidden');
 }
 
 // ============================================================
