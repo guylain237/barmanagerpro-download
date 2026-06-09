@@ -30,7 +30,7 @@
   --font-h: 'Syne', sans-serif;
   --font-b: 'Geist', 'DM Sans', ui-sans-serif, system-ui, sans-serif;
   --nav-h:  68px;
-  --banner-h: 38px;
+  --banner-h: 0px;
   --r:      12px;
   --r2:     20px;
 }
@@ -474,6 +474,68 @@ a { color: inherit; text-decoration: none; }
 }
 .dl-version { font-size: .73rem; color: var(--muted); margin-top: -8px; }
 
+
+/* ============================================================
+   SECTION VIDÉO DÉMO
+   ============================================================ */
+#video-demo {
+  background:
+    radial-gradient(ellipse 60% 50% at 50% 0%, rgba(212,160,23,.06) 0%, transparent 60%),
+    var(--black);
+}
+.video-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--r2);
+  overflow: hidden;
+  background: var(--dark2);
+  border: 1px solid var(--border2);
+  box-shadow:
+    0 40px 100px rgba(0,0,0,.55),
+    0 0 0 1px rgba(255,255,255,.04),
+    0 0 80px rgba(212,160,23,.06);
+  transition: transform .4s ease, box-shadow .4s ease;
+}
+.video-wrapper:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 50px 120px rgba(0,0,0,.6),
+    0 0 0 1px rgba(212,160,23,.12),
+    0 0 100px rgba(212,160,23,.1);
+}
+.video-wrapper::before {
+  content: '';
+  position: absolute; inset: 0;
+  border-radius: var(--r2);
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(212,160,23,.4), transparent 40%, transparent 60%, rgba(45,189,126,.3));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: 2;
+}
+.video-wrapper iframe {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  border: none;
+  display: block;
+}
+.video-caption {
+  text-align: center;
+  margin-top: 24px;
+  font-size: .85rem;
+  color: var(--muted);
+}
+.video-caption strong { color: var(--text); font-weight: 600; }
+@media (max-width: 600px) {
+  .video-wrapper { border-radius: var(--r); }
+  .video-caption { font-size: .78rem; margin-top: 18px; padding: 0 8px; }
+}
 
 /* Noise overlay */
 .noise::after {
@@ -1206,18 +1268,6 @@ textarea.form-control { resize: vertical; min-height: 120px; }
 </head>
 <body>
 
-<!-- ============================================================
-     BANDEAU VERSION WEB BIENTÔT
-     ============================================================ -->
-<div class="top-banner" id="topBanner" role="region" aria-label="Annonce produit">
-  <span class="top-banner-badge">
-    <span class="top-banner-dot" aria-hidden="true"></span>
-    <span data-fr="Nouveau" data-en="New">Nouveau</span>
-  </span>
-  <span class="top-banner-message" data-fr-html="Version web SaaS en développement — <strong>Desktop disponible dès maintenant</strong>." data-en-html="Web SaaS version in development — <strong>Desktop available right now</strong>.">Version web SaaS en développement — <strong>Desktop disponible dès maintenant</strong>.</span>
-  <a class="top-banner-cta" href="https://github.com/guylain237/barmanagerpro-download/releases/download/v1.0.2/BarManager.Pro_1.0.2_x64-setup.exe" rel="noopener" download onclick="trackDownload(event)" data-fr="Télécharger" data-en="Download">Télécharger</a>
-  <button class="top-banner-close" onclick="closeBanner()" aria-label="Fermer le bandeau">✕</button>
-</div>
 
 <!-- ============================================================
      NAVBAR
@@ -1359,6 +1409,28 @@ textarea.form-control { resize: vertical; min-height: 120px; }
           </div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Section Vidéo démo -->
+  <section class="section" id="video-demo">
+    <div class="container">
+      <div class="section-header text-c stagger">
+        <div class="pill reveal" data-fr="Démo vidéo" data-en="Video demo">Démo vidéo</div>
+        <h2 class="reveal" data-fr-html="Découvrez BarManager Pro<br>en action" data-en-html="See BarManager Pro<br>in action">Découvrez BarManager Pro<br>en action</h2>
+        <p class="reveal" style="margin: 0 auto; color: var(--muted);" data-fr="Une démonstration complète des modules essentiels — caisse, stocks, paiements et plus encore." data-en="A complete walkthrough of the essential modules — POS, inventory, payments and more.">Une démonstration complète des modules essentiels — caisse, stocks, paiements et plus encore.</p>
+      </div>
+      <div class="video-wrapper reveal">
+        <iframe
+          src="https://drive.google.com/file/d/1G3aEM7xTejMIpE0bYimrv6Zip2ztQZ0l/preview"
+          allow="autoplay; fullscreen"
+          allowfullscreen
+          loading="lazy"
+          title="BarManager Pro — Démonstration"></iframe>
+      </div>
+      <p class="video-caption reveal" data-fr-html="Astuce : cliquez sur l'icône plein écran de la vidéo pour profiter de la démo en <strong>grand format</strong>." data-en-html="Tip: click the video's fullscreen icon to enjoy the demo in <strong>large format</strong>.">Astuce : cliquez sur l'icône plein écran de la vidéo pour profiter de la démo en <strong>grand format</strong>.</p>
     </div>
   </section>
 
