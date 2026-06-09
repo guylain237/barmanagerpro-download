@@ -778,15 +778,18 @@ body.banner-closed { --banner-h: 0px; }
   transform: translateY(-50%) rotate(172deg) scaleY(-1) translateX(-4px);
 }
 
+.nav .container { height: 100%; }
 .nav-inner {
   height: 100%;
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
+  align-content: center;
   gap: 24px;
   position: relative;
   z-index: 2;
 }
+.nav-inner > * { align-self: center; }
 
 /* Logo */
 .nav-logo {
