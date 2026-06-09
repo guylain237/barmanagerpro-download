@@ -2,7 +2,7 @@
 
 *La solution tout-en-un de gestion de bar et restaurant pour le Cameroun et l'Afrique Centrale.*
 
-![Version](https://img.shields.io/badge/version-1.0.2-amber)
+![Version](https://img.shields.io/badge/version-1.0.6-amber)
 ![Desktop](https://img.shields.io/badge/desktop-disponible-green)
 ![Web SaaS](https://img.shields.io/badge/web%20SaaS-bient%C3%B4t-orange)
 ![Pays](https://img.shields.io/badge/pays%20support%C3%A9s-29-blue)
@@ -88,7 +88,7 @@ La protection des données des établissements est une priorité non négociable
 
 | Version | Date prévue | Faits marquants |
 |---|---|---|
-| **v1.0.2** | Avril 2026 | Version Desktop stable. Neuf modules complets. Conformité DGI. Mobile Money. 29 pays. |
+| **v1.0.6** | Avril 2026 | Version Desktop stable. Neuf modules complets. Conformité DGI. Mobile Money. 29 pays. |
 | **v1.1** | Été 2026 | Application Web SaaS — accès depuis n'importe quel navigateur, synchronisation cloud |
 | **v1.2** | Automne 2026 | Application mobile native iOS et Android |
 | **v1.3** | Hiver 2026-2027 | Multi-établissements pour les chaînes, API publique REST, SSO entreprise |
@@ -98,7 +98,7 @@ La protection des données des établissements est une priorité non négociable
 
 ## Téléchargement
 
-**[Télécharger BarManager Pro v1.0.2 pour Windows](https://github.com/guylain237/barmanagerpro-download/releases/download/v1.0.2/BarManager.Pro_1.0.2_x64-setup.exe)** — 35 Mo, Windows 10/11 64-bit, installation en un clic, aucune configuration requise.
+**[Télécharger BarManager Pro v1.0.6 pour Windows](https://github.com/guylain237/barmanagerpro-download/releases/download/v1.0.6/BarManager.Pro_1.0.6_x64-setup.exe)** — 35 Mo, Windows 10/11 64-bit, installation en un clic, aucune configuration requise.
 
 La version Web SaaS sera bientôt disponible sur [https://barmanagerpro.cm](https://barmanagerpro.cm).
 
