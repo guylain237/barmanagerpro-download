@@ -1009,7 +1009,10 @@ body.banner-closed { --banner-h: 0px; }
   border: 1px solid var(--border2);
   border-radius: var(--r2);
   overflow: hidden;
-  box-shadow: 0 40px 120px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.04);
+  box-shadow:
+    0 40px 120px rgba(0,0,0,.6),
+    0 0 0 1px rgba(255,255,255,.04),
+    0 0 80px rgba(212,160,23,.08);
   transform: perspective(1200px) rotateY(-8deg) rotateX(3deg);
   transition: transform .4s ease;
 }
@@ -1022,7 +1025,7 @@ body.banner-closed { --banner-h: 0px; }
   display: flex; align-items: center; gap: 14px;
   border-bottom: 1px solid var(--border);
 }
-.db-dots { display: flex; gap: 6px; }
+.db-dots { display: flex; gap: 6px; flex-shrink: 0; }
 .db-dot {
   width: 10px; height: 10px; border-radius: 50%;
 }
@@ -1032,30 +1035,127 @@ body.banner-closed { --banner-h: 0px; }
   font-weight: 700;
   color: var(--gold);
   margin-left: 4px;
+  flex: 1;
+  display: flex; align-items: center; gap: 8px;
+  white-space: nowrap;
+  overflow: hidden;
 }
-.db-body { padding: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-.db-card {
+.db-logo-title {
+  color: var(--text);
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.db-live {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 2px 8px;
+  background: rgba(45,189,126,.12);
+  border: 1px solid rgba(45,189,126,.3);
+  border-radius: 100px;
+  font-size: .62rem;
+  font-weight: 700;
+  color: var(--green2);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+.db-live-dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--green2);
+  box-shadow: 0 0 6px var(--green2);
+  animation: bannerDotPulse 2s ease-out infinite;
+}
+
+/* Carrousel d'images */
+.db-carousel {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  background: #0A0C08;
+  overflow: hidden;
+}
+.db-slide {
+  position: absolute; inset: 0;
+  opacity: 0;
+  transform: scale(1.02);
+  transition: opacity .6s ease, transform .8s ease;
+  pointer-events: none;
+}
+.db-slide.active {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+.db-slide img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Flèches navigation */
+.db-nav {
+  position: absolute; top: 50%;
+  transform: translateY(-50%);
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: rgba(12,14,11,.7);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,.12);
+  color: var(--white);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem;
+  opacity: 0;
+  transition: opacity .25s ease, background .25s ease, transform .25s ease;
+  z-index: 3;
+}
+.db-nav-prev { left: 12px; }
+.db-nav-next { right: 12px; }
+.dashboard-preview:hover .db-nav { opacity: 1; }
+.db-nav:hover {
+  background: var(--gold);
+  color: #0C0E0B;
+  border-color: var(--gold);
+}
+.db-nav-prev:hover { transform: translateY(-50%) translateX(-2px); }
+.db-nav-next:hover { transform: translateY(-50%) translateX(2px); }
+
+/* Indicateurs (pills sous le carrousel, dans la barre de pied) */
+.db-footer {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px;
+  padding: 12px 18px;
   background: var(--dark3);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 16px;
+  border-top: 1px solid var(--border);
+  font-family: var(--font-h);
+  font-size: .72rem;
+  color: var(--muted);
 }
-.db-card-label { font-size: .72rem; color: var(--muted); font-family: var(--font-h); font-weight: 600; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 6px; }
-.db-card-val { font-family: var(--font-h); font-size: 1.45rem; font-weight: 800; color: var(--white); }
-.db-card-delta { font-size: .72rem; color: var(--green); margin-top: 2px; }
-.db-chart { grid-column: 1 / -1; background: var(--dark3); border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
-.db-chart-bars {
-  display: flex; align-items: flex-end; gap: 6px;
-  height: 72px; margin-top: 12px;
+.db-indicators {
+  display: flex; gap: 6px;
+  flex: 1;
+  justify-content: center;
 }
-.db-bar {
-  flex: 1; border-radius: 4px 4px 0 0;
-  background: rgba(212,160,23,.25);
-  transition: background .2s;
+.db-indicator {
+  width: 22px; height: 4px;
+  border-radius: 100px;
+  background: rgba(255,255,255,.12);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: background .3s ease, width .3s ease;
 }
-.db-bar.active { background: var(--gold); }
-.db-bar:hover { background: var(--gold2); }
-.db-chart-label { font-size: .7rem; color: var(--muted); font-family: var(--font-h); font-weight: 600; text-transform: uppercase; letter-spacing: .05em; }
+.db-indicator.active {
+  background: var(--gold);
+  width: 32px;
+}
+.db-indicator:hover:not(.active) { background: rgba(255,255,255,.25); }
+.db-counter {
+  font-weight: 600;
+  color: var(--text);
+  flex-shrink: 0;
+}
+.db-counter span { color: var(--muted); font-weight: 500; }
 
 /* ============================================================
    FEATURES (HOME SECTION)
@@ -1768,50 +1868,49 @@ textarea.form-control { resize: vertical; min-height: 120px; }
           </div>
         </div>
 
-        <!-- Dashboard preview -->
+        <!-- Dashboard preview : carrousel d'écrans réels -->
         <div class="hero-visual">
-          <div class="dashboard-preview">
+          <div class="dashboard-preview" id="dbPreview">
+            <!-- Barre supérieure type fenêtre d'app -->
             <div class="db-topbar">
               <div class="db-dots">
                 <div class="db-dot" style="background:#FF5F57"></div>
                 <div class="db-dot" style="background:#FFBD2E"></div>
                 <div class="db-dot" style="background:#28CA41"></div>
               </div>
-              <div class="db-logo">BarManager Pro — Dashboard</div>
+              <div class="db-logo">
+                BarManager Pro —
+                <span class="db-logo-title" id="dbSlideTitle" data-fr="Dashboard" data-en="Dashboard">Dashboard</span>
+              </div>
+              <span class="db-live">
+                <span class="db-live-dot" aria-hidden="true"></span>
+                <span data-fr="Live" data-en="Live">Live</span>
+              </span>
             </div>
-            <div class="db-body">
-              <div class="db-card">
-                <div class="db-card-label" data-fr="CA aujourd'hui" data-en="Today's revenue">CA aujourd'hui</div>
-                <div class="db-card-val">487 500</div>
-                <div class="db-card-delta" data-fr="↑ +12% vs hier" data-en="↑ +12% vs yesterday">↑ +12% vs hier</div>
-              </div>
-              <div class="db-card">
-                <div class="db-card-label" data-fr="Commandes" data-en="Orders">Commandes</div>
-                <div class="db-card-val">134</div>
-                <div class="db-card-delta" data-fr="↑ +8 cette heure" data-en="↑ +8 this hour">↑ +8 cette heure</div>
-              </div>
-              <div class="db-card">
-                <div class="db-card-label" data-fr="Caisse ouverte" data-en="Open till">Caisse ouverte</div>
-                <div class="db-card-val">75 000</div>
-                <div class="db-card-delta" style="color: var(--gold)" data-fr="FCFA en caisse" data-en="FCFA in till">FCFA en caisse</div>
-              </div>
-              <div class="db-card">
-                <div class="db-card-label" data-fr="Stock critique" data-en="Critical stock">Stock critique</div>
-                <div class="db-card-val">3</div>
-                <div class="db-card-delta" style="color:#F87171" data-fr="⚠ alertes actives" data-en="⚠ active alerts">⚠ alertes actives</div>
-              </div>
-              <div class="db-chart">
-                <div class="db-chart-label" data-fr="Ventes — 7 derniers jours (FCFA)" data-en="Sales — Last 7 days (FCFA)">Ventes — 7 derniers jours (FCFA)</div>
-                <div class="db-chart-bars">
-                  <div class="db-bar" style="height:55%"></div>
-                  <div class="db-bar" style="height:70%"></div>
-                  <div class="db-bar" style="height:48%"></div>
-                  <div class="db-bar" style="height:82%"></div>
-                  <div class="db-bar" style="height:65%"></div>
-                  <div class="db-bar" style="height:90%"></div>
-                  <div class="db-bar active" style="height:100%"></div>
-                </div>
-              </div>
+
+            <!-- Carrousel -->
+            <div class="db-carousel" id="dbCarousel"
+                 data-titles-fr="Tableau de bord,Caisse,POS &amp; Commandes,Gestion des stocks,Fournisseurs,Équipe &amp; utilisateurs,Recherche &amp; audit,Sauvegarde &amp; sécurité,Aide intégrée"
+                 data-titles-en="Dashboard,Cash register,POS &amp; Orders,Inventory management,Suppliers,Team &amp; users,Search &amp; audit,Backup &amp; security,Built-in help">
+              <div class="db-slide active"><img src="image/dasboard.jpg" alt="Tableau de bord" loading="eager" decoding="async"></div>
+              <div class="db-slide"><img src="image/caisse.jpg" alt="Module Caisse" loading="lazy" decoding="async"></div>
+              <div class="db-slide"><img src="image/pos.jpg" alt="Module POS & Commandes" loading="lazy" decoding="async"></div>
+              <div class="db-slide"><img src="image/stock.jpg" alt="Gestion des stocks" loading="lazy" decoding="async"></div>
+              <div class="db-slide"><img src="image/fournisseur.jpg" alt="Fournisseurs" loading="lazy" decoding="async"></div>
+              <div class="db-slide"><img src="image/user.jpg" alt="Équipe & utilisateurs" loading="lazy" decoding="async"></div>
+              <div class="db-slide"><img src="image/recherche.jpg" alt="Recherche & audit" loading="lazy" decoding="async"></div>
+              <div class="db-slide"><img src="image/backup.jpg" alt="Sauvegarde & sécurité" loading="lazy" decoding="async"></div>
+              <div class="db-slide"><img src="image/aide.jpg" alt="Aide intégrée" loading="lazy" decoding="async"></div>
+
+              <!-- Flèches navigation -->
+              <button class="db-nav db-nav-prev" onclick="dbCarouselGo(-1)" aria-label="Précédent">‹</button>
+              <button class="db-nav db-nav-next" onclick="dbCarouselGo(1)" aria-label="Suivant">›</button>
+            </div>
+
+            <!-- Pied : indicateurs + compteur -->
+            <div class="db-footer">
+              <div class="db-indicators" id="dbIndicators"></div>
+              <div class="db-counter"><span id="dbCounter">1</span> / 9</div>
             </div>
           </div>
         </div>
@@ -2957,6 +3056,75 @@ function closeBanner() {
 }
 
 // ============================================================
+// DASHBOARD CARROUSEL (hero)
+// ============================================================
+let dbIndex = 0;
+let dbTimer = null;
+const DB_INTERVAL = 4200; // ms entre slides
+
+function dbBuildIndicators() {
+  const container = document.getElementById('dbIndicators');
+  if (!container) return;
+  const slides = document.querySelectorAll('#dbCarousel .db-slide');
+  container.innerHTML = '';
+  slides.forEach((_, i) => {
+    const b = document.createElement('button');
+    b.className = 'db-indicator' + (i === 0 ? ' active' : '');
+    b.setAttribute('aria-label', 'Slide ' + (i + 1));
+    b.addEventListener('click', () => dbCarouselSet(i, true));
+    container.appendChild(b);
+  });
+}
+
+function dbCarouselSet(i, resetTimer) {
+  const slides = document.querySelectorAll('#dbCarousel .db-slide');
+  const inds = document.querySelectorAll('#dbIndicators .db-indicator');
+  if (!slides.length) return;
+  dbIndex = (i + slides.length) % slides.length;
+  slides.forEach((s, idx) => s.classList.toggle('active', idx === dbIndex));
+  inds.forEach((d, idx) => d.classList.toggle('active', idx === dbIndex));
+
+  // Met à jour le titre dans la barre supérieure (langue actuelle)
+  const carousel = document.getElementById('dbCarousel');
+  const titleEl = document.getElementById('dbSlideTitle');
+  const counter = document.getElementById('dbCounter');
+  if (carousel && titleEl) {
+    const key = currentLang === 'en' ? 'titlesEn' : 'titlesFr';
+    const list = (carousel.dataset[key] || '').split(',');
+    if (list[dbIndex]) titleEl.textContent = list[dbIndex].trim();
+  }
+  if (counter) counter.textContent = (dbIndex + 1);
+
+  if (resetTimer) dbCarouselStart();
+}
+
+function dbCarouselGo(delta) { dbCarouselSet(dbIndex + delta, true); }
+
+function dbCarouselStart() {
+  if (dbTimer) clearInterval(dbTimer);
+  dbTimer = setInterval(() => dbCarouselSet(dbIndex + 1, false), DB_INTERVAL);
+}
+
+function dbCarouselStop() {
+  if (dbTimer) { clearInterval(dbTimer); dbTimer = null; }
+}
+
+function initDbCarousel() {
+  const preview = document.getElementById('dbPreview');
+  if (!preview) return;
+  dbBuildIndicators();
+  dbCarouselSet(0, false);
+  dbCarouselStart();
+  preview.addEventListener('mouseenter', dbCarouselStop);
+  preview.addEventListener('mouseleave', dbCarouselStart);
+
+  // Pause si l'utilisateur a réduit son mouvement
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    dbCarouselStop();
+  }
+}
+
+// ============================================================
 // DOWNLOAD TRACKING (assure le déclenchement direct)
 // ============================================================
 function trackDownload(e) {
@@ -3012,6 +3180,10 @@ function applyLang(lang) {
   if (document.getElementById('faqList') && document.getElementById('faqList').children.length) {
     initFaq();
   }
+  // Re-synchronise le titre du carrousel avec la langue
+  if (document.getElementById('dbCarousel')) {
+    dbCarouselSet(dbIndex, false);
+  }
 }
 
 function setLang(lang) {
@@ -3034,6 +3206,7 @@ function detectInitialLang() {
 document.addEventListener('DOMContentLoaded', () => {
   applyLang(detectInitialLang());
   initReveal();
+  initDbCarousel();
   document.getElementById('navbar').classList.add('scrolled');
 });
 </script>
