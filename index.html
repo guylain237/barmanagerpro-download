@@ -960,33 +960,19 @@ textarea.form-control { resize: vertical; min-height: 120px; }
   border-top: 1px solid var(--border);
   padding: 72px 0 40px;
 }
-.footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 64px; }
-.footer-brand p { color: var(--muted); font-size: .88rem; margin-top: 16px; margin-bottom: 24px; max-width: 34ch; }
+.footer-grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr; gap: 56px; margin-bottom: 56px; }
+.footer-brand p { color: var(--muted); font-size: .88rem; margin-top: 16px; max-width: 38ch; }
 .footer-col h4 { font-size: .82rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 20px; font-family: var(--font-h); font-weight: 700; }
 .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
 .footer-col ul li a { font-size: .88rem; color: var(--muted); transition: color .2s; }
 .footer-col ul li a:hover { color: var(--white); }
 .footer-bottom {
-  display: flex; align-items: center; justify-content: space-between;
+  display: flex; align-items: center; justify-content: center;
   padding-top: 32px;
   border-top: 1px solid var(--border);
   font-size: .82rem; color: var(--muted);
+  text-align: center;
 }
-.footer-bottom a { color: var(--muted); transition: color .2s; }
-.footer-bottom a:hover { color: var(--gold); }
-
-/* Social links */
-.social-links { display: flex; gap: 8px; }
-.social-link {
-  width: 36px; height: 36px;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: .9rem;
-  color: var(--muted);
-  transition: all .2s;
-}
-.social-link:hover { border-color: var(--gold); color: var(--gold); background: rgba(212,160,23,.06); }
 
 /* ============================================================
    ANIMATIONS
@@ -1095,7 +1081,6 @@ textarea.form-control { resize: vertical; min-height: 120px; }
   .footer-col ul { gap: 8px; }
   .footer-col ul li a { font-size: .85rem; }
   .footer-bottom { gap: 14px; font-size: .76rem; padding-top: 24px; }
-  .footer-bottom > div { flex-wrap: wrap; justify-content: center; gap: 10px 16px; }
 
   /* Contact grid : déjà 1 col, juste ajuster padding form */
   .contact-form { padding: 24px 18px; }
@@ -1296,7 +1281,6 @@ textarea.form-control { resize: vertical; min-height: 120px; }
           <button id="langFr" class="active" onclick="setLang('fr')" aria-label="Français">FR</button>
           <button id="langEn" onclick="setLang('en')" aria-label="English">EN</button>
         </div>
-        <button class="btn btn-ghost" onclick="showPage('contact')" data-fr="Se connecter" data-en="Sign in">Se connecter</button>
         <a class="btn btn-primary" href="https://github.com/guylain237/barmanagerpro-download/releases/download/v1.0.6/BarManager.Pro_1.0.6_x64-setup.exe" rel="noopener" download onclick="trackDownload(event)" style="text-decoration:none;" data-fr="⇩ Télécharger" data-en="⇩ Download">&#8659; Télécharger</a>
       </div>
 
@@ -2291,12 +2275,6 @@ textarea.form-control { resize: vertical; min-height: 120px; }
           BarManager <span class="gold">Pro</span>
         </a>
         <p data-fr="Solution de gestion intégrale pour bars au Cameroun et en Afrique Centrale. Offline-first, conforme DGI et CNPS." data-en="All-in-one management solution for bars in Cameroon and Central Africa. Offline-first, DGI- and CNPS-compliant.">Solution de gestion intégrale pour bars au Cameroun et en Afrique Centrale. Offline-first, conforme DGI et CNPS.</p>
-        <div class="social-links">
-          <a href="#" class="social-link">f</a>
-          <a href="#" class="social-link">in</a>
-          <a href="#" class="social-link">w</a>
-          <a href="#" class="social-link">wp</a>
-        </div>
       </div>
       <div class="footer-col">
         <h4 data-fr="Produit" data-en="Product">Produit</h4>
@@ -2305,34 +2283,19 @@ textarea.form-control { resize: vertical; min-height: 120px; }
           <li><a href="#" onclick="showPage('pricing')" data-fr="Tarifs" data-en="Pricing">Tarifs</a></li>
           <li><a href="#" onclick="showPage('pricing')" data-fr="FAQ" data-en="FAQ">FAQ</a></li>
           <li><a href="https://github.com/guylain237/barmanagerpro-download/releases/download/v1.0.6/BarManager.Pro_1.0.6_x64-setup.exe" rel="noopener" download onclick="trackDownload(event)" data-fr="Téléchargement" data-en="Download">Téléchargement</a></li>
-          <li><a href="#" data-fr="Changelog" data-en="Changelog">Changelog</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4 data-fr="Entreprise" data-en="Company">Entreprise</h4>
-        <ul>
-          <li><a href="#" data-fr="À propos" data-en="About">À propos</a></li>
-          <li><a href="#" data-fr="Blog" data-en="Blog">Blog</a></li>
-          <li><a href="mailto:contact@barmanagerpro.cm" data-fr="Partenaires" data-en="Partners">Partenaires</a></li>
-          <li><a href="mailto:contact@barmanagerpro.cm" data-fr="Presse" data-en="Press">Presse</a></li>
         </ul>
       </div>
       <div class="footer-col">
         <h4 data-fr="Support" data-en="Support">Support</h4>
         <ul>
+          <li><a href="#" onclick="showPage('contact')" data-fr="Contact" data-en="Contact">Contact</a></li>
           <li><a href="mailto:contact@barmanagerpro.cm" data-fr="Centre d'aide" data-en="Help center">Centre d'aide</a></li>
-          <li><a href="mailto:contact@barmanagerpro.cm" data-fr="Contacter l'équipe" data-en="Contact the team">Contacter l'équipe</a></li>
-          <li><a href="#" data-fr="Statut du service" data-en="Service status">Statut du service</a></li>
+          <li><a href="mailto:contact@barmanagerpro.cm" data-fr="Partenariats &amp; presse" data-en="Partnerships &amp; press">Partenariats &amp; presse</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
       <span data-fr="© 2026 BarManager Pro · Cameroun. Tous droits réservés." data-en="© 2026 BarManager Pro · Cameroon. All rights reserved.">© 2026 BarManager Pro · Cameroun. Tous droits réservés.</span>
-      <div style="display: flex; gap: 20px;">
-        <a href="/legal/mentions" data-fr="Mentions légales" data-en="Legal notice">Mentions légales</a>
-        <a href="/legal/cgu" data-fr="CGU" data-en="Terms">CGU</a>
-        <a href="/legal/privacy" data-fr="Politique de confidentialité" data-en="Privacy policy">Politique de confidentialité</a>
-      </div>
     </div>
   </div>
 </footer>
