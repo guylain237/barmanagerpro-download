@@ -1621,99 +1621,256 @@ textarea.form-control { resize: vertical; min-height: 120px; }
 }
 
 /* ============================================================
-   COMPARISON TABLE — Desktop vs Web/Mobile
+   COMPARAISON — Arbre généalogique Desktop vs Web/Mobile
    ============================================================ */
 #comparaison {
   background: linear-gradient(135deg, rgba(45,189,126,.03), rgba(64,120,210,.03));
+  position: relative;
+  overflow: hidden;
 }
-.comparison-table-wrap {
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  border-radius: var(--r2);
-  border: 1px solid var(--border);
+#comparaison::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(212,160,23,.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(212,160,23,.025) 1px, transparent 1px);
+  background-size: 80px 80px;
+  mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 30%, transparent 100%);
+  pointer-events: none;
 }
-.comparison-table {
-  width: 100%;
-  border-collapse: collapse;
-  min-width: 580px;
-  background: var(--card);
+#comparaison .container { position: relative; z-index: 1; }
+
+.tree-compare {
+  max-width: 1100px;
+  margin: 0 auto;
+  position: relative;
+  padding-top: 20px;
 }
-.comparison-table thead tr {
-  background: rgba(212,160,23,.07);
-  border-bottom: 1px solid var(--border2);
+
+/* Racine : node central en haut */
+.tree-root {
+  display: flex; justify-content: center;
+  margin-bottom: 56px;
+  position: relative;
 }
-.comparison-table thead th {
-  padding: 18px 24px;
-  text-align: left;
+.tree-root-node {
+  display: inline-flex; flex-direction: column; align-items: center;
+  padding: 18px 32px;
+  background: linear-gradient(135deg, var(--gold2), var(--gold));
+  color: #0C0E0B;
+  border-radius: 14px;
+  text-align: center;
+  box-shadow:
+    0 12px 36px rgba(212,160,23,.4),
+    inset 0 1px 0 rgba(255,255,255,.45),
+    inset 0 -2px 0 rgba(0,0,0,.15);
+  position: relative;
+}
+.tree-root-node strong {
   font-family: var(--font-h);
-  font-size: .82rem;
-  font-weight: 700;
+  font-size: 1.05rem;
+  font-weight: 900;
+  letter-spacing: .02em;
+}
+.tree-root-node span {
+  font-family: var(--font-h);
+  font-size: .72rem;
+  font-weight: 600;
+  margin-top: 4px;
+  opacity: .8;
   text-transform: uppercase;
-  letter-spacing: .06em;
-  color: var(--gold2);
-  white-space: nowrap;
+  letter-spacing: .12em;
 }
-.comparison-table thead th:first-child {
-  color: var(--muted);
-  font-size: .78rem;
-  width: 44%;
+/* Connecteur vertical sous la racine */
+.tree-root::after {
+  content: '';
+  position: absolute;
+  bottom: -40px;
+  left: 50%;
+  width: 2px; height: 40px;
+  background: linear-gradient(180deg, var(--gold) 0%, rgba(212,160,23,.3) 100%);
+  transform: translateX(-50%);
 }
-.comparison-table thead th:nth-child(2),
-.comparison-table thead th:nth-child(3) {
+
+/* Niveau 2 : 2 branches Desktop / Web */
+.tree-branches {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  position: relative;
+  margin-bottom: 12px;
+}
+.tree-branches::before {
+  content: '';
+  position: absolute;
+  top: -12px;
+  left: 25%; right: 25%;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(212,160,23,.3), var(--gold), rgba(212,160,23,.3));
+}
+
+.tree-branch {
+  position: relative;
+  padding-top: 24px;
+}
+.tree-branch::before {
+  content: '';
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  width: 2px; height: 24px;
+  background: var(--gold);
+  transform: translateX(-50%);
+}
+
+.tree-branch-card {
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  padding: 22px 24px;
+  border-radius: var(--r2);
+  position: relative;
   text-align: center;
-  width: 28%;
+  margin-bottom: 28px;
+  border: 2px solid;
 }
-.comparison-table tbody tr {
-  border-bottom: 1px solid var(--border);
-  transition: background .15s;
+.tree-branch-desktop .tree-branch-card {
+  background: linear-gradient(135deg, rgba(45,189,126,.12), rgba(45,189,126,.04));
+  border-color: rgba(45,189,126,.4);
+  box-shadow: 0 12px 32px rgba(45,189,126,.15);
 }
-.comparison-table tbody tr:last-child { border-bottom: none; }
-.comparison-table tbody tr:hover { background: rgba(255,255,255,.025); }
-.comparison-table tbody td {
-  padding: 14px 24px;
-  font-size: .9rem;
-  color: var(--text);
-  vertical-align: middle;
+.tree-branch-web .tree-branch-card {
+  background: linear-gradient(135deg, rgba(64,120,210,.12), rgba(64,120,210,.04));
+  border-color: rgba(108,160,247,.4);
+  box-shadow: 0 12px 32px rgba(64,120,210,.15);
 }
-.comparison-table tbody td:nth-child(2),
-.comparison-table tbody td:nth-child(3) {
-  text-align: center;
+.tree-branch-icon {
+  font-size: 2rem;
+  line-height: 1;
 }
-.cmp-feature-name {
-  font-weight: 500;
+.tree-branch-name {
+  font-family: var(--font-h);
+  font-size: 1.15rem;
+  font-weight: 800;
   color: var(--white);
-  font-size: .88rem;
+  letter-spacing: .01em;
 }
-.cmp-yes {
+.tree-branch-status {
   display: inline-flex; align-items: center; gap: 6px;
-  font-size: .82rem; font-weight: 600;
-  color: #4ade80;
+  padding: 4px 12px;
+  border-radius: 100px;
   font-family: var(--font-h);
+  font-size: .7rem;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
 }
-.cmp-no {
-  display: inline-flex; align-items: center; gap: 6px;
-  font-size: .82rem; font-weight: 600;
-  color: #f87171;
+.tree-branch-status-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  animation: bannerDotPulse 2s ease-out infinite;
+}
+.tree-branch-desktop .tree-branch-status {
+  background: rgba(45,189,126,.18);
+  color: var(--green2);
+  border: 1px solid rgba(45,189,126,.4);
+}
+.tree-branch-desktop .tree-branch-status-dot {
+  background: var(--green2);
+  box-shadow: 0 0 6px var(--green2);
+}
+.tree-branch-web .tree-branch-status {
+  background: rgba(212,160,23,.18);
+  color: var(--gold2);
+  border: 1px solid rgba(212,160,23,.4);
+}
+.tree-branch-web .tree-branch-status-dot {
+  background: var(--gold);
+  box-shadow: 0 0 6px var(--gold);
+}
+
+/* Feuilles : liste de fonctionnalités sous chaque branche */
+.tree-leaves {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  position: relative;
+}
+/* Connecteur vertical entre branche-card et feuilles */
+.tree-leaves::before {
+  content: '';
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  width: 2px; height: 20px;
+  background: linear-gradient(180deg, var(--gold), rgba(212,160,23,.3));
+  transform: translateX(-50%);
+}
+.tree-leaf {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 16px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin-bottom: 8px;
+  transition: border-color .2s ease, background .2s ease, transform .2s ease;
+  position: relative;
+}
+.tree-leaf::before {
+  content: '';
+  position: absolute;
+  left: -12px; top: 50%;
+  width: 12px; height: 2px;
+  background: rgba(212,160,23,.3);
+  transform: translateY(-50%);
+}
+.tree-leaf:hover {
+  background: rgba(255,255,255,.025);
+  border-color: rgba(255,255,255,.16);
+  transform: translateX(2px);
+}
+.tree-leaf-icon {
+  flex-shrink: 0;
+  width: 28px; height: 28px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .85rem;
+  font-weight: 800;
+}
+.tree-leaf-yes .tree-leaf-icon {
+  background: rgba(45,189,126,.15);
+  color: var(--green2);
+  border: 1px solid rgba(45,189,126,.3);
+}
+.tree-leaf-soon .tree-leaf-icon {
+  background: rgba(212,160,23,.15);
+  color: var(--gold2);
+  border: 1px solid rgba(212,160,23,.3);
+}
+.tree-leaf-no .tree-leaf-icon {
+  background: rgba(248,113,113,.12);
+  color: #F87171;
+  border: 1px solid rgba(248,113,113,.3);
+}
+.tree-leaf-content { flex: 1; min-width: 0; }
+.tree-leaf-title {
+  display: block;
   font-family: var(--font-h);
+  font-size: .85rem;
+  font-weight: 600;
+  color: var(--white);
+  line-height: 1.3;
 }
-.cmp-badge-avail {
-  display: inline-block;
-  padding: 2px 10px; border-radius: 20px;
-  font-size: .7rem; font-weight: 700; font-family: var(--font-h);
-  letter-spacing: .04em; white-space: nowrap;
-  background: rgba(74,222,128,.12); color: #4ade80;
-  border: 1px solid rgba(74,222,128,.25);
+.tree-leaf-meta {
+  display: block;
+  font-size: .72rem;
+  color: var(--muted);
+  margin-top: 2px;
 }
-.cmp-badge-soon {
-  display: inline-block;
-  padding: 2px 10px; border-radius: 20px;
-  font-size: .7rem; font-weight: 700; font-family: var(--font-h);
-  letter-spacing: .04em; white-space: nowrap;
-  background: rgba(212,160,23,.12); color: var(--gold2);
-  border: 1px solid rgba(212,160,23,.25);
-}
+.tree-leaf-yes .tree-leaf-meta { color: var(--green2); }
+.tree-leaf-soon .tree-leaf-meta { color: var(--gold2); }
+.tree-leaf-no .tree-leaf-meta { color: #F87171; }
+
+/* Note du bas */
 .cmp-note {
-  margin-top: 28px;
+  margin-top: 40px;
   padding: 18px 24px;
   background: rgba(255,255,255,.03);
   border: 1px solid var(--border);
@@ -1725,34 +1882,36 @@ textarea.form-control { resize: vertical; min-height: 120px; }
 }
 .cmp-note strong { color: var(--text); }
 
-/* Responsive comparaison : cartes empilées sous 600px */
-@media (max-width: 599px) {
-  .comparison-table-wrap { border: none; border-radius: 0; }
-  .comparison-table { display: none; }
-  .comparison-cards { display: flex; flex-direction: column; gap: 12px; }
-  .comparison-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--r);
-    padding: 16px;
-  }
-  .comparison-card-name {
-    font-weight: 600; font-size: .9rem; color: var(--white);
-    margin-bottom: 12px; padding-bottom: 10px;
-    border-bottom: 1px solid var(--border);
-  }
-  .comparison-card-row {
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 8px; font-size: .82rem;
-  }
-  .comparison-card-col-label {
-    font-family: var(--font-h); font-size: .7rem; font-weight: 700;
-    text-transform: uppercase; letter-spacing: .05em;
-    color: var(--muted); margin-bottom: 4px;
-  }
+/* Responsive : tablette */
+@media (max-width: 900px) {
+  .tree-branches { gap: 24px; }
 }
-@media (min-width: 600px) {
-  .comparison-cards { display: none; }
+
+/* Responsive : mobile (les branches s'empilent verticalement) */
+@media (max-width: 700px) {
+  .tree-root { margin-bottom: 36px; }
+  .tree-root::after { height: 30px; bottom: -30px; }
+  .tree-branches {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+  /* Plus de connecteur horizontal en colonne */
+  .tree-branches::before { display: none; }
+  .tree-branch:first-child::before {
+    top: -22px; height: 22px;
+  }
+  /* La seconde branche reçoit son connecteur depuis le bas de la première */
+  .tree-branch:nth-child(2)::before {
+    top: -22px; height: 22px;
+    background: linear-gradient(180deg, rgba(212,160,23,.3), var(--gold));
+  }
+  .tree-branch-card { padding: 18px 16px; margin-bottom: 22px; }
+  .tree-branch-icon { font-size: 1.7rem; }
+  .tree-branch-name { font-size: 1.05rem; }
+  .tree-leaf { padding: 10px 14px; }
+  .tree-leaf-icon { width: 26px; height: 26px; }
+  .tree-leaf-title { font-size: .82rem; }
+  .tree-leaf-meta { font-size: .7rem; }
 }
 </style>
 </head>
@@ -2276,205 +2435,156 @@ textarea.form-control { resize: vertical; min-height: 120px; }
         <p class="reveal" style="margin: 0 auto; color: var(--muted);" data-fr="Découvrez ce qui est disponible aujourd'hui et ce qui arrive bientôt." data-en="See what's available today and what's coming soon.">Découvrez ce qui est disponible aujourd'hui et ce qui arrive bientôt.</p>
       </div>
 
-      <!-- Tableau desktop / tablette -->
-      <div class="comparison-table-wrap reveal">
-        <table class="comparison-table" role="table" aria-label="Comparaison des fonctionnalités Desktop vs Web / Mobile">
-          <thead>
-            <tr>
-              <th scope="col" data-fr="Fonctionnalité" data-en="Feature">Fonctionnalité</th>
-              <th scope="col" data-fr-html="💻 Desktop<br><span style='font-weight:400;color:var(--muted);font-size:.72rem;text-transform:none;letter-spacing:0;'>Disponible maintenant</span>" data-en-html="💻 Desktop<br><span style='font-weight:400;color:var(--muted);font-size:.72rem;text-transform:none;letter-spacing:0;'>Available now</span>">💻 Desktop<br><span style="font-weight:400;color:var(--muted);font-size:.72rem;text-transform:none;letter-spacing:0;">Disponible maintenant</span></th>
-              <th scope="col" data-fr-html="🌐 Web / 📱 Mobile<br><span style='font-weight:400;color:var(--muted);font-size:.72rem;text-transform:none;letter-spacing:0;'>Bientôt</span>" data-en-html="🌐 Web / 📱 Mobile<br><span style='font-weight:400;color:var(--muted);font-size:.72rem;text-transform:none;letter-spacing:0;'>Soon</span>">🌐 Web / 📱 Mobile<br><span style="font-weight:400;color:var(--muted);font-size:.72rem;text-transform:none;letter-spacing:0;">Bientôt</span></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="cmp-feature-name" data-fr="Caisse & POS" data-en="Cash register & POS">Caisse &amp; POS</td>
-              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-avail" data-fr="Complet" data-en="Complete">Complet</span></td>
-              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-soon" data-fr="Prévu" data-en="Planned">Prévu</span></td>
-            </tr>
-            <tr>
-              <td class="cmp-feature-name" data-fr="Mode hors-ligne (offline-first)" data-en="Offline mode (offline-first)">Mode hors-ligne (offline-first)</td>
-              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-avail" data-fr="100% offline" data-en="100% offline">100% offline</span></td>
-              <td><span class="cmp-no">❌</span> <span style="font-size:.8rem;color:var(--muted);" data-fr="Connexion requise" data-en="Connection required">Connexion requise</span></td>
-            </tr>
-            <tr>
-              <td class="cmp-feature-name" data-fr="Gestion des stocks & magasin" data-en="Inventory & warehouse management">Gestion des stocks &amp; magasin</td>
-              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-avail" data-fr="Complet" data-en="Complete">Complet</span></td>
-              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-soon" data-fr="Prévu" data-en="Planned">Prévu</span></td>
-            </tr>
-            <tr>
-              <td class="cmp-feature-name" data-fr="Commandes fournisseurs" data-en="Supplier orders">Commandes fournisseurs</td>
-              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-avail" data-fr="Complet" data-en="Complete">Complet</span></td>
-              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-soon" data-fr="Prévu" data-en="Planned">Prévu</span></td>
-            </tr>
-            <tr>
-              <td class="cmp-feature-name" data-fr="Dettes & paiements" data-en="Debts & payments">Dettes &amp; paiements</td>
-              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-avail" data-fr="Complet" data-en="Complete">Complet</span></td>
-              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-soon" data-fr="Prévu" data-en="Planned">Prévu</span></td>
-            </tr>
-            <tr>
-              <td class="cmp-feature-name" data-fr="Équipe & rôles (RH, paie)" data-en="Team & roles (HR, payroll)">Équipe &amp; rôles (RH, paie)</td>
-              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-avail" data-fr="Complet" data-en="Complete">Complet</span></td>
-              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-soon" data-fr="Prévu" data-en="Planned">Prévu</span></td>
-            </tr>
-            <tr>
-              <td class="cmp-feature-name" data-fr="Analytics & rapports" data-en="Analytics & reports">Analytics &amp; rapports</td>
-              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-avail" data-fr="Complet" data-en="Complete">Complet</span></td>
-              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-soon" data-fr="Prévu (temps réel)" data-en="Planned (real-time)">Prévu (temps réel)</span></td>
-            </tr>
-            <tr>
-              <td class="cmp-feature-name" data-fr="Conformité DGI Cameroun" data-en="DGI Cameroon compliance">Conformité DGI Cameroun</td>
-              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-avail" data-fr="TVA 19,25%" data-en="VAT 19.25%">TVA 19,25%</span></td>
-              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-soon" data-fr="Prévu" data-en="Planned">Prévu</span></td>
-            </tr>
-            <tr>
-              <td class="cmp-feature-name" data-fr="Paiements Orange Money & MTN MoMo" data-en="Orange Money & MTN MoMo payments">Paiements Orange Money &amp; MTN MoMo</td>
-              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-avail" data-fr="Disponible" data-en="Available">Disponible</span></td>
-              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-soon" data-fr="Prévu" data-en="Planned">Prévu</span></td>
-            </tr>
-            <tr>
-              <td class="cmp-feature-name" data-fr="Backup automatique" data-en="Automatic backup">Backup automatique</td>
-              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-avail" data-fr="Local + cloud optionnel" data-en="Local + optional cloud">Local + cloud optionnel</span></td>
-              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-soon" data-fr="Cloud natif" data-en="Native cloud">Cloud natif</span></td>
-            </tr>
-            <tr>
-              <td class="cmp-feature-name" data-fr="Multi-établissements (chaînes)" data-en="Multi-location (chains)">Multi-établissements (chaînes)</td>
-              <td><span class="cmp-no">❌</span> <span style="font-size:.8rem;color:var(--muted);" data-fr="Non" data-en="No">Non</span></td>
-              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-soon" data-fr="Prévu — Enterprise" data-en="Planned — Enterprise">Prévu — Enterprise</span></td>
-            </tr>
-            <tr>
-              <td class="cmp-feature-name" data-fr="Accès distant (gérant en déplacement)" data-en="Remote access (manager on the move)">Accès distant (gérant en déplacement)</td>
-              <td><span class="cmp-no">❌</span> <span style="font-size:.8rem;color:var(--muted);" data-fr="Local uniquement" data-en="Local only">Local uniquement</span></td>
-              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-soon" data-fr="Prévu" data-en="Planned">Prévu</span></td>
-            </tr>
-            <tr>
-              <td class="cmp-feature-name" data-fr="Application mobile native" data-en="Native mobile app">Application mobile native</td>
-              <td><span class="cmp-no">❌</span> <span style="font-size:.8rem;color:var(--muted);">N/A</span></td>
-              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-soon" data-fr="Prévu (iOS + Android)" data-en="Planned (iOS + Android)">Prévu (iOS + Android)</span></td>
-            </tr>
-            <tr>
-              <td class="cmp-feature-name" data-fr="Synchronisation multi-appareils" data-en="Multi-device synchronization">Synchronisation multi-appareils</td>
-              <td><span class="cmp-no">❌</span> <span style="font-size:.8rem;color:var(--muted);" data-fr="Mono-poste" data-en="Single-device">Mono-poste</span></td>
-              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-soon" data-fr="Prévu temps réel" data-en="Real-time planned">Prévu temps réel</span></td>
-            </tr>
-            <tr>
-              <td class="cmp-feature-name" data-fr="API publique (intégrations tierces)" data-en="Public API (third-party integrations)">API publique (intégrations tierces)</td>
-              <td><span class="cmp-no">❌</span> <span style="font-size:.8rem;color:var(--muted);" data-fr="Non" data-en="No">Non</span></td>
-              <td><span class="cmp-yes">✅</span> <span class="cmp-badge-soon" data-fr="Prévu (REST + webhooks)" data-en="Planned (REST + webhooks)">Prévu (REST + webhooks)</span></td>
-            </tr>
-          </tbody>
-        </table>
+      <!-- Arbre généalogique : racine → 2 branches → feuilles -->
+      <div class="tree-compare reveal">
+
+        <!-- Racine -->
+        <div class="tree-root">
+          <div class="tree-root-node">
+            <strong>BarManager Pro</strong>
+            <span data-fr="Choisissez votre plateforme" data-en="Choose your platform">Choisissez votre plateforme</span>
+          </div>
+        </div>
+
+        <!-- Branches -->
+        <div class="tree-branches">
+
+          <!-- BRANCHE DESKTOP -->
+          <div class="tree-branch tree-branch-desktop">
+            <div class="tree-branch-card">
+              <div class="tree-branch-icon">💻</div>
+              <div class="tree-branch-name" data-fr="Desktop" data-en="Desktop">Desktop</div>
+              <div class="tree-branch-status">
+                <span class="tree-branch-status-dot" aria-hidden="true"></span>
+                <span data-fr="Disponible maintenant" data-en="Available now">Disponible maintenant</span>
+              </div>
+            </div>
+            <ul class="tree-leaves">
+              <li class="tree-leaf tree-leaf-yes">
+                <div class="tree-leaf-icon">✓</div>
+                <div class="tree-leaf-content">
+                  <span class="tree-leaf-title" data-fr="Caisse & POS complets" data-en="Full register & POS">Caisse &amp; POS complets</span>
+                  <span class="tree-leaf-meta" data-fr="Encaissement multi-paiements" data-en="Multi-payment checkout">Encaissement multi-paiements</span>
+                </div>
+              </li>
+              <li class="tree-leaf tree-leaf-yes">
+                <div class="tree-leaf-icon">✓</div>
+                <div class="tree-leaf-content">
+                  <span class="tree-leaf-title" data-fr="100% offline-first" data-en="100% offline-first">100% offline-first</span>
+                  <span class="tree-leaf-meta" data-fr="Aucune connexion requise" data-en="No connection needed">Aucune connexion requise</span>
+                </div>
+              </li>
+              <li class="tree-leaf tree-leaf-yes">
+                <div class="tree-leaf-icon">✓</div>
+                <div class="tree-leaf-content">
+                  <span class="tree-leaf-title" data-fr="Stocks & fournisseurs" data-en="Inventory & suppliers">Stocks &amp; fournisseurs</span>
+                  <span class="tree-leaf-meta" data-fr="Module complet, import Excel" data-en="Full module, Excel import">Module complet, import Excel</span>
+                </div>
+              </li>
+              <li class="tree-leaf tree-leaf-yes">
+                <div class="tree-leaf-icon">✓</div>
+                <div class="tree-leaf-content">
+                  <span class="tree-leaf-title" data-fr="Conformité DGI Cameroun" data-en="DGI Cameroon compliance">Conformité DGI Cameroun</span>
+                  <span class="tree-leaf-meta" data-fr="TVA 19,25% · Rapport Z PDF" data-en="VAT 19.25% · Z report PDF">TVA 19,25% · Rapport Z PDF</span>
+                </div>
+              </li>
+              <li class="tree-leaf tree-leaf-yes">
+                <div class="tree-leaf-icon">✓</div>
+                <div class="tree-leaf-content">
+                  <span class="tree-leaf-title" data-fr="Orange Money & MTN MoMo" data-en="Orange Money & MTN MoMo">Orange Money &amp; MTN MoMo</span>
+                  <span class="tree-leaf-meta" data-fr="Paiements mobile natifs" data-en="Native mobile payments">Paiements mobile natifs</span>
+                </div>
+              </li>
+              <li class="tree-leaf tree-leaf-yes">
+                <div class="tree-leaf-icon">✓</div>
+                <div class="tree-leaf-content">
+                  <span class="tree-leaf-title" data-fr="Backup chiffré local" data-en="Encrypted local backup">Backup chiffré local</span>
+                  <span class="tree-leaf-meta" data-fr="Toutes les 6h · cloud optionnel" data-en="Every 6h · optional cloud">Toutes les 6h · cloud optionnel</span>
+                </div>
+              </li>
+              <li class="tree-leaf tree-leaf-no">
+                <div class="tree-leaf-icon">✕</div>
+                <div class="tree-leaf-content">
+                  <span class="tree-leaf-title" data-fr="Multi-établissements" data-en="Multi-location">Multi-établissements</span>
+                  <span class="tree-leaf-meta" data-fr="Mono-poste uniquement" data-en="Single device only">Mono-poste uniquement</span>
+                </div>
+              </li>
+              <li class="tree-leaf tree-leaf-no">
+                <div class="tree-leaf-icon">✕</div>
+                <div class="tree-leaf-content">
+                  <span class="tree-leaf-title" data-fr="Accès distant & mobile" data-en="Remote & mobile access">Accès distant &amp; mobile</span>
+                  <span class="tree-leaf-meta" data-fr="Local uniquement" data-en="Local only">Local uniquement</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <!-- BRANCHE WEB / MOBILE -->
+          <div class="tree-branch tree-branch-web">
+            <div class="tree-branch-card">
+              <div class="tree-branch-icon">🌐 📱</div>
+              <div class="tree-branch-name" data-fr="Web SaaS & Mobile" data-en="Web SaaS & Mobile">Web SaaS &amp; Mobile</div>
+              <div class="tree-branch-status">
+                <span class="tree-branch-status-dot" aria-hidden="true"></span>
+                <span data-fr="Bientôt disponible" data-en="Coming soon">Bientôt disponible</span>
+              </div>
+            </div>
+            <ul class="tree-leaves">
+              <li class="tree-leaf tree-leaf-soon">
+                <div class="tree-leaf-icon">⏳</div>
+                <div class="tree-leaf-content">
+                  <span class="tree-leaf-title" data-fr="Tous les modules Desktop" data-en="All Desktop modules">Tous les modules Desktop</span>
+                  <span class="tree-leaf-meta" data-fr="Caisse, stocks, fournisseurs, RH…" data-en="Register, inventory, suppliers, HR…">Caisse, stocks, fournisseurs, RH…</span>
+                </div>
+              </li>
+              <li class="tree-leaf tree-leaf-soon">
+                <div class="tree-leaf-icon">⏳</div>
+                <div class="tree-leaf-content">
+                  <span class="tree-leaf-title" data-fr="Cloud natif & synchronisation" data-en="Native cloud & sync">Cloud natif &amp; synchronisation</span>
+                  <span class="tree-leaf-meta" data-fr="Multi-appareils en temps réel" data-en="Multi-device real-time">Multi-appareils en temps réel</span>
+                </div>
+              </li>
+              <li class="tree-leaf tree-leaf-soon">
+                <div class="tree-leaf-icon">⏳</div>
+                <div class="tree-leaf-content">
+                  <span class="tree-leaf-title" data-fr="Accès distant" data-en="Remote access">Accès distant</span>
+                  <span class="tree-leaf-meta" data-fr="Gérez votre bar de partout" data-en="Run your bar from anywhere">Gérez votre bar de partout</span>
+                </div>
+              </li>
+              <li class="tree-leaf tree-leaf-soon">
+                <div class="tree-leaf-icon">⏳</div>
+                <div class="tree-leaf-content">
+                  <span class="tree-leaf-title" data-fr="App mobile iOS & Android" data-en="Mobile app iOS & Android">App mobile iOS &amp; Android</span>
+                  <span class="tree-leaf-meta" data-fr="Notifications push & POS tablette" data-en="Push notifications & tablet POS">Notifications push &amp; POS tablette</span>
+                </div>
+              </li>
+              <li class="tree-leaf tree-leaf-soon">
+                <div class="tree-leaf-icon">⏳</div>
+                <div class="tree-leaf-content">
+                  <span class="tree-leaf-title" data-fr="Multi-établissements" data-en="Multi-location">Multi-établissements</span>
+                  <span class="tree-leaf-meta" data-fr="Console pour chaînes (Enterprise)" data-en="Chain console (Enterprise)">Console pour chaînes (Enterprise)</span>
+                </div>
+              </li>
+              <li class="tree-leaf tree-leaf-soon">
+                <div class="tree-leaf-icon">⏳</div>
+                <div class="tree-leaf-content">
+                  <span class="tree-leaf-title" data-fr="API publique REST + webhooks" data-en="Public REST API + webhooks">API publique REST + webhooks</span>
+                  <span class="tree-leaf-meta" data-fr="Intégrations tierces" data-en="Third-party integrations">Intégrations tierces</span>
+                </div>
+              </li>
+              <li class="tree-leaf tree-leaf-no">
+                <div class="tree-leaf-icon">✕</div>
+                <div class="tree-leaf-content">
+                  <span class="tree-leaf-title" data-fr="Mode 100% offline" data-en="100% offline mode">Mode 100% offline</span>
+                  <span class="tree-leaf-meta" data-fr="Connexion internet requise" data-en="Internet connection required">Connexion internet requise</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+        </div>
       </div>
 
-      <!-- Cartes mobiles (< 600px) -->
-      <div class="comparison-cards" aria-hidden="true">
-        <!-- Caisse & POS -->
-        <div class="comparison-card">
-          <div class="comparison-card-name" data-fr="Caisse & POS" data-en="Cash register & POS">Caisse &amp; POS</div>
-          <div class="comparison-card-row">
-            <div><div class="comparison-card-col-label">💻 Desktop</div><span class="cmp-yes">✅</span> <span class="cmp-badge-avail" data-fr="Complet" data-en="Complete">Complet</span></div>
-            <div><div class="comparison-card-col-label">🌐 Web / 📱 Mobile</div><span class="cmp-yes">✅</span> <span class="cmp-badge-soon" data-fr="Prévu" data-en="Planned">Prévu</span></div>
-          </div>
-        </div>
-        <div class="comparison-card">
-          <div class="comparison-card-name" data-fr="Mode hors-ligne (offline-first)" data-en="Offline mode (offline-first)">Mode hors-ligne (offline-first)</div>
-          <div class="comparison-card-row">
-            <div><div class="comparison-card-col-label">💻 Desktop</div><span class="cmp-yes">✅</span> <span class="cmp-badge-avail" data-fr="100% offline" data-en="100% offline">100% offline</span></div>
-            <div><div class="comparison-card-col-label">🌐 Web / 📱 Mobile</div><span class="cmp-no">❌</span> <span style="font-size:.78rem;color:var(--muted);" data-fr="Connexion requise" data-en="Connection required">Connexion requise</span></div>
-          </div>
-        </div>
-        <div class="comparison-card">
-          <div class="comparison-card-name" data-fr="Gestion des stocks & magasin" data-en="Inventory & warehouse management">Gestion des stocks &amp; magasin</div>
-          <div class="comparison-card-row">
-            <div><div class="comparison-card-col-label">💻 Desktop</div><span class="cmp-yes">✅</span> <span class="cmp-badge-avail" data-fr="Complet" data-en="Complete">Complet</span></div>
-            <div><div class="comparison-card-col-label">🌐 Web / 📱 Mobile</div><span class="cmp-yes">✅</span> <span class="cmp-badge-soon" data-fr="Prévu" data-en="Planned">Prévu</span></div>
-          </div>
-        </div>
-        <div class="comparison-card">
-          <div class="comparison-card-name" data-fr="Commandes fournisseurs" data-en="Supplier orders">Commandes fournisseurs</div>
-          <div class="comparison-card-row">
-            <div><div class="comparison-card-col-label">💻 Desktop</div><span class="cmp-yes">✅</span> <span class="cmp-badge-avail" data-fr="Complet" data-en="Complete">Complet</span></div>
-            <div><div class="comparison-card-col-label">🌐 Web / 📱 Mobile</div><span class="cmp-yes">✅</span> <span class="cmp-badge-soon" data-fr="Prévu" data-en="Planned">Prévu</span></div>
-          </div>
-        </div>
-        <div class="comparison-card">
-          <div class="comparison-card-name" data-fr="Dettes & paiements" data-en="Debts & payments">Dettes &amp; paiements</div>
-          <div class="comparison-card-row">
-            <div><div class="comparison-card-col-label">💻 Desktop</div><span class="cmp-yes">✅</span> <span class="cmp-badge-avail" data-fr="Complet" data-en="Complete">Complet</span></div>
-            <div><div class="comparison-card-col-label">🌐 Web / 📱 Mobile</div><span class="cmp-yes">✅</span> <span class="cmp-badge-soon" data-fr="Prévu" data-en="Planned">Prévu</span></div>
-          </div>
-        </div>
-        <div class="comparison-card">
-          <div class="comparison-card-name" data-fr="Équipe & rôles (RH, paie)" data-en="Team & roles (HR, payroll)">Équipe &amp; rôles (RH, paie)</div>
-          <div class="comparison-card-row">
-            <div><div class="comparison-card-col-label">💻 Desktop</div><span class="cmp-yes">✅</span> <span class="cmp-badge-avail" data-fr="Complet" data-en="Complete">Complet</span></div>
-            <div><div class="comparison-card-col-label">🌐 Web / 📱 Mobile</div><span class="cmp-yes">✅</span> <span class="cmp-badge-soon" data-fr="Prévu" data-en="Planned">Prévu</span></div>
-          </div>
-        </div>
-        <div class="comparison-card">
-          <div class="comparison-card-name" data-fr="Analytics & rapports" data-en="Analytics & reports">Analytics &amp; rapports</div>
-          <div class="comparison-card-row">
-            <div><div class="comparison-card-col-label">💻 Desktop</div><span class="cmp-yes">✅</span> <span class="cmp-badge-avail" data-fr="Complet" data-en="Complete">Complet</span></div>
-            <div><div class="comparison-card-col-label">🌐 Web / 📱 Mobile</div><span class="cmp-yes">✅</span> <span class="cmp-badge-soon" data-fr="Prévu (temps réel)" data-en="Planned (real-time)">Prévu (temps réel)</span></div>
-          </div>
-        </div>
-        <div class="comparison-card">
-          <div class="comparison-card-name" data-fr="Conformité DGI Cameroun" data-en="DGI Cameroon compliance">Conformité DGI Cameroun</div>
-          <div class="comparison-card-row">
-            <div><div class="comparison-card-col-label">💻 Desktop</div><span class="cmp-yes">✅</span> <span class="cmp-badge-avail" data-fr="TVA 19,25%" data-en="VAT 19.25%">TVA 19,25%</span></div>
-            <div><div class="comparison-card-col-label">🌐 Web / 📱 Mobile</div><span class="cmp-yes">✅</span> <span class="cmp-badge-soon" data-fr="Prévu" data-en="Planned">Prévu</span></div>
-          </div>
-        </div>
-        <div class="comparison-card">
-          <div class="comparison-card-name" data-fr="Paiements Orange Money & MTN MoMo" data-en="Orange Money & MTN MoMo payments">Paiements Orange Money &amp; MTN MoMo</div>
-          <div class="comparison-card-row">
-            <div><div class="comparison-card-col-label">💻 Desktop</div><span class="cmp-yes">✅</span> <span class="cmp-badge-avail" data-fr="Disponible" data-en="Available">Disponible</span></div>
-            <div><div class="comparison-card-col-label">🌐 Web / 📱 Mobile</div><span class="cmp-yes">✅</span> <span class="cmp-badge-soon" data-fr="Prévu" data-en="Planned">Prévu</span></div>
-          </div>
-        </div>
-        <div class="comparison-card">
-          <div class="comparison-card-name" data-fr="Backup automatique" data-en="Automatic backup">Backup automatique</div>
-          <div class="comparison-card-row">
-            <div><div class="comparison-card-col-label">💻 Desktop</div><span class="cmp-yes">✅</span> <span class="cmp-badge-avail" data-fr="Local + cloud" data-en="Local + cloud">Local + cloud</span></div>
-            <div><div class="comparison-card-col-label">🌐 Web / 📱 Mobile</div><span class="cmp-yes">✅</span> <span class="cmp-badge-soon" data-fr="Cloud natif" data-en="Native cloud">Cloud natif</span></div>
-          </div>
-        </div>
-        <div class="comparison-card">
-          <div class="comparison-card-name" data-fr="Multi-établissements (chaînes)" data-en="Multi-location (chains)">Multi-établissements (chaînes)</div>
-          <div class="comparison-card-row">
-            <div><div class="comparison-card-col-label">💻 Desktop</div><span class="cmp-no">❌</span> <span style="font-size:.78rem;color:var(--muted);" data-fr="Non" data-en="No">Non</span></div>
-            <div><div class="comparison-card-col-label">🌐 Web / 📱 Mobile</div><span class="cmp-yes">✅</span> <span class="cmp-badge-soon">Enterprise</span></div>
-          </div>
-        </div>
-        <div class="comparison-card">
-          <div class="comparison-card-name" data-fr="Accès distant (gérant en déplacement)" data-en="Remote access (manager on the move)">Accès distant (gérant en déplacement)</div>
-          <div class="comparison-card-row">
-            <div><div class="comparison-card-col-label">💻 Desktop</div><span class="cmp-no">❌</span> <span style="font-size:.78rem;color:var(--muted);" data-fr="Local uniquement" data-en="Local only">Local uniquement</span></div>
-            <div><div class="comparison-card-col-label">🌐 Web / 📱 Mobile</div><span class="cmp-yes">✅</span> <span class="cmp-badge-soon" data-fr="Prévu" data-en="Planned">Prévu</span></div>
-          </div>
-        </div>
-        <div class="comparison-card">
-          <div class="comparison-card-name" data-fr="Application mobile native" data-en="Native mobile app">Application mobile native</div>
-          <div class="comparison-card-row">
-            <div><div class="comparison-card-col-label">💻 Desktop</div><span class="cmp-no">❌</span> <span style="font-size:.78rem;color:var(--muted);">N/A</span></div>
-            <div><div class="comparison-card-col-label">📱 Mobile</div><span class="cmp-yes">✅</span> <span class="cmp-badge-soon">iOS + Android</span></div>
-          </div>
-        </div>
-        <div class="comparison-card">
-          <div class="comparison-card-name" data-fr="Synchronisation multi-appareils" data-en="Multi-device synchronization">Synchronisation multi-appareils</div>
-          <div class="comparison-card-row">
-            <div><div class="comparison-card-col-label">💻 Desktop</div><span class="cmp-no">❌</span> <span style="font-size:.78rem;color:var(--muted);" data-fr="Mono-poste" data-en="Single-device">Mono-poste</span></div>
-            <div><div class="comparison-card-col-label">🌐 Web / 📱 Mobile</div><span class="cmp-yes">✅</span> <span class="cmp-badge-soon" data-fr="Temps réel" data-en="Real-time">Temps réel</span></div>
-          </div>
-        </div>
-        <div class="comparison-card">
-          <div class="comparison-card-name" data-fr="API publique (intégrations tierces)" data-en="Public API (third-party integrations)">API publique (intégrations tierces)</div>
-          <div class="comparison-card-row">
-            <div><div class="comparison-card-col-label">💻 Desktop</div><span class="cmp-no">❌</span> <span style="font-size:.78rem;color:var(--muted);" data-fr="Non" data-en="No">Non</span></div>
-            <div><div class="comparison-card-col-label">🌐 Web</div><span class="cmp-yes">✅</span> <span class="cmp-badge-soon">REST + webhooks</span></div>
-          </div>
-        </div>
-      </div>
 
       <p class="cmp-note reveal" data-fr-html="<strong>La version Desktop fonctionne entièrement hors-ligne.</strong> La version Web SaaS et l'application Mobile sont en développement actif — inscription à la liste d'attente bientôt disponible." data-en-html="<strong>The Desktop version works entirely offline.</strong> The Web SaaS version and Mobile app are in active development — waitlist signup coming soon.">
         <strong>La version Desktop fonctionne entièrement hors-ligne.</strong> La version Web SaaS et l'application Mobile sont en développement actif — inscription à la liste d'attente bientôt disponible.
