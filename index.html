@@ -1088,8 +1088,11 @@ body.banner-closed { --banner-h: 0px; }
 }
 .db-slide img {
   width: 100%; height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  object-position: center;
   display: block;
+  background:
+    radial-gradient(ellipse at center, #14180F 0%, #0A0C08 100%);
 }
 
 /* Flèches navigation */
@@ -1184,18 +1187,40 @@ body.banner-closed { --banner-h: 0px; }
   width: 100%;
   aspect-ratio: 16 / 10;
   overflow: hidden;
-  background: var(--dark3);
+  background:
+    radial-gradient(ellipse at center, #14180F 0%, #0A0C08 100%);
 }
 .feature-card-image img {
+  position: absolute; inset: 0;
   width: 100%; height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  object-position: center;
   display: block;
-  transition: transform .7s cubic-bezier(.22,.61,.36,1);
+  opacity: 0;
+  transform: scale(1.02);
+  transition: opacity .7s ease, transform .9s cubic-bezier(.22,.61,.36,1), filter .4s ease;
   filter: saturate(.95);
 }
-.feature-card:hover .feature-card-image img {
-  transform: scale(1.06);
+.feature-card-image img.active { opacity: 1; transform: scale(1); }
+.feature-card:hover .feature-card-image img.active {
   filter: saturate(1.05);
+}
+/* Indicateurs du mini-carrousel (en bas à droite de l'image) */
+.feature-card-image-indicators {
+  position: absolute;
+  bottom: 10px; right: 12px;
+  display: flex; gap: 4px;
+  z-index: 3;
+}
+.feature-card-image-indicators span {
+  width: 14px; height: 3px;
+  border-radius: 100px;
+  background: rgba(255,255,255,.25);
+  transition: background .3s ease, width .3s ease;
+}
+.feature-card-image-indicators span.active {
+  background: var(--gold);
+  width: 20px;
 }
 /* Fondu vers le fond de la carte en bas de l'image */
 .feature-card-image::after {
@@ -1888,19 +1913,13 @@ textarea.form-control { resize: vertical; min-height: 120px; }
               </span>
             </div>
 
-            <!-- Carrousel -->
+            <!-- Carrousel : uniquement les écrans de tableau de bord -->
             <div class="db-carousel" id="dbCarousel"
-                 data-titles-fr="Tableau de bord,Caisse,POS &amp; Commandes,Gestion des stocks,Fournisseurs,Équipe &amp; utilisateurs,Recherche &amp; audit,Sauvegarde &amp; sécurité,Aide intégrée"
-                 data-titles-en="Dashboard,Cash register,POS &amp; Orders,Inventory management,Suppliers,Team &amp; users,Search &amp; audit,Backup &amp; security,Built-in help">
-              <div class="db-slide active"><img src="image/dasboard.jpg" alt="Tableau de bord" loading="eager" decoding="async"></div>
-              <div class="db-slide"><img src="image/caisse.jpg" alt="Module Caisse" loading="lazy" decoding="async"></div>
-              <div class="db-slide"><img src="image/pos.jpg" alt="Module POS & Commandes" loading="lazy" decoding="async"></div>
-              <div class="db-slide"><img src="image/stock.jpg" alt="Gestion des stocks" loading="lazy" decoding="async"></div>
-              <div class="db-slide"><img src="image/fournisseur.jpg" alt="Fournisseurs" loading="lazy" decoding="async"></div>
-              <div class="db-slide"><img src="image/user.jpg" alt="Équipe & utilisateurs" loading="lazy" decoding="async"></div>
-              <div class="db-slide"><img src="image/recherche.jpg" alt="Recherche & audit" loading="lazy" decoding="async"></div>
-              <div class="db-slide"><img src="image/backup.jpg" alt="Sauvegarde & sécurité" loading="lazy" decoding="async"></div>
-              <div class="db-slide"><img src="image/aide.jpg" alt="Aide intégrée" loading="lazy" decoding="async"></div>
+                 data-titles-fr="Tableau de bord,Tableau de bord — Vue alternative,Tableau de bord — Synthèse"
+                 data-titles-en="Dashboard,Dashboard — Alternate view,Dashboard — Summary">
+              <div class="db-slide active"><img src="image/dasboard.jpg" alt="Tableau de bord principal" loading="eager" decoding="async"></div>
+              <div class="db-slide"><img src="image/dasboard_2.jpg" alt="Tableau de bord — Vue alternative" loading="lazy" decoding="async"></div>
+              <div class="db-slide"><img src="image/dasboard.png" alt="Tableau de bord — Synthèse" loading="lazy" decoding="async"></div>
 
               <!-- Flèches navigation -->
               <button class="db-nav db-nav-prev" onclick="dbCarouselGo(-1)" aria-label="Précédent">‹</button>
@@ -1910,7 +1929,7 @@ textarea.form-control { resize: vertical; min-height: 120px; }
             <!-- Pied : indicateurs + compteur -->
             <div class="db-footer">
               <div class="db-indicators" id="dbIndicators"></div>
-              <div class="db-counter"><span id="dbCounter">1</span> / 9</div>
+              <div class="db-counter"><span id="dbCounter">1</span> / 3</div>
             </div>
           </div>
         </div>
@@ -2019,9 +2038,12 @@ textarea.form-control { resize: vertical; min-height: 120px; }
 
         <!-- 1. Caisse -->
         <div class="card feature-card reveal">
-          <div class="feature-card-image">
-            <img src="image/caisse.jpg" alt="Module Caisse — interface" loading="lazy" decoding="async">
+          <div class="feature-card-image" data-feat-carousel>
+            <img class="active" src="image/caisse.jpg" alt="Caisse — vue 1" loading="lazy" decoding="async">
+            <img src="image/caisse_2.jpg" alt="Caisse — vue 2" loading="lazy" decoding="async">
+            <img src="image/caisse_3.jpg" alt="Caisse — vue 3" loading="lazy" decoding="async">
             <span class="feature-card-badge"><span class="feature-card-badge-dot" style="background:#D4A017"></span><span data-fr="Caisse" data-en="Cash register">Caisse</span></span>
+            <div class="feature-card-image-indicators"><span class="active"></span><span></span><span></span></div>
           </div>
           <div class="feature-card-body">
             <p class="feature-card-tag" style="color:#D4A017" data-fr="Le coeur financier du bar" data-en="The financial heart of the bar">Le coeur financier du bar</p>
@@ -2032,9 +2054,11 @@ textarea.form-control { resize: vertical; min-height: 120px; }
 
         <!-- 2. POS & Commandes -->
         <div class="card feature-card reveal">
-          <div class="feature-card-image">
-            <img src="image/pos.jpg" alt="Module POS & Commandes — interface" loading="lazy" decoding="async">
+          <div class="feature-card-image" data-feat-carousel>
+            <img class="active" src="image/pos.jpg" alt="POS — vue 1" loading="lazy" decoding="async">
+            <img src="image/pos_commandes_2.jpg" alt="POS — vue 2" loading="lazy" decoding="async">
             <span class="feature-card-badge"><span class="feature-card-badge-dot" style="background:#2DBD7E"></span><span data-fr="POS & Commandes" data-en="POS & Orders">POS &amp; Commandes</span></span>
+            <div class="feature-card-image-indicators"><span class="active"></span><span></span></div>
           </div>
           <div class="feature-card-body">
             <p class="feature-card-tag" style="color:#2DBD7E" data-fr="Encaissement rapide, sans erreur" data-en="Fast checkout, no errors">Encaissement rapide, sans erreur</p>
@@ -2045,9 +2069,11 @@ textarea.form-control { resize: vertical; min-height: 120px; }
 
         <!-- 3. Stocks & Magasin -->
         <div class="card feature-card reveal">
-          <div class="feature-card-image">
-            <img src="image/stock.jpg" alt="Module Stocks & Magasin — interface" loading="lazy" decoding="async">
+          <div class="feature-card-image" data-feat-carousel>
+            <img class="active" src="image/stock.jpg" alt="Stocks — vue 1" loading="lazy" decoding="async">
+            <img src="image/stock_2.jpg" alt="Stocks — vue 2" loading="lazy" decoding="async">
             <span class="feature-card-badge"><span class="feature-card-badge-dot" style="background:#6CA0F7"></span><span data-fr="Stocks" data-en="Inventory">Stocks</span></span>
+            <div class="feature-card-image-indicators"><span class="active"></span><span></span></div>
           </div>
           <div class="feature-card-body">
             <p class="feature-card-tag" style="color:#6CA0F7" data-fr="Vision temps réel de l'inventaire" data-en="Real-time inventory view">Vision temps réel de l'inventaire</p>
@@ -2058,9 +2084,11 @@ textarea.form-control { resize: vertical; min-height: 120px; }
 
         <!-- 4. Fournisseurs -->
         <div class="card feature-card reveal">
-          <div class="feature-card-image">
-            <img src="image/fournisseur.jpg" alt="Module Fournisseurs — interface" loading="lazy" decoding="async">
+          <div class="feature-card-image" data-feat-carousel>
+            <img class="active" src="image/fournisseur.jpg" alt="Fournisseurs — vue 1" loading="lazy" decoding="async">
+            <img src="image/fournisseur_2.jpg" alt="Fournisseurs — vue 2" loading="lazy" decoding="async">
             <span class="feature-card-badge"><span class="feature-card-badge-dot" style="background:#F87171"></span><span data-fr="Fournisseurs" data-en="Suppliers">Fournisseurs</span></span>
+            <div class="feature-card-image-indicators"><span class="active"></span><span></span></div>
           </div>
           <div class="feature-card-body">
             <p class="feature-card-tag" style="color:#F87171" data-fr="Annuaire et historique commandes" data-en="Directory and order history">Annuaire et historique commandes</p>
@@ -2072,7 +2100,7 @@ textarea.form-control { resize: vertical; min-height: 120px; }
         <!-- 5. Dettes & Paiements -->
         <div class="card feature-card reveal">
           <div class="feature-card-image">
-            <img src="image/caisse_2.jpg" alt="Module Dettes & Paiements — interface" loading="lazy" decoding="async">
+            <img class="active" src="image/aide.jpg" alt="Module Dettes & Paiements — interface" loading="lazy" decoding="async">
             <span class="feature-card-badge"><span class="feature-card-badge-dot" style="background:#C084FC"></span><span data-fr="Dettes" data-en="Debts">Dettes</span></span>
           </div>
           <div class="feature-card-body">
@@ -2084,9 +2112,11 @@ textarea.form-control { resize: vertical; min-height: 120px; }
 
         <!-- 6. Équipe & Rôles -->
         <div class="card feature-card reveal">
-          <div class="feature-card-image">
-            <img src="image/user.jpg" alt="Module Équipe & Rôles — interface" loading="lazy" decoding="async">
+          <div class="feature-card-image" data-feat-carousel>
+            <img class="active" src="image/user.jpg" alt="Équipe — vue 1" loading="lazy" decoding="async">
+            <img src="image/login.jpg" alt="Équipe — connexion" loading="lazy" decoding="async">
             <span class="feature-card-badge"><span class="feature-card-badge-dot" style="background:#34D399"></span><span data-fr="Équipe" data-en="Team">Équipe</span></span>
+            <div class="feature-card-image-indicators"><span class="active"></span><span></span></div>
           </div>
           <div class="feature-card-body">
             <p class="feature-card-tag" style="color:#34D399" data-fr="Permissions granulaires par poste" data-en="Granular permissions per role">Permissions granulaires par poste</p>
@@ -2097,9 +2127,12 @@ textarea.form-control { resize: vertical; min-height: 120px; }
 
         <!-- 7. Analytics -->
         <div class="card feature-card reveal">
-          <div class="feature-card-image">
-            <img src="image/dasboard.jpg" alt="Module Analytics — tableau de bord" loading="lazy" decoding="async">
+          <div class="feature-card-image" data-feat-carousel>
+            <img class="active" src="image/dasboard.jpg" alt="Analytics — vue 1" loading="lazy" decoding="async">
+            <img src="image/dasboard_2.jpg" alt="Analytics — vue 2" loading="lazy" decoding="async">
+            <img src="image/dasboard.png" alt="Analytics — vue 3" loading="lazy" decoding="async">
             <span class="feature-card-badge"><span class="feature-card-badge-dot" style="background:#FBBF24"></span><span data-fr="Analytics" data-en="Analytics">Analytics</span></span>
+            <div class="feature-card-image-indicators"><span class="active"></span><span></span><span></span></div>
           </div>
           <div class="feature-card-body">
             <p class="feature-card-tag" style="color:#FBBF24" data-fr="Pilotez par les chiffres" data-en="Drive decisions with data">Pilotez par les chiffres</p>
@@ -2111,7 +2144,7 @@ textarea.form-control { resize: vertical; min-height: 120px; }
         <!-- 8. Conformité DGI -->
         <div class="card feature-card reveal">
           <div class="feature-card-image">
-            <img src="image/recherche.jpg" alt="Module Conformité DGI — recherche & audit" loading="lazy" decoding="async">
+            <img class="active" src="image/recherche.jpg" alt="Module Conformité DGI — recherche & audit" loading="lazy" decoding="async">
             <span class="feature-card-badge"><span class="feature-card-badge-dot" style="background:#38BDF8"></span><span data-fr="DGI" data-en="Tax">DGI</span></span>
           </div>
           <div class="feature-card-body">
@@ -2124,7 +2157,7 @@ textarea.form-control { resize: vertical; min-height: 120px; }
         <!-- 9. Sécurité & Backup -->
         <div class="card feature-card reveal">
           <div class="feature-card-image">
-            <img src="image/backup.jpg" alt="Module Sécurité & Backup — interface" loading="lazy" decoding="async">
+            <img class="active" src="image/backup.jpg" alt="Module Sécurité & Backup — interface" loading="lazy" decoding="async">
             <span class="feature-card-badge"><span class="feature-card-badge-dot" style="background:#A3E635"></span><span data-fr="Sécurité" data-en="Security">Sécurité</span></span>
           </div>
           <div class="feature-card-body">
@@ -3125,6 +3158,29 @@ function initDbCarousel() {
 }
 
 // ============================================================
+// MINI-CARROUSELS sur les cartes fonctionnalités
+// ============================================================
+function initFeatureCarousels() {
+  const carousels = document.querySelectorAll('[data-feat-carousel]');
+  carousels.forEach((wrap, cardIdx) => {
+    const imgs = wrap.querySelectorAll('img');
+    const dots = wrap.querySelectorAll('.feature-card-image-indicators span');
+    if (imgs.length <= 1) return;
+    let idx = 0;
+    // Décalage de phase pour éviter que toutes les cartes
+    // défilent en synchronisation parfaite
+    const interval = 4000 + (cardIdx * 350);
+    setInterval(() => {
+      imgs[idx].classList.remove('active');
+      if (dots[idx]) dots[idx].classList.remove('active');
+      idx = (idx + 1) % imgs.length;
+      imgs[idx].classList.add('active');
+      if (dots[idx]) dots[idx].classList.add('active');
+    }, interval);
+  });
+}
+
+// ============================================================
 // DOWNLOAD TRACKING (assure le déclenchement direct)
 // ============================================================
 function trackDownload(e) {
@@ -3207,6 +3263,7 @@ document.addEventListener('DOMContentLoaded', () => {
   applyLang(detectInitialLang());
   initReveal();
   initDbCarousel();
+  initFeatureCarousels();
   document.getElementById('navbar').classList.add('scrolled');
 });
 </script>
