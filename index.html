@@ -2050,16 +2050,28 @@ textarea.form-control { resize: vertical; min-height: 120px; }
 }
 .tree-root-node {
   display: inline-flex; flex-direction: column; align-items: center;
-  padding: 18px 32px;
-  background: linear-gradient(135deg, var(--gold2), var(--gold));
+  padding: 16px 32px 14px;
+  background: linear-gradient(135deg, #F0C44A 0%, var(--gold2) 50%, var(--gold) 100%);
   color: #0C0E0B;
-  border-radius: 14px;
+  border-radius: 16px;
   text-align: center;
   box-shadow:
-    0 12px 36px rgba(212,160,23,.4),
-    inset 0 1px 0 rgba(255,255,255,.45),
-    inset 0 -2px 0 rgba(0,0,0,.15);
+    0 16px 44px rgba(212,160,23,.45),
+    inset 0 1px 0 rgba(255,255,255,.55),
+    inset 0 -2px 0 rgba(0,0,0,.18),
+    0 0 0 1px rgba(212,160,23,.6);
   position: relative;
+  overflow: hidden;
+}
+/* Brillance subtile en haut */
+.tree-root-node::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 15%; right: 15%;
+  height: 50%;
+  background: linear-gradient(180deg, rgba(255,255,255,.35), transparent);
+  border-radius: 16px 16px 0 0;
+  pointer-events: none;
 }
 .tree-root-node strong {
   font-family: var(--font-h);
@@ -2076,15 +2088,33 @@ textarea.form-control { resize: vertical; min-height: 120px; }
   text-transform: uppercase;
   letter-spacing: .12em;
 }
-/* Connecteur vertical sous la racine */
+/* Connecteur vertical sous la racine — avec animation de flux */
 .tree-root::after {
   content: '';
   position: absolute;
   bottom: -40px;
   left: 50%;
   width: 2px; height: 40px;
-  background: linear-gradient(180deg, var(--gold) 0%, rgba(212,160,23,.3) 100%);
+  background: linear-gradient(180deg, var(--gold) 0%, rgba(212,160,23,.25) 100%);
   transform: translateX(-50%);
+}
+/* Petit point doré qui descend en boucle pour matérialiser le flux */
+.tree-root .tree-flow-dot {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 10px rgba(212,160,23,.8);
+  transform: translateX(-50%);
+  animation: treeFlowDown 2.5s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes treeFlowDown {
+  0%   { bottom: 0;     opacity: 0; }
+  20%  { opacity: 1; }
+  100% { bottom: -40px; opacity: 0; }
 }
 
 /* Niveau 2 : 2 branches Desktop / Web */
@@ -2119,24 +2149,91 @@ textarea.form-control { resize: vertical; min-height: 120px; }
 }
 
 .tree-branch-card {
-  display: flex; flex-direction: column; align-items: center; gap: 8px;
-  padding: 22px 24px;
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  padding: 22px 24px 18px;
   border-radius: var(--r2);
   position: relative;
   text-align: center;
   margin-bottom: 28px;
-  border: 2px solid;
+  border: 1px solid;
+  backdrop-filter: blur(12px) saturate(150%);
+  -webkit-backdrop-filter: blur(12px) saturate(150%);
+  overflow: hidden;
+  transition: transform .35s cubic-bezier(.22,.61,.36,1), box-shadow .35s ease, border-color .35s ease;
+}
+.tree-branch-card:hover { transform: translateY(-3px); }
+/* Halo subtil derrière le card */
+.tree-branch-card::before {
+  content: '';
+  position: absolute;
+  top: -50%; left: 50%;
+  width: 80%; height: 100%;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse, currentColor 0%, transparent 60%);
+  opacity: .12;
+  pointer-events: none;
+}
+/* Liseré supérieur dégradé subtil */
+.tree-branch-card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 10%; right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, currentColor, transparent);
+  opacity: .4;
 }
 .tree-branch-desktop .tree-branch-card {
-  background: linear-gradient(135deg, rgba(45,189,126,.12), rgba(45,189,126,.04));
-  border-color: rgba(45,189,126,.4);
-  box-shadow: 0 12px 32px rgba(45,189,126,.15);
+  background: linear-gradient(160deg, rgba(45,189,126,.14) 0%, rgba(45,189,126,.05) 60%, rgba(45,189,126,.02) 100%);
+  border-color: rgba(45,189,126,.35);
+  box-shadow:
+    0 16px 40px rgba(45,189,126,.12),
+    inset 0 1px 0 rgba(255,255,255,.04),
+    0 0 0 1px rgba(45,189,126,.08);
+  color: var(--green2);
+}
+.tree-branch-desktop .tree-branch-card:hover {
+  border-color: rgba(45,189,126,.6);
+  box-shadow:
+    0 24px 60px rgba(45,189,126,.22),
+    inset 0 1px 0 rgba(255,255,255,.06),
+    0 0 0 1px rgba(45,189,126,.18);
 }
 .tree-branch-web .tree-branch-card {
-  background: linear-gradient(135deg, rgba(64,120,210,.12), rgba(64,120,210,.04));
-  border-color: rgba(108,160,247,.4);
-  box-shadow: 0 12px 32px rgba(64,120,210,.15);
+  background: linear-gradient(160deg, rgba(64,120,210,.14) 0%, rgba(64,120,210,.05) 60%, rgba(64,120,210,.02) 100%);
+  border-color: rgba(108,160,247,.35);
+  box-shadow:
+    0 16px 40px rgba(64,120,210,.12),
+    inset 0 1px 0 rgba(255,255,255,.04),
+    0 0 0 1px rgba(108,160,247,.08);
+  color: #6CA0F7;
 }
+.tree-branch-web .tree-branch-card:hover {
+  border-color: rgba(108,160,247,.6);
+  box-shadow:
+    0 24px 60px rgba(64,120,210,.22),
+    inset 0 1px 0 rgba(255,255,255,.06),
+    0 0 0 1px rgba(108,160,247,.18);
+}
+
+/* Compteur de fonctionnalités */
+.tree-branch-count {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 11px;
+  background: rgba(0,0,0,.35);
+  border: 1px solid rgba(255,255,255,.06);
+  border-radius: 100px;
+  font-family: var(--font-h);
+  font-size: .66rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.6);
+  position: relative; z-index: 1;
+  margin-top: 4px;
+}
+.tree-branch-count strong { font-size: .76rem; font-weight: 800; }
+.tree-branch-desktop .tree-branch-count strong { color: var(--green2); }
+.tree-branch-web .tree-branch-count strong { color: #6CA0F7; }
 .tree-branch-icon {
   display: flex; align-items: center; justify-content: center;
   height: 36px;
@@ -2238,12 +2335,21 @@ textarea.form-control { resize: vertical; min-height: 120px; }
   backface-visibility: hidden;
   display: flex; align-items: center; gap: 10px;
   padding: 6px 12px;
-  background: var(--card);
+  background: linear-gradient(135deg, rgba(35,40,32,.95) 0%, rgba(31,36,25,.95) 100%);
   border: 1px solid var(--border);
   border-radius: 10px;
   border-left-width: 3px;
   overflow: hidden;
+  transition: border-color .3s ease, box-shadow .3s ease;
 }
+/* Glow subtil au survol selon la couleur d'état */
+.tree-leaf:hover .tree-leaf-front,
+.tree-leaf.flipped .tree-leaf-front {
+  box-shadow: 0 6px 20px rgba(0,0,0,.3);
+}
+.tree-leaf-yes:hover .tree-leaf-back { box-shadow: 0 8px 24px rgba(45,189,126,.18); }
+.tree-leaf-soon:hover .tree-leaf-back { box-shadow: 0 8px 24px rgba(212,160,23,.18); }
+.tree-leaf-no:hover .tree-leaf-back { box-shadow: 0 8px 24px rgba(248,113,113,.18); }
 
 /* État YES (vert) */
 .tree-leaf-yes .tree-leaf-face { border-left-color: rgba(45,189,126,.6); }
@@ -3188,6 +3294,7 @@ textarea.form-control { resize: vertical; min-height: 120px; }
             <strong>BarManager Pro</strong>
             <span data-fr="Choisissez votre plateforme" data-en="Choose your platform">Choisissez votre plateforme</span>
           </div>
+          <span class="tree-flow-dot" aria-hidden="true"></span>
         </div>
 
         <!-- Branches -->
@@ -3206,6 +3313,10 @@ textarea.form-control { resize: vertical; min-height: 120px; }
               <div class="tree-branch-status">
                 <span class="tree-branch-status-dot" aria-hidden="true"></span>
                 <span data-fr="Disponible maintenant" data-en="Available now">Disponible maintenant</span>
+              </div>
+              <div class="tree-branch-count">
+                <strong>6</strong>
+                <span data-fr="fonctionnalités incluses" data-en="features included">fonctionnalités incluses</span>
               </div>
             </div>
             <ul class="tree-leaves">
@@ -3324,6 +3435,10 @@ textarea.form-control { resize: vertical; min-height: 120px; }
               <div class="tree-branch-status">
                 <span class="tree-branch-status-dot" aria-hidden="true"></span>
                 <span data-fr="Bientôt disponible" data-en="Coming soon">Bientôt disponible</span>
+              </div>
+              <div class="tree-branch-count">
+                <strong>6</strong>
+                <span data-fr="fonctionnalités prévues" data-en="features planned">fonctionnalités prévues</span>
               </div>
             </div>
             <ul class="tree-leaves">
