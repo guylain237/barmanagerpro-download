@@ -2184,88 +2184,145 @@ textarea.form-control { resize: vertical; min-height: 120px; }
   box-shadow: 0 0 6px var(--gold);
 }
 
-/* Feuilles : liste de fonctionnalités sous chaque branche */
+/* Feuilles : cartes 3D qui se retournent au survol */
 .tree-leaves {
   list-style: none;
   padding: 0;
   margin: 0;
   position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 6px;
 }
 /* Connecteur vertical entre branche-card et feuilles */
 .tree-leaves::before {
   content: '';
   position: absolute;
-  top: -20px;
+  top: -18px;
   left: 50%;
-  width: 2px; height: 20px;
+  width: 2px; height: 18px;
   background: linear-gradient(180deg, var(--gold), rgba(212,160,23,.3));
   transform: translateX(-50%);
 }
+
 .tree-leaf {
-  display: flex; align-items: center; gap: 12px;
-  padding: 12px 16px;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  margin-bottom: 8px;
-  transition: border-color .2s ease, background .2s ease, transform .2s ease;
   position: relative;
+  height: 46px;
+  perspective: 1000px;
+  cursor: pointer;
 }
 .tree-leaf::before {
   content: '';
   position: absolute;
-  left: -12px; top: 50%;
-  width: 12px; height: 2px;
-  background: rgba(212,160,23,.3);
+  left: -10px; top: 50%;
+  width: 10px; height: 2px;
+  background: rgba(212,160,23,.25);
   transform: translateY(-50%);
+  z-index: 1;
 }
-.tree-leaf:hover {
-  background: rgba(255,255,255,.025);
-  border-color: rgba(255,255,255,.16);
-  transform: translateX(2px);
+
+.tree-leaf-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform .55s cubic-bezier(.22,.61,.36,1);
 }
+.tree-leaf:hover .tree-leaf-inner,
+.tree-leaf.flipped .tree-leaf-inner { transform: rotateY(180deg); }
+
+.tree-leaf-face {
+  position: absolute;
+  inset: 0;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  display: flex; align-items: center; gap: 10px;
+  padding: 6px 12px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  border-left-width: 3px;
+  overflow: hidden;
+}
+
+/* État YES (vert) */
+.tree-leaf-yes .tree-leaf-face { border-left-color: rgba(45,189,126,.6); }
+.tree-leaf-yes .tree-leaf-back { background: linear-gradient(135deg, rgba(45,189,126,.1), rgba(45,189,126,.04)); border-color: rgba(45,189,126,.3); }
+.tree-leaf-yes .tree-leaf-icon { background: rgba(45,189,126,.15); color: var(--green2); border: 1px solid rgba(45,189,126,.3); }
+.tree-leaf-yes .tree-leaf-meta { color: var(--green2); }
+
+/* État SOON (or) */
+.tree-leaf-soon .tree-leaf-face { border-left-color: rgba(212,160,23,.6); }
+.tree-leaf-soon .tree-leaf-back { background: linear-gradient(135deg, rgba(212,160,23,.1), rgba(212,160,23,.04)); border-color: rgba(212,160,23,.3); }
+.tree-leaf-soon .tree-leaf-icon { background: rgba(212,160,23,.15); color: var(--gold2); border: 1px solid rgba(212,160,23,.3); }
+.tree-leaf-soon .tree-leaf-meta { color: var(--gold2); }
+
+/* État NO (rouge) */
+.tree-leaf-no .tree-leaf-face { border-left-color: rgba(248,113,113,.55); }
+.tree-leaf-no .tree-leaf-back { background: linear-gradient(135deg, rgba(248,113,113,.1), rgba(248,113,113,.04)); border-color: rgba(248,113,113,.3); }
+.tree-leaf-no .tree-leaf-icon { background: rgba(248,113,113,.12); color: #F87171; border: 1px solid rgba(248,113,113,.3); }
+.tree-leaf-no .tree-leaf-meta { color: #F87171; }
+
+/* Verso : tourné à 180° */
+.tree-leaf-back {
+  transform: rotateY(180deg);
+  padding: 6px 12px;
+  justify-content: flex-start;
+}
+
+/* Icône */
 .tree-leaf-icon {
   flex-shrink: 0;
-  width: 28px; height: 28px;
-  border-radius: 8px;
+  width: 26px; height: 26px;
+  border-radius: 7px;
   display: flex; align-items: center; justify-content: center;
-  font-size: .85rem;
-  font-weight: 800;
 }
-.tree-leaf-icon svg { width: 16px; height: 16px; display: block; }
-.tree-leaf-yes .tree-leaf-icon {
-  background: rgba(45,189,126,.15);
-  color: var(--green2);
-  border: 1px solid rgba(45,189,126,.3);
-}
-.tree-leaf-soon .tree-leaf-icon {
-  background: rgba(212,160,23,.15);
-  color: var(--gold2);
-  border: 1px solid rgba(212,160,23,.3);
-}
-.tree-leaf-no .tree-leaf-icon {
-  background: rgba(248,113,113,.12);
-  color: #F87171;
-  border: 1px solid rgba(248,113,113,.3);
-}
-.tree-leaf-content { flex: 1; min-width: 0; }
+.tree-leaf-icon svg { width: 14px; height: 14px; display: block; }
+
+/* Texte de face avant : titre compact */
 .tree-leaf-title {
   display: block;
   font-family: var(--font-h);
-  font-size: .85rem;
+  font-size: .8rem;
   font-weight: 600;
   color: var(--white);
+  line-height: 1.25;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+  min-width: 0;
+}
+/* Texte de face arrière : meta sur 2 lignes max */
+.tree-leaf-meta {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-size: .73rem;
+  font-weight: 500;
   line-height: 1.3;
 }
-.tree-leaf-meta {
-  display: block;
-  font-size: .72rem;
-  color: var(--muted);
-  margin-top: 2px;
+
+/* Petit "i" en haut à droite pour indiquer "survoler pour détails" */
+.tree-leaf-hint {
+  position: absolute;
+  top: 6px; right: 8px;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.08);
+  color: rgba(255,255,255,.4);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-h);
+  font-size: 9px;
+  font-weight: 800;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .25s ease;
 }
-.tree-leaf-yes .tree-leaf-meta { color: var(--green2); }
-.tree-leaf-soon .tree-leaf-meta { color: var(--gold2); }
-.tree-leaf-no .tree-leaf-meta { color: #F87171; }
+.tree-leaf-front .tree-leaf-hint { opacity: .6; }
+.tree-leaf:hover .tree-leaf-front .tree-leaf-hint { opacity: 0; }
 
 /* Note du bas */
 .cmp-note {
@@ -2301,36 +2358,42 @@ textarea.form-control { resize: vertical; min-height: 120px; }
 .guarantee-item h4 { margin-bottom: 8px; }
 .guarantee-item p { font-size: .83rem; color: var(--muted); max-width: 100%; }
 
-/* Responsive : tablette */
-@media (max-width: 900px) {
+/* Responsive : tablette — 2 colonnes pour les feuilles, gain vertical */
+@media (max-width: 900px) and (min-width: 561px) {
   .tree-branches { gap: 24px; }
+  .tree-leaves { grid-template-columns: 1fr 1fr; gap: 6px 8px; }
 }
 
 /* Responsive : mobile (les branches s'empilent verticalement) */
 @media (max-width: 700px) {
-  .tree-root { margin-bottom: 36px; }
-  .tree-root::after { height: 30px; bottom: -30px; }
+  .tree-root { margin-bottom: 32px; }
+  .tree-root::after { height: 28px; bottom: -28px; }
   .tree-branches {
     grid-template-columns: 1fr;
-    gap: 36px;
+    gap: 32px;
   }
-  /* Plus de connecteur horizontal en colonne */
   .tree-branches::before { display: none; }
-  .tree-branch:first-child::before {
-    top: -22px; height: 22px;
-  }
-  /* La seconde branche reçoit son connecteur depuis le bas de la première */
+  .tree-branch:first-child::before { top: -20px; height: 20px; }
   .tree-branch:nth-child(2)::before {
-    top: -22px; height: 22px;
+    top: -20px; height: 20px;
     background: linear-gradient(180deg, rgba(212,160,23,.3), var(--gold));
   }
-  .tree-branch-card { padding: 18px 16px; margin-bottom: 22px; }
-  .tree-branch-icon { font-size: 1.7rem; }
+  .tree-branch-card { padding: 16px 14px; margin-bottom: 18px; }
   .tree-branch-name { font-size: 1.05rem; }
-  .tree-leaf { padding: 10px 14px; }
-  .tree-leaf-icon { width: 26px; height: 26px; }
-  .tree-leaf-title { font-size: .82rem; }
-  .tree-leaf-meta { font-size: .7rem; }
+  /* Feuilles : 2 colonnes pour optimiser la hauteur (mobile moyen) */
+  .tree-leaves { grid-template-columns: 1fr 1fr; gap: 6px; }
+  .tree-leaf { height: 42px; }
+  .tree-leaf-face { padding: 5px 10px; gap: 8px; }
+  .tree-leaf-icon { width: 24px; height: 24px; }
+  .tree-leaf-icon svg { width: 12px; height: 12px; }
+  .tree-leaf-title { font-size: .74rem; }
+  .tree-leaf-meta { font-size: .68rem; }
+}
+
+/* Très petit écran : 1 colonne pour rester lisible */
+@media (max-width: 380px) {
+  .tree-leaves { grid-template-columns: 1fr; }
+  .tree-leaf { height: 44px; }
 }
 </style>
 </head>
@@ -3146,60 +3209,100 @@ textarea.form-control { resize: vertical; min-height: 120px; }
               </div>
             </div>
             <ul class="tree-leaves">
-              <li class="tree-leaf tree-leaf-yes">
-                <div class="tree-leaf-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12.5 10 17.5 19 7.5"/></svg></div>
-                <div class="tree-leaf-content">
-                  <span class="tree-leaf-title" data-fr="Caisse & POS complets" data-en="Full register & POS">Caisse &amp; POS complets</span>
-                  <span class="tree-leaf-meta" data-fr="Encaissement multi-paiements" data-en="Multi-payment checkout">Encaissement multi-paiements</span>
+              <li class="tree-leaf tree-leaf-yes" tabindex="0" onclick="this.classList.toggle('flipped')">
+                <div class="tree-leaf-inner">
+                  <div class="tree-leaf-face tree-leaf-front">
+                    <div class="tree-leaf-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12.5 10 17.5 19 7.5"/></svg></div>
+                    <span class="tree-leaf-title" data-fr="Caisse & POS complets" data-en="Full register & POS">Caisse &amp; POS complets</span>
+                    <span class="tree-leaf-hint" aria-hidden="true">i</span>
+                  </div>
+                  <div class="tree-leaf-face tree-leaf-back">
+                    <span class="tree-leaf-meta" data-fr="Encaissement multi-paiements" data-en="Multi-payment checkout">Encaissement multi-paiements</span>
+                  </div>
                 </div>
               </li>
-              <li class="tree-leaf tree-leaf-yes">
-                <div class="tree-leaf-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12.5 10 17.5 19 7.5"/></svg></div>
-                <div class="tree-leaf-content">
-                  <span class="tree-leaf-title" data-fr="100% offline-first" data-en="100% offline-first">100% offline-first</span>
-                  <span class="tree-leaf-meta" data-fr="Aucune connexion requise" data-en="No connection needed">Aucune connexion requise</span>
+              <li class="tree-leaf tree-leaf-yes" tabindex="0" onclick="this.classList.toggle('flipped')">
+                <div class="tree-leaf-inner">
+                  <div class="tree-leaf-face tree-leaf-front">
+                    <div class="tree-leaf-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12.5 10 17.5 19 7.5"/></svg></div>
+                    <span class="tree-leaf-title" data-fr="100% offline-first" data-en="100% offline-first">100% offline-first</span>
+                    <span class="tree-leaf-hint" aria-hidden="true">i</span>
+                  </div>
+                  <div class="tree-leaf-face tree-leaf-back">
+                    <span class="tree-leaf-meta" data-fr="Aucune connexion requise" data-en="No connection needed">Aucune connexion requise</span>
+                  </div>
                 </div>
               </li>
-              <li class="tree-leaf tree-leaf-yes">
-                <div class="tree-leaf-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12.5 10 17.5 19 7.5"/></svg></div>
-                <div class="tree-leaf-content">
-                  <span class="tree-leaf-title" data-fr="Stocks & fournisseurs" data-en="Inventory & suppliers">Stocks &amp; fournisseurs</span>
-                  <span class="tree-leaf-meta" data-fr="Module complet, import Excel" data-en="Full module, Excel import">Module complet, import Excel</span>
+              <li class="tree-leaf tree-leaf-yes" tabindex="0" onclick="this.classList.toggle('flipped')">
+                <div class="tree-leaf-inner">
+                  <div class="tree-leaf-face tree-leaf-front">
+                    <div class="tree-leaf-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12.5 10 17.5 19 7.5"/></svg></div>
+                    <span class="tree-leaf-title" data-fr="Stocks & fournisseurs" data-en="Inventory & suppliers">Stocks &amp; fournisseurs</span>
+                    <span class="tree-leaf-hint" aria-hidden="true">i</span>
+                  </div>
+                  <div class="tree-leaf-face tree-leaf-back">
+                    <span class="tree-leaf-meta" data-fr="Module complet, import Excel" data-en="Full module, Excel import">Module complet, import Excel</span>
+                  </div>
                 </div>
               </li>
-              <li class="tree-leaf tree-leaf-yes">
-                <div class="tree-leaf-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12.5 10 17.5 19 7.5"/></svg></div>
-                <div class="tree-leaf-content">
-                  <span class="tree-leaf-title" data-fr="Conformité DGI Cameroun" data-en="DGI Cameroon compliance">Conformité DGI Cameroun</span>
-                  <span class="tree-leaf-meta" data-fr="TVA 19,25% · Rapport Z PDF" data-en="VAT 19.25% · Z report PDF">TVA 19,25% · Rapport Z PDF</span>
+              <li class="tree-leaf tree-leaf-yes" tabindex="0" onclick="this.classList.toggle('flipped')">
+                <div class="tree-leaf-inner">
+                  <div class="tree-leaf-face tree-leaf-front">
+                    <div class="tree-leaf-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12.5 10 17.5 19 7.5"/></svg></div>
+                    <span class="tree-leaf-title" data-fr="Conformité DGI Cameroun" data-en="DGI Cameroon compliance">Conformité DGI Cameroun</span>
+                    <span class="tree-leaf-hint" aria-hidden="true">i</span>
+                  </div>
+                  <div class="tree-leaf-face tree-leaf-back">
+                    <span class="tree-leaf-meta" data-fr="TVA 19,25% · Rapport Z PDF" data-en="VAT 19.25% · Z report PDF">TVA 19,25% · Rapport Z PDF</span>
+                  </div>
                 </div>
               </li>
-              <li class="tree-leaf tree-leaf-yes">
-                <div class="tree-leaf-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12.5 10 17.5 19 7.5"/></svg></div>
-                <div class="tree-leaf-content">
-                  <span class="tree-leaf-title" data-fr="Orange Money & MTN MoMo" data-en="Orange Money & MTN MoMo">Orange Money &amp; MTN MoMo</span>
-                  <span class="tree-leaf-meta" data-fr="Paiements mobile natifs" data-en="Native mobile payments">Paiements mobile natifs</span>
+              <li class="tree-leaf tree-leaf-yes" tabindex="0" onclick="this.classList.toggle('flipped')">
+                <div class="tree-leaf-inner">
+                  <div class="tree-leaf-face tree-leaf-front">
+                    <div class="tree-leaf-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12.5 10 17.5 19 7.5"/></svg></div>
+                    <span class="tree-leaf-title" data-fr="Orange Money & MTN MoMo" data-en="Orange Money & MTN MoMo">Orange Money &amp; MTN MoMo</span>
+                    <span class="tree-leaf-hint" aria-hidden="true">i</span>
+                  </div>
+                  <div class="tree-leaf-face tree-leaf-back">
+                    <span class="tree-leaf-meta" data-fr="Paiements mobile natifs" data-en="Native mobile payments">Paiements mobile natifs</span>
+                  </div>
                 </div>
               </li>
-              <li class="tree-leaf tree-leaf-yes">
-                <div class="tree-leaf-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12.5 10 17.5 19 7.5"/></svg></div>
-                <div class="tree-leaf-content">
-                  <span class="tree-leaf-title" data-fr="Backup chiffré local" data-en="Encrypted local backup">Backup chiffré local</span>
-                  <span class="tree-leaf-meta" data-fr="Toutes les 6h · cloud optionnel" data-en="Every 6h · optional cloud">Toutes les 6h · cloud optionnel</span>
+              <li class="tree-leaf tree-leaf-yes" tabindex="0" onclick="this.classList.toggle('flipped')">
+                <div class="tree-leaf-inner">
+                  <div class="tree-leaf-face tree-leaf-front">
+                    <div class="tree-leaf-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12.5 10 17.5 19 7.5"/></svg></div>
+                    <span class="tree-leaf-title" data-fr="Backup chiffré local" data-en="Encrypted local backup">Backup chiffré local</span>
+                    <span class="tree-leaf-hint" aria-hidden="true">i</span>
+                  </div>
+                  <div class="tree-leaf-face tree-leaf-back">
+                    <span class="tree-leaf-meta" data-fr="Toutes les 6h · cloud optionnel" data-en="Every 6h · optional cloud">Toutes les 6h · cloud optionnel</span>
+                  </div>
                 </div>
               </li>
-              <li class="tree-leaf tree-leaf-no">
-                <div class="tree-leaf-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><line x1="6.5" y1="6.5" x2="17.5" y2="17.5"/><line x1="17.5" y1="6.5" x2="6.5" y2="17.5"/></svg></div>
-                <div class="tree-leaf-content">
-                  <span class="tree-leaf-title" data-fr="Multi-établissements" data-en="Multi-location">Multi-établissements</span>
-                  <span class="tree-leaf-meta" data-fr="Mono-poste uniquement" data-en="Single device only">Mono-poste uniquement</span>
+              <li class="tree-leaf tree-leaf-no" tabindex="0" onclick="this.classList.toggle('flipped')">
+                <div class="tree-leaf-inner">
+                  <div class="tree-leaf-face tree-leaf-front">
+                    <div class="tree-leaf-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><line x1="6.5" y1="6.5" x2="17.5" y2="17.5"/><line x1="17.5" y1="6.5" x2="6.5" y2="17.5"/></svg></div>
+                    <span class="tree-leaf-title" data-fr="Multi-établissements" data-en="Multi-location">Multi-établissements</span>
+                    <span class="tree-leaf-hint" aria-hidden="true">i</span>
+                  </div>
+                  <div class="tree-leaf-face tree-leaf-back">
+                    <span class="tree-leaf-meta" data-fr="Mono-poste uniquement" data-en="Single device only">Mono-poste uniquement</span>
+                  </div>
                 </div>
               </li>
-              <li class="tree-leaf tree-leaf-no">
-                <div class="tree-leaf-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><line x1="6.5" y1="6.5" x2="17.5" y2="17.5"/><line x1="17.5" y1="6.5" x2="6.5" y2="17.5"/></svg></div>
-                <div class="tree-leaf-content">
-                  <span class="tree-leaf-title" data-fr="Accès distant & mobile" data-en="Remote & mobile access">Accès distant &amp; mobile</span>
-                  <span class="tree-leaf-meta" data-fr="Local uniquement" data-en="Local only">Local uniquement</span>
+              <li class="tree-leaf tree-leaf-no" tabindex="0" onclick="this.classList.toggle('flipped')">
+                <div class="tree-leaf-inner">
+                  <div class="tree-leaf-face tree-leaf-front">
+                    <div class="tree-leaf-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><line x1="6.5" y1="6.5" x2="17.5" y2="17.5"/><line x1="17.5" y1="6.5" x2="6.5" y2="17.5"/></svg></div>
+                    <span class="tree-leaf-title" data-fr="Accès distant & mobile" data-en="Remote & mobile access">Accès distant &amp; mobile</span>
+                    <span class="tree-leaf-hint" aria-hidden="true">i</span>
+                  </div>
+                  <div class="tree-leaf-face tree-leaf-back">
+                    <span class="tree-leaf-meta" data-fr="Local uniquement" data-en="Local only">Local uniquement</span>
+                  </div>
                 </div>
               </li>
             </ul>
@@ -3224,53 +3327,88 @@ textarea.form-control { resize: vertical; min-height: 120px; }
               </div>
             </div>
             <ul class="tree-leaves">
-              <li class="tree-leaf tree-leaf-soon">
-                <div class="tree-leaf-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/></svg></div>
-                <div class="tree-leaf-content">
-                  <span class="tree-leaf-title" data-fr="Tous les modules Desktop" data-en="All Desktop modules">Tous les modules Desktop</span>
-                  <span class="tree-leaf-meta" data-fr="Caisse, stocks, fournisseurs, RH…" data-en="Register, inventory, suppliers, HR…">Caisse, stocks, fournisseurs, RH…</span>
+              <li class="tree-leaf tree-leaf-soon" tabindex="0" onclick="this.classList.toggle('flipped')">
+                <div class="tree-leaf-inner">
+                  <div class="tree-leaf-face tree-leaf-front">
+                    <div class="tree-leaf-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/></svg></div>
+                    <span class="tree-leaf-title" data-fr="Tous les modules Desktop" data-en="All Desktop modules">Tous les modules Desktop</span>
+                    <span class="tree-leaf-hint" aria-hidden="true">i</span>
+                  </div>
+                  <div class="tree-leaf-face tree-leaf-back">
+                    <span class="tree-leaf-meta" data-fr="Caisse, stocks, fournisseurs, RH…" data-en="Register, inventory, suppliers, HR…">Caisse, stocks, fournisseurs, RH…</span>
+                  </div>
                 </div>
               </li>
-              <li class="tree-leaf tree-leaf-soon">
-                <div class="tree-leaf-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/></svg></div>
-                <div class="tree-leaf-content">
-                  <span class="tree-leaf-title" data-fr="Cloud natif & synchronisation" data-en="Native cloud & sync">Cloud natif &amp; synchronisation</span>
-                  <span class="tree-leaf-meta" data-fr="Multi-appareils en temps réel" data-en="Multi-device real-time">Multi-appareils en temps réel</span>
+              <li class="tree-leaf tree-leaf-soon" tabindex="0" onclick="this.classList.toggle('flipped')">
+                <div class="tree-leaf-inner">
+                  <div class="tree-leaf-face tree-leaf-front">
+                    <div class="tree-leaf-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/></svg></div>
+                    <span class="tree-leaf-title" data-fr="Cloud natif & synchronisation" data-en="Native cloud & sync">Cloud natif &amp; synchronisation</span>
+                    <span class="tree-leaf-hint" aria-hidden="true">i</span>
+                  </div>
+                  <div class="tree-leaf-face tree-leaf-back">
+                    <span class="tree-leaf-meta" data-fr="Multi-appareils en temps réel" data-en="Multi-device real-time">Multi-appareils en temps réel</span>
+                  </div>
                 </div>
               </li>
-              <li class="tree-leaf tree-leaf-soon">
-                <div class="tree-leaf-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/></svg></div>
-                <div class="tree-leaf-content">
-                  <span class="tree-leaf-title" data-fr="Accès distant" data-en="Remote access">Accès distant</span>
-                  <span class="tree-leaf-meta" data-fr="Gérez votre bar de partout" data-en="Run your bar from anywhere">Gérez votre bar de partout</span>
+              <li class="tree-leaf tree-leaf-soon" tabindex="0" onclick="this.classList.toggle('flipped')">
+                <div class="tree-leaf-inner">
+                  <div class="tree-leaf-face tree-leaf-front">
+                    <div class="tree-leaf-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/></svg></div>
+                    <span class="tree-leaf-title" data-fr="Accès distant" data-en="Remote access">Accès distant</span>
+                    <span class="tree-leaf-hint" aria-hidden="true">i</span>
+                  </div>
+                  <div class="tree-leaf-face tree-leaf-back">
+                    <span class="tree-leaf-meta" data-fr="Gérez votre bar de partout" data-en="Run your bar from anywhere">Gérez votre bar de partout</span>
+                  </div>
                 </div>
               </li>
-              <li class="tree-leaf tree-leaf-soon">
-                <div class="tree-leaf-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/></svg></div>
-                <div class="tree-leaf-content">
-                  <span class="tree-leaf-title" data-fr="App mobile iOS & Android" data-en="Mobile app iOS & Android">App mobile iOS &amp; Android</span>
-                  <span class="tree-leaf-meta" data-fr="Notifications push & POS tablette" data-en="Push notifications & tablet POS">Notifications push &amp; POS tablette</span>
+              <li class="tree-leaf tree-leaf-soon" tabindex="0" onclick="this.classList.toggle('flipped')">
+                <div class="tree-leaf-inner">
+                  <div class="tree-leaf-face tree-leaf-front">
+                    <div class="tree-leaf-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/></svg></div>
+                    <span class="tree-leaf-title" data-fr="App mobile iOS & Android" data-en="Mobile app iOS & Android">App mobile iOS &amp; Android</span>
+                    <span class="tree-leaf-hint" aria-hidden="true">i</span>
+                  </div>
+                  <div class="tree-leaf-face tree-leaf-back">
+                    <span class="tree-leaf-meta" data-fr="Notifications push & POS tablette" data-en="Push notifications & tablet POS">Notifications push &amp; POS tablette</span>
+                  </div>
                 </div>
               </li>
-              <li class="tree-leaf tree-leaf-soon">
-                <div class="tree-leaf-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/></svg></div>
-                <div class="tree-leaf-content">
-                  <span class="tree-leaf-title" data-fr="Multi-établissements" data-en="Multi-location">Multi-établissements</span>
-                  <span class="tree-leaf-meta" data-fr="Console pour chaînes (Enterprise)" data-en="Chain console (Enterprise)">Console pour chaînes (Enterprise)</span>
+              <li class="tree-leaf tree-leaf-soon" tabindex="0" onclick="this.classList.toggle('flipped')">
+                <div class="tree-leaf-inner">
+                  <div class="tree-leaf-face tree-leaf-front">
+                    <div class="tree-leaf-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/></svg></div>
+                    <span class="tree-leaf-title" data-fr="Multi-établissements" data-en="Multi-location">Multi-établissements</span>
+                    <span class="tree-leaf-hint" aria-hidden="true">i</span>
+                  </div>
+                  <div class="tree-leaf-face tree-leaf-back">
+                    <span class="tree-leaf-meta" data-fr="Console pour chaînes (Enterprise)" data-en="Chain console (Enterprise)">Console pour chaînes (Enterprise)</span>
+                  </div>
                 </div>
               </li>
-              <li class="tree-leaf tree-leaf-soon">
-                <div class="tree-leaf-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/></svg></div>
-                <div class="tree-leaf-content">
-                  <span class="tree-leaf-title" data-fr="API publique REST + webhooks" data-en="Public REST API + webhooks">API publique REST + webhooks</span>
-                  <span class="tree-leaf-meta" data-fr="Intégrations tierces" data-en="Third-party integrations">Intégrations tierces</span>
+              <li class="tree-leaf tree-leaf-soon" tabindex="0" onclick="this.classList.toggle('flipped')">
+                <div class="tree-leaf-inner">
+                  <div class="tree-leaf-face tree-leaf-front">
+                    <div class="tree-leaf-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/></svg></div>
+                    <span class="tree-leaf-title" data-fr="API publique REST + webhooks" data-en="Public REST API + webhooks">API publique REST + webhooks</span>
+                    <span class="tree-leaf-hint" aria-hidden="true">i</span>
+                  </div>
+                  <div class="tree-leaf-face tree-leaf-back">
+                    <span class="tree-leaf-meta" data-fr="Intégrations tierces" data-en="Third-party integrations">Intégrations tierces</span>
+                  </div>
                 </div>
               </li>
-              <li class="tree-leaf tree-leaf-no">
-                <div class="tree-leaf-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><line x1="6.5" y1="6.5" x2="17.5" y2="17.5"/><line x1="17.5" y1="6.5" x2="6.5" y2="17.5"/></svg></div>
-                <div class="tree-leaf-content">
-                  <span class="tree-leaf-title" data-fr="Mode 100% offline" data-en="100% offline mode">Mode 100% offline</span>
-                  <span class="tree-leaf-meta" data-fr="Connexion internet requise" data-en="Internet connection required">Connexion internet requise</span>
+              <li class="tree-leaf tree-leaf-no" tabindex="0" onclick="this.classList.toggle('flipped')">
+                <div class="tree-leaf-inner">
+                  <div class="tree-leaf-face tree-leaf-front">
+                    <div class="tree-leaf-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><line x1="6.5" y1="6.5" x2="17.5" y2="17.5"/><line x1="17.5" y1="6.5" x2="6.5" y2="17.5"/></svg></div>
+                    <span class="tree-leaf-title" data-fr="Mode 100% offline" data-en="100% offline mode">Mode 100% offline</span>
+                    <span class="tree-leaf-hint" aria-hidden="true">i</span>
+                  </div>
+                  <div class="tree-leaf-face tree-leaf-back">
+                    <span class="tree-leaf-meta" data-fr="Connexion internet requise" data-en="Internet connection required">Connexion internet requise</span>
+                  </div>
                 </div>
               </li>
             </ul>
