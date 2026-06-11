@@ -1327,7 +1327,24 @@ body.banner-closed { --banner-h: 0px; }
   display: flex; align-items: center; gap: 16px;
   margin-bottom: 32px;
 }
-.hero-title { margin-bottom: 24px; }
+.hero-title {
+  margin-bottom: 24px;
+  /* Chaque ligne du titre est verrouillée : nombre de lignes invariant */
+  display: flex;
+  flex-direction: column;
+}
+.hero-title .hero-line {
+  display: block;
+  white-space: nowrap;            /* JAMAIS de retour à la ligne au milieu */
+  font-size: clamp(1.7rem, 5.4vw, 4.6rem);
+  line-height: 1.05;
+  letter-spacing: -.03em;
+  font-weight: 800;
+}
+.hero-title .hero-line em {
+  font-style: normal;
+  color: var(--gold);
+}
 .hero-title em {
   font-style: normal;
   position: relative;
@@ -2749,8 +2766,8 @@ textarea.form-control { resize: vertical; min-height: 120px; }
             <div class="badge-web-soon-dot"></div>
             <span data-fr="Version web SaaS — Bientôt disponible" data-en="Web SaaS version — Coming soon">Version web SaaS — Bientôt disponible</span>
           </div>
-          <h1 class="hero-title" data-fr-html="Gérez votre bar<br>comme un <em>pro</em>." data-en-html="Run your bar<br>like a <em>pro</em>.">
-            Gérez votre bar<br>comme un <em>pro</em>.
+          <h1 class="hero-title" data-fr-html="<span class='hero-line'>Gérez votre bar</span><span class='hero-line'>comme un <em>pro</em>.</span>" data-en-html="<span class='hero-line'>Run your bar</span><span class='hero-line'>like a <em>pro</em>.</span>">
+            <span class="hero-line">Gérez votre bar</span><span class="hero-line">comme un <em>pro</em>.</span>
           </h1>
           <p class="hero-desc" data-fr="La solution tout-en-un pour les bars et restaurants du Cameroun et d'Afrique Centrale — caisse, stocks, paiements MoMo, conformité DGI." data-en="The all-in-one solution for bars and restaurants in Cameroon and Central Africa — POS, inventory, MoMo payments, DGI compliance.">
             La solution tout-en-un pour les bars et restaurants du Cameroun
