@@ -1329,15 +1329,19 @@ body.banner-closed { --banner-h: 0px; }
 }
 .hero-title {
   margin-bottom: 24px;
-  /* Chaque ligne du titre est verrouillée : nombre de lignes invariant */
   display: flex;
   flex-direction: column;
+  /* Coupe ce qui dépasse au lieu de laisser wrapper */
+  overflow: hidden;
 }
 .hero-title .hero-line {
   display: block;
-  white-space: nowrap;            /* JAMAIS de retour à la ligne au milieu */
-  font-size: clamp(1.7rem, 5.4vw, 4.6rem);
-  line-height: 1.05;
+  white-space: nowrap !important; /* Jamais de retour à la ligne */
+  overflow: hidden;
+  text-overflow: clip;
+  /* Police plus contenue car Verdana est très large */
+  font-size: clamp(1.5rem, 4vw, 3.8rem);
+  line-height: 1.08;
   letter-spacing: -.03em;
   font-weight: 800;
 }
