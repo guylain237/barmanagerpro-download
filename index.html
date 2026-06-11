@@ -2501,6 +2501,135 @@ textarea.form-control { resize: vertical; min-height: 120px; }
   .tree-leaves { grid-template-columns: 1fr; }
   .tree-leaf { height: 44px; }
 }
+
+/* ============================================================
+   RESPONSIVE GLOBAL — Tweaks transversaux
+   ============================================================ */
+
+/* Tablette */
+@media (max-width: 900px) {
+  /* Espacements harmonisés */
+  .section { padding: 80px 0; }
+  .section-sm { padding: 56px 0; }
+  .section-header { margin-bottom: 48px; }
+
+  /* Hero plus aéré */
+  .hero { padding-top: calc(var(--nav-h) + 24px); padding-bottom: 60px; min-height: auto; }
+  .hero .grid-2 { gap: 40px !important; }
+  .hero-eyebrow { margin-bottom: 24px; flex-wrap: wrap; }
+  .hero-desc { font-size: 1rem; margin-bottom: 32px; }
+  .hero-social-proof { margin-top: 40px; padding-top: 24px; gap: 24px; }
+
+  /* Vidéo : aspect ratio adapté pour ne pas écraser le chrome */
+  .video-stage { padding: 12px; }
+  .video-chrome { padding: 9px 14px; }
+  .video-highlights { gap: 12px; margin-top: 30px; }
+  .video-meta { gap: 14px; margin-top: 24px; font-size: .78rem; }
+  .video-cta { margin-top: 20px; gap: 10px; }
+
+  /* Journey : taille des numéros */
+  .journey-step-num { font-size: 3.5rem; }
+  .journey-step-title { font-size: 1.5rem; }
+  .journey-step-desc { font-size: .9rem; }
+  .journey-controls { gap: 8px; }
+
+  /* Tableau de comparaison + autres grilles déjà gérés */
+  .arch-cards, .modules-grid { gap: 16px; }
+  .module-card { padding: 24px 20px; }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  /* Container plus serré */
+  .container { padding: 0 18px; }
+
+  /* Hero : tout en colonne */
+  .hero { padding-top: calc(var(--nav-h) + 16px); padding-bottom: 40px; }
+  .hero .grid-2 { gap: 28px !important; }
+  .hero-title { margin-bottom: 16px; }
+  .hero-desc { font-size: .95rem; margin-bottom: 24px; }
+  .hero-social-proof { gap: 18px; margin-top: 32px; padding-top: 20px; }
+  .hero-stat strong { font-size: 1.4rem; }
+  .hero-stat span { font-size: .76rem; }
+  .badge-web-soon { font-size: .7rem; padding: 5px 12px; }
+
+  /* Boutons : taille de cible tactile */
+  .btn { padding: 12px 22px; font-size: .85rem; }
+
+  /* Section vidéo */
+  .video-stage { padding: 0; }
+  .video-wrapper { border-radius: 12px; }
+  .video-chrome-title { font-size: .68rem; }
+  .video-chrome-badge { font-size: .56rem; padding: 2px 7px; }
+  .video-highlights { grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 24px; }
+  .video-highlight { padding: 12px; gap: 10px; }
+  .video-highlight-icon { width: 30px; height: 30px; }
+  .video-highlight-text strong { font-size: .8rem; }
+  .video-highlight-text span { font-size: .7rem; }
+  .video-meta { font-size: .72rem; gap: 10px; flex-direction: column; }
+  .video-meta-dot { display: none; }
+  .video-cta { flex-direction: column; align-items: stretch; }
+  .video-cta .btn { width: 100%; justify-content: center; }
+
+  /* Journey */
+  .journey-wrap { gap: 28px; }
+  .journey-step-num { font-size: 2.8rem; }
+  .journey-step-title { font-size: 1.3rem; }
+  .journey-step-desc { font-size: .88rem; line-height: 1.55; }
+  .journey-step-actor { font-size: .76rem; padding: 7px 12px; }
+  .journey-btn { width: 36px; height: 36px; }
+
+  /* CTA banner */
+  .card-accent { padding: 36px 22px !important; }
+  .card-accent h2 { font-size: 1.6rem; }
+  .card-accent p { font-size: .95rem; }
+
+  /* Pricing : plans en colonne + padding réduit */
+  .plan-card { padding: 22px 18px; }
+  .plan-price strong { font-size: 2.2rem !important; }
+
+  /* FAQ */
+  .faq-q { font-size: .9rem; padding: 18px 0; }
+  .faq-a { font-size: .85rem; }
+
+  /* Modules page */
+  .modules-hero, .pricing-hero { padding: 130px 0 50px; }
+  .module-card { padding: 22px 18px; }
+  .module-card ul li { font-size: .82rem; padding: 6px 0; }
+
+  /* Arch cards : icônes mises en avant */
+  .arch-card { padding: 20px 16px; }
+  .arch-card .icon-box { width: 44px; height: 44px; }
+
+  /* Tree compare : badges plus compacts */
+  .tree-root-node { padding: 14px 24px; }
+  .tree-root-node strong { font-size: .92rem; }
+  .tree-root-node span { font-size: .62rem; }
+  .tree-branch-card { padding: 16px 14px; }
+  .tree-branch-name { font-size: 1rem; }
+  .tree-branch-status { font-size: .62rem; padding: 3px 10px; }
+  .tree-branch-count { font-size: .58rem; padding: 3px 9px; }
+}
+
+/* Très petit écran */
+@media (max-width: 380px) {
+  .container { padding: 0 14px; }
+  h1 { font-size: 2rem !important; }
+  h2 { font-size: 1.5rem !important; }
+  .hero-title { font-size: 2.2rem; }
+  .video-highlights { grid-template-columns: 1fr; }
+  .journey-step-num { font-size: 2.4rem; }
+  .journey-step-title { font-size: 1.15rem; }
+}
+
+/* Accessibilité : zones tactiles minimum 44x44 sur mobile */
+@media (pointer: coarse) {
+  .btn, .nav-links a, .lang-switch button,
+  .journey-btn, .feature-card-image button,
+  .db-indicator, .journey-dot, .tree-leaf {
+    min-height: 38px;
+  }
+}
 </style>
 </head>
 <body>
@@ -2575,7 +2704,6 @@ textarea.form-control { resize: vertical; min-height: 120px; }
         <li><a href="#" onclick="showPage('home')" data-page="home" class="active" data-fr="Accueil" data-en="Home">Accueil</a></li>
         <li><a href="#" onclick="showPage('modules')" data-page="modules" data-fr="Modules" data-en="Modules">Modules</a></li>
         <li><a href="#" onclick="showPage('pricing')" data-page="pricing" data-fr="Tarifs" data-en="Pricing">Tarifs</a></li>
-        <li><a href="#" onclick="showPage('contact')" data-page="contact" data-fr="Contact" data-en="Contact">Contact</a></li>
       </ul>
 
       <!-- CTA -->
@@ -4154,7 +4282,6 @@ textarea.form-control { resize: vertical; min-height: 120px; }
       <div class="footer-col">
         <h4 data-fr="Support" data-en="Support">Support</h4>
         <ul>
-          <li><a href="#" onclick="showPage('contact')" data-fr="Contact" data-en="Contact">Contact</a></li>
           <li><a href="mailto:contact@barmanagerpro.cm" data-fr="Centre d'aide" data-en="Help center">Centre d'aide</a></li>
           <li><a href="mailto:contact@barmanagerpro.cm" data-fr="Partenariats &amp; presse" data-en="Partnerships &amp; press">Partenariats &amp; presse</a></li>
         </ul>
