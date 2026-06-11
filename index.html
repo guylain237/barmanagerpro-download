@@ -913,6 +913,9 @@ a { color: inherit; text-decoration: none; }
   width: 100%;
   aspect-ratio: 16 / 9;
   background: #000;
+  /* Sur mobile l'aspect-ratio doit fonctionner même si parent overflow:hidden */
+  min-height: 1px;
+  z-index: 1;
 }
 .video-frame iframe {
   position: absolute; inset: 0;
@@ -920,6 +923,37 @@ a { color: inherit; text-decoration: none; }
   border: none;
   display: block;
   background: #000;
+  /* Garantit que rien n'intercepte les taps sur l'iframe */
+  pointer-events: auto;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+/* Lien fallback "Ouvrir dans Drive" sous la vidéo (très utile en mobile) */
+.video-fallback {
+  display: inline-flex; align-items: center; gap: 7px;
+  margin: 16px auto 0;
+  padding: 8px 14px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  font-family: var(--font-h);
+  font-size: .76rem;
+  font-weight: 600;
+  color: var(--muted);
+  text-decoration: none;
+  transition: all .22s ease;
+  width: fit-content;
+  max-width: 100%;
+}
+.video-fallback:hover {
+  background: rgba(212,160,23,.08);
+  border-color: rgba(212,160,23,.3);
+  color: var(--gold2);
+}
+.video-stage { display: flex; flex-direction: column; align-items: center; }
+@media (max-width: 600px) {
+  .video-fallback { font-size: .72rem; padding: 8px 14px; margin-top: 14px; }
 }
 
 /* Bordure dégradée subtile */
@@ -2520,12 +2554,24 @@ textarea.form-control { resize: vertical; min-height: 120px; }
           <div class="video-frame">
             <iframe
               src="https://drive.google.com/file/d/1G3aEM7xTejMIpE0bYimrv6Zip2ztQZ0l/preview"
-              allow="autoplay; fullscreen"
+              allow="autoplay; fullscreen; accelerometer; encrypted-media; gyroscope; picture-in-picture"
               allowfullscreen
-              loading="lazy"
+              webkitallowfullscreen
+              mozallowfullscreen
+              frameborder="0"
+              referrerpolicy="strict-origin-when-cross-origin"
               title="BarManager Pro — Démonstration"></iframe>
           </div>
         </div>
+        <!-- Fallback mobile : ouvrir dans Drive si la lecture ne démarre pas -->
+        <a class="video-fallback" href="https://drive.google.com/file/d/1G3aEM7xTejMIpE0bYimrv6Zip2ztQZ0l/view" target="_blank" rel="noopener" aria-label="Ouvrir la vidéo dans un nouvel onglet">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+            <polyline points="15 3 21 3 21 9"/>
+            <line x1="10" y1="14" x2="21" y2="3"/>
+          </svg>
+          <span data-fr="La vidéo ne se lance pas ? Ouvrir dans Drive" data-en="Video won't play? Open in Drive">La vidéo ne se lance pas ? Ouvrir dans Drive</span>
+        </a>
       </div>
 
       <!-- Ce que vous allez voir : 4 highlights -->
