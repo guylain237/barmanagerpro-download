@@ -395,18 +395,89 @@ a { color: inherit; text-decoration: none; }
   background:
     radial-gradient(ellipse at center, #14180F 0%, #0A0C08 100%);
 }
-.journey-slide {
+/* SVG flow : diagramme animé avec point en déplacement */
+.journey-flow {
   position: absolute; inset: 0;
-  opacity: 0;
-  transform: scale(1.02);
-  transition: opacity .7s ease, transform .9s cubic-bezier(.22,.61,.36,1);
-}
-.journey-slide.active { opacity: 1; transform: scale(1); }
-.journey-slide img {
   width: 100%; height: 100%;
-  object-fit: contain;
-  object-position: center;
   display: block;
+}
+
+/* Nœuds */
+.flow-node { cursor: pointer; transition: transform .4s cubic-bezier(.22,.61,.36,1); }
+.flow-node-ring {
+  fill: none;
+  stroke: rgba(255,255,255,.08);
+  stroke-width: 1.5;
+  transition: stroke .4s ease, stroke-width .4s ease;
+}
+.flow-node-bg {
+  fill: var(--dark3);
+  stroke: rgba(255,255,255,.1);
+  stroke-width: 1;
+  transition: fill .4s ease, stroke .4s ease;
+}
+.flow-node-icon {
+  color: var(--muted);
+  overflow: visible;
+  transition: color .4s ease;
+}
+.flow-node-num {
+  fill: rgba(255,255,255,.55);
+  font-family: var(--font-h);
+  font-size: 11px;
+  font-weight: 800;
+  text-anchor: middle;
+  transition: fill .4s ease;
+}
+.flow-node-label {
+  fill: var(--muted);
+  font-family: var(--font-h);
+  font-size: 11px;
+  font-weight: 600;
+  text-anchor: middle;
+  letter-spacing: .02em;
+  transition: fill .4s ease;
+}
+
+/* État "done" : passé, doré tamisé */
+.flow-node.done .flow-node-ring { stroke: rgba(212,160,23,.35); }
+.flow-node.done .flow-node-bg   { fill: rgba(212,160,23,.08); stroke: rgba(212,160,23,.35); }
+.flow-node.done .flow-node-icon { color: var(--gold2); }
+.flow-node.done .flow-node-num,
+.flow-node.done .flow-node-label { fill: rgba(212,160,23,.7); }
+
+/* État "active" : en cours, doré complet + ring pulsant */
+.flow-node.active .flow-node-ring {
+  stroke: var(--gold);
+  stroke-width: 2.5;
+  animation: nodeRingPulse 1.6s ease-out infinite;
+}
+.flow-node.active .flow-node-bg   { fill: rgba(212,160,23,.22); stroke: var(--gold); }
+.flow-node.active .flow-node-icon { color: #FFE38A; }
+.flow-node.active .flow-node-num,
+.flow-node.active .flow-node-label { fill: var(--white); }
+@keyframes nodeRingPulse {
+  0%, 100% { opacity: 1;   r: 28; }
+  50%      { opacity: .4;  r: 36; }
+}
+
+/* Point en déplacement */
+#flowDotHalo, #flowDot, #flowDotCore {
+  transition: cx .8s cubic-bezier(.65,.05,.36,1), cy .8s cubic-bezier(.65,.05,.36,1);
+}
+#flowDot, #flowDotCore { pointer-events: none; }
+#flowDotHalo {
+  pointer-events: none;
+  animation: flowHaloPulse 1.4s ease-in-out infinite;
+}
+@keyframes flowHaloPulse {
+  0%, 100% { opacity: .85; r: 22; }
+  50%      { opacity: .5;  r: 28; }
+}
+
+/* Chemin actif : tracé doré qui suit le point */
+#flowActivePath {
+  transition: d .8s cubic-bezier(.65,.05,.36,1);
 }
 
 /* Colonne contenu (droite) */
@@ -2401,16 +2472,131 @@ textarea.form-control { resize: vertical; min-height: 120px; }
               </div>
             </div>
             <div class="journey-body" id="journeyBody">
-              <div class="journey-slide active"><img src="image/dasboard.png" alt="Installation" loading="lazy" decoding="async"></div>
-              <div class="journey-slide"><img src="image/recherche.jpg" alt="Configuration du bar" loading="lazy" decoding="async"></div>
-              <div class="journey-slide"><img src="image/login.jpg" alt="Connexion équipe" loading="lazy" decoding="async"></div>
-              <div class="journey-slide"><img src="image/user.jpg" alt="Paramètres employés et catalogue" loading="lazy" decoding="async"></div>
-              <div class="journey-slide"><img src="image/stock.jpg" alt="Gestion des stocks" loading="lazy" decoding="async"></div>
-              <div class="journey-slide"><img src="image/pos.jpg" alt="Prise de commande à la table" loading="lazy" decoding="async"></div>
-              <div class="journey-slide"><img src="image/pos_commandes_2.jpg" alt="Envoi en caisse" loading="lazy" decoding="async"></div>
-              <div class="journey-slide"><img src="image/caisse.jpg" alt="Encaissement client" loading="lazy" decoding="async"></div>
-              <div class="journey-slide"><img src="image/fournisseur.jpg" alt="Commande fournisseur pour réappro" loading="lazy" decoding="async"></div>
-              <div class="journey-slide"><img src="image/caisse_3.jpg" alt="Clôture journalière et déconnexion" loading="lazy" decoding="async"></div>
+              <svg class="journey-flow" viewBox="0 0 800 460" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+                <defs>
+                  <linearGradient id="flowGoldGrad" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0" stop-color="#D4A017"/>
+                    <stop offset="1" stop-color="#E8B840"/>
+                  </linearGradient>
+                  <radialGradient id="flowDotHalo">
+                    <stop offset="0" stop-color="#FFE38A" stop-opacity="1"/>
+                    <stop offset="0.4" stop-color="#D4A017" stop-opacity=".8"/>
+                    <stop offset="1" stop-color="#D4A017" stop-opacity="0"/>
+                  </radialGradient>
+                  <filter id="flowGlow" x="-50%" y="-50%" width="200%" height="200%">
+                    <feGaussianBlur stdDeviation="6" result="b"/>
+                    <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+                  </filter>
+                </defs>
+
+                <!-- Chemin de fond pointillé (parcours global) -->
+                <path d="M 90 120 L 690 120 L 690 340 L 90 340"
+                      stroke="rgba(255,255,255,.1)" stroke-width="2"
+                      stroke-dasharray="2 8" fill="none" stroke-linejoin="round"/>
+
+                <!-- Chemin actif (rempli au fur et à mesure) -->
+                <path id="flowActivePath" d="M 90 120 L 90 120"
+                      stroke="url(#flowGoldGrad)" stroke-width="3.5"
+                      fill="none" stroke-linecap="round" stroke-linejoin="round"
+                      filter="url(#flowGlow)" opacity=".95"/>
+
+                <!-- 10 nœuds -->
+                <g class="flow-node active" data-step="0" transform="translate(90 120)">
+                  <circle class="flow-node-ring" r="28"/>
+                  <circle class="flow-node-bg" r="22"/>
+                  <svg class="flow-node-icon" x="-10" y="-10" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+                  </svg>
+                  <text class="flow-node-num" y="44">1</text>
+                  <text class="flow-node-label" y="62" data-fr="Install" data-en="Install">Install</text>
+                </g>
+                <g class="flow-node" data-step="1" transform="translate(240 120)">
+                  <circle class="flow-node-ring" r="28"/>
+                  <circle class="flow-node-bg" r="22"/>
+                  <svg class="flow-node-icon" x="-10" y="-10" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                  </svg>
+                  <text class="flow-node-num" y="44">2</text>
+                  <text class="flow-node-label" y="62" data-fr="Config" data-en="Setup">Config</text>
+                </g>
+                <g class="flow-node" data-step="2" transform="translate(390 120)">
+                  <circle class="flow-node-ring" r="28"/>
+                  <circle class="flow-node-bg" r="22"/>
+                  <svg class="flow-node-icon" x="-10" y="-10" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/>
+                  </svg>
+                  <text class="flow-node-num" y="44">3</text>
+                  <text class="flow-node-label" y="62" data-fr="Login" data-en="Login">Login</text>
+                </g>
+                <g class="flow-node" data-step="3" transform="translate(540 120)">
+                  <circle class="flow-node-ring" r="28"/>
+                  <circle class="flow-node-bg" r="22"/>
+                  <svg class="flow-node-icon" x="-10" y="-10" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+                  </svg>
+                  <text class="flow-node-num" y="44">4</text>
+                  <text class="flow-node-label" y="62" data-fr="Catalogue" data-en="Catalogue">Catalogue</text>
+                </g>
+                <g class="flow-node" data-step="4" transform="translate(690 120)">
+                  <circle class="flow-node-ring" r="28"/>
+                  <circle class="flow-node-bg" r="22"/>
+                  <svg class="flow-node-icon" x="-10" y="-10" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/>
+                  </svg>
+                  <text class="flow-node-num" y="44">5</text>
+                  <text class="flow-node-label" y="62" data-fr="Stocks" data-en="Stock">Stocks</text>
+                </g>
+                <g class="flow-node" data-step="5" transform="translate(690 340)">
+                  <circle class="flow-node-ring" r="28"/>
+                  <circle class="flow-node-bg" r="22"/>
+                  <svg class="flow-node-icon" x="-10" y="-10" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>
+                  </svg>
+                  <text class="flow-node-num" y="44">6</text>
+                  <text class="flow-node-label" y="62" data-fr="Commande" data-en="Order">Commande</text>
+                </g>
+                <g class="flow-node" data-step="6" transform="translate(540 340)">
+                  <circle class="flow-node-ring" r="28"/>
+                  <circle class="flow-node-bg" r="22"/>
+                  <svg class="flow-node-icon" x="-10" y="-10" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="4" y1="12" x2="20" y2="12"/><polyline points="14 6 20 12 14 18"/>
+                  </svg>
+                  <text class="flow-node-num" y="44">7</text>
+                  <text class="flow-node-label" y="62" data-fr="Envoi caisse" data-en="To register">Envoi caisse</text>
+                </g>
+                <g class="flow-node" data-step="7" transform="translate(390 340)">
+                  <circle class="flow-node-ring" r="28"/>
+                  <circle class="flow-node-bg" r="22"/>
+                  <svg class="flow-node-icon" x="-10" y="-10" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/>
+                  </svg>
+                  <text class="flow-node-num" y="44">8</text>
+                  <text class="flow-node-label" y="62" data-fr="Paiement" data-en="Payment">Paiement</text>
+                </g>
+                <g class="flow-node" data-step="8" transform="translate(240 340)">
+                  <circle class="flow-node-ring" r="28"/>
+                  <circle class="flow-node-bg" r="22"/>
+                  <svg class="flow-node-icon" x="-10" y="-10" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>
+                  </svg>
+                  <text class="flow-node-num" y="44">9</text>
+                  <text class="flow-node-label" y="62" data-fr="Réappro" data-en="Reorder">Réappro</text>
+                </g>
+                <g class="flow-node" data-step="9" transform="translate(90 340)">
+                  <circle class="flow-node-ring" r="28"/>
+                  <circle class="flow-node-bg" r="22"/>
+                  <svg class="flow-node-icon" x="-10" y="-10" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>
+                  </svg>
+                  <text class="flow-node-num" y="44">10</text>
+                  <text class="flow-node-label" y="62" data-fr="Clôture" data-en="Close">Clôture</text>
+                </g>
+
+                <!-- Point en déplacement (halo + cœur) -->
+                <circle id="flowDotHalo" cx="90" cy="120" r="22" fill="url(#flowDotHalo)" filter="url(#flowGlow)" opacity=".85"/>
+                <circle id="flowDot" cx="90" cy="120" r="8" fill="#FFE38A"/>
+                <circle id="flowDotCore" cx="90" cy="120" r="3" fill="#FFFFFF"/>
+              </svg>
             </div>
           </div>
           <!-- Indicateurs : une pilule par étape -->
@@ -3722,15 +3908,47 @@ let journeyProgress = 0;
 const JOURNEY_DURATION = 6500; // ms par étape
 const JOURNEY_TICK = 60; // ms entre updates de barre
 
+// Positions des 10 nœuds dans le viewBox 800x460
+const FLOW_NODES = [
+  { x: 90,  y: 120 }, { x: 240, y: 120 }, { x: 390, y: 120 }, { x: 540, y: 120 }, { x: 690, y: 120 },
+  { x: 690, y: 340 }, { x: 540, y: 340 }, { x: 390, y: 340 }, { x: 240, y: 340 }, { x: 90,  y: 340 }
+];
+
 function journeyRender() {
   const step = journeySteps[journeyIdx];
   const lang = currentLang;
-  const slides = document.querySelectorAll('#journeyBody .journey-slide');
   const dots = document.querySelectorAll('#journeyDots .journey-dot');
 
-  // Slides
-  slides.forEach((el, i) => el.classList.toggle('active', i === journeyIdx));
-  // Dots : actif courant, "done" précédents
+  // SVG flow : nœuds, point en déplacement, chemin actif
+  const flowNodes = document.querySelectorAll('#journeyBody .flow-node');
+  flowNodes.forEach((el, i) => {
+    el.classList.toggle('active', i === journeyIdx);
+    el.classList.toggle('done',   i <  journeyIdx);
+    // Re-traduit le label SVG selon la langue active
+    const label = el.querySelector('.flow-node-label');
+    if (label && label.dataset[lang] !== undefined) {
+      label.textContent = label.dataset[lang];
+    }
+  });
+
+  // Déplacement du point doré (halo + cœur)
+  const pos = FLOW_NODES[journeyIdx];
+  ['flowDot', 'flowDotHalo', 'flowDotCore'].forEach(id => {
+    const c = document.getElementById(id);
+    if (c) { c.setAttribute('cx', pos.x); c.setAttribute('cy', pos.y); }
+  });
+
+  // Construction du chemin actif (tracé du parcours jusqu'au nœud courant)
+  const activePath = document.getElementById('flowActivePath');
+  if (activePath) {
+    let d = `M ${FLOW_NODES[0].x} ${FLOW_NODES[0].y}`;
+    for (let i = 1; i <= journeyIdx; i++) {
+      d += ` L ${FLOW_NODES[i].x} ${FLOW_NODES[i].y}`;
+    }
+    activePath.setAttribute('d', d);
+  }
+
+  // Indicateurs (sous l'écran)
   dots.forEach((el, i) => {
     el.classList.toggle('active', i === journeyIdx);
     el.classList.toggle('done', i < journeyIdx);
@@ -3824,6 +4042,10 @@ function setPlayIcon(playing) {
 function initJourney() {
   if (!document.getElementById('journeyWrap')) return;
   journeyBuildDots();
+  // Click sur les nœuds SVG pour naviguer manuellement
+  document.querySelectorAll('#journeyBody .flow-node').forEach((node, i) => {
+    node.addEventListener('click', () => journeySet(i, true));
+  });
   journeyRender();
   journeyStart();
   // Pause au hover du visuel
