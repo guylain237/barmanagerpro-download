@@ -395,12 +395,172 @@ a { color: inherit; text-decoration: none; }
   background:
     radial-gradient(ellipse at center, #14180F 0%, #0A0C08 100%);
 }
+/* Barre des 3 phases (au-dessus du diagramme) */
+.journey-phase-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 12px 14px;
+  background: linear-gradient(180deg, var(--dark3) 0%, var(--card) 100%);
+  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+.journey-phase {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 7px 14px;
+  border-radius: 100px;
+  font-family: var(--font-h);
+  font-size: .76rem;
+  font-weight: 700;
+  color: var(--muted);
+  background: rgba(255,255,255,.025);
+  border: 1px solid rgba(255,255,255,.06);
+  transition: all .4s cubic-bezier(.22,.61,.36,1);
+  letter-spacing: .01em;
+}
+.journey-phase-num {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.06);
+  font-size: .68rem;
+  font-weight: 800;
+  flex-shrink: 0;
+  transition: all .4s ease;
+}
+.journey-phase-range {
+  opacity: .55;
+  font-size: .68rem;
+  font-weight: 600;
+}
+.journey-phase-sep {
+  display: flex; align-items: center;
+  color: rgba(255,255,255,.15);
+  flex-shrink: 0;
+}
+.journey-phase-sep svg { width: 14px; height: 14px; display: block; }
+
+/* Phase active : grandit et s'illumine de sa couleur */
+.journey-phase.active {
+  transform: scale(1.04);
+}
+.journey-phase.done {
+  opacity: .85;
+}
+
+/* Phase 1 : Préparation = Bleu */
+.journey-phase.phase-prep.active {
+  background: linear-gradient(135deg, rgba(108,160,247,.18), rgba(108,160,247,.08));
+  color: #A0C3FA;
+  border-color: rgba(108,160,247,.5);
+  box-shadow: 0 6px 18px rgba(108,160,247,.22);
+}
+.journey-phase.phase-prep.active .journey-phase-num {
+  background: rgba(108,160,247,.3);
+  color: #FFFFFF;
+}
+.journey-phase.phase-prep.done .journey-phase-num {
+  background: rgba(108,160,247,.18);
+  color: #A0C3FA;
+}
+
+/* Phase 2 : Service = Vert */
+.journey-phase.phase-service.active {
+  background: linear-gradient(135deg, rgba(45,189,126,.18), rgba(45,189,126,.08));
+  color: var(--green2);
+  border-color: rgba(45,189,126,.5);
+  box-shadow: 0 6px 18px rgba(45,189,126,.22);
+}
+.journey-phase.phase-service.active .journey-phase-num {
+  background: rgba(45,189,126,.3);
+  color: #FFFFFF;
+}
+.journey-phase.phase-service.done .journey-phase-num {
+  background: rgba(45,189,126,.18);
+  color: var(--green2);
+}
+
+/* Phase 3 : Clôture = Or */
+.journey-phase.phase-close.active {
+  background: linear-gradient(135deg, rgba(212,160,23,.22), rgba(212,160,23,.08));
+  color: var(--gold2);
+  border-color: rgba(212,160,23,.5);
+  box-shadow: 0 6px 18px rgba(212,160,23,.25);
+}
+.journey-phase.phase-close.active .journey-phase-num {
+  background: rgba(212,160,23,.35);
+  color: #0C0E0B;
+}
+.journey-phase.phase-close.done .journey-phase-num {
+  background: rgba(212,160,23,.2);
+  color: var(--gold2);
+}
+
+/* Mobile : phases empilées, taille réduite */
+@media (max-width: 600px) {
+  .journey-phase-bar { padding: 10px 12px; gap: 4px; }
+  .journey-phase { padding: 5px 10px; font-size: .66rem; gap: 6px; }
+  .journey-phase-num { width: 16px; height: 16px; font-size: .6rem; }
+  .journey-phase-range { display: none; }
+  .journey-phase-sep svg { width: 12px; height: 12px; }
+}
+
 /* SVG flow : diagramme animé avec point en déplacement */
 .journey-flow {
   position: absolute; inset: 0;
   width: 100%; height: 100%;
   display: block;
 }
+
+/* Tint subtil des nœuds selon leur phase (mode inactif) */
+.flow-node[data-step="0"] .flow-node-bg,
+.flow-node[data-step="1"] .flow-node-bg,
+.flow-node[data-step="2"] .flow-node-bg,
+.flow-node[data-step="3"] .flow-node-bg {
+  filter: drop-shadow(0 0 0 rgba(108,160,247,0));
+}
+.flow-node.done[data-step="0"] .flow-node-ring,
+.flow-node.done[data-step="1"] .flow-node-ring,
+.flow-node.done[data-step="2"] .flow-node-ring,
+.flow-node.done[data-step="3"] .flow-node-ring { stroke: rgba(108,160,247,.45); }
+.flow-node.done[data-step="0"] .flow-node-bg,
+.flow-node.done[data-step="1"] .flow-node-bg,
+.flow-node.done[data-step="2"] .flow-node-bg,
+.flow-node.done[data-step="3"] .flow-node-bg { fill: rgba(108,160,247,.08); stroke: rgba(108,160,247,.45); }
+.flow-node.done[data-step="0"] .flow-node-icon,
+.flow-node.done[data-step="1"] .flow-node-icon,
+.flow-node.done[data-step="2"] .flow-node-icon,
+.flow-node.done[data-step="3"] .flow-node-icon { color: #A0C3FA; }
+.flow-node.done[data-step="0"] .flow-node-num,
+.flow-node.done[data-step="0"] .flow-node-label,
+.flow-node.done[data-step="1"] .flow-node-num,
+.flow-node.done[data-step="1"] .flow-node-label,
+.flow-node.done[data-step="2"] .flow-node-num,
+.flow-node.done[data-step="2"] .flow-node-label,
+.flow-node.done[data-step="3"] .flow-node-num,
+.flow-node.done[data-step="3"] .flow-node-label { fill: #A0C3FA; }
+
+.flow-node.done[data-step="4"] .flow-node-ring,
+.flow-node.done[data-step="5"] .flow-node-ring,
+.flow-node.done[data-step="6"] .flow-node-ring,
+.flow-node.done[data-step="7"] .flow-node-ring { stroke: rgba(45,189,126,.45); }
+.flow-node.done[data-step="4"] .flow-node-bg,
+.flow-node.done[data-step="5"] .flow-node-bg,
+.flow-node.done[data-step="6"] .flow-node-bg,
+.flow-node.done[data-step="7"] .flow-node-bg { fill: rgba(45,189,126,.08); stroke: rgba(45,189,126,.45); }
+.flow-node.done[data-step="4"] .flow-node-icon,
+.flow-node.done[data-step="5"] .flow-node-icon,
+.flow-node.done[data-step="6"] .flow-node-icon,
+.flow-node.done[data-step="7"] .flow-node-icon { color: var(--green2); }
+.flow-node.done[data-step="4"] .flow-node-num,
+.flow-node.done[data-step="4"] .flow-node-label,
+.flow-node.done[data-step="5"] .flow-node-num,
+.flow-node.done[data-step="5"] .flow-node-label,
+.flow-node.done[data-step="6"] .flow-node-num,
+.flow-node.done[data-step="6"] .flow-node-label,
+.flow-node.done[data-step="7"] .flow-node-num,
+.flow-node.done[data-step="7"] .flow-node-label { fill: var(--green2); }
 
 /* Nœuds */
 .flow-node { cursor: pointer; transition: transform .4s cubic-bezier(.22,.61,.36,1); }
@@ -2471,6 +2631,30 @@ textarea.form-control { resize: vertical; min-height: 120px; }
                 <span id="journeyChromeNum">1</span>/10
               </div>
             </div>
+            <!-- Barre des 3 phases : Préparation / Service / Clôture -->
+            <div class="journey-phase-bar">
+              <div class="journey-phase phase-prep active" data-phase="1">
+                <span class="journey-phase-num">1</span>
+                <span class="journey-phase-text" data-fr="Préparation" data-en="Setup">Préparation</span>
+                <span class="journey-phase-range">· 1–4</span>
+              </div>
+              <div class="journey-phase-sep" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+              </div>
+              <div class="journey-phase phase-service" data-phase="2">
+                <span class="journey-phase-num">2</span>
+                <span class="journey-phase-text" data-fr="Service" data-en="Service">Service</span>
+                <span class="journey-phase-range">· 5–8</span>
+              </div>
+              <div class="journey-phase-sep" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+              </div>
+              <div class="journey-phase phase-close" data-phase="3">
+                <span class="journey-phase-num">3</span>
+                <span class="journey-phase-text" data-fr="Clôture" data-en="Closing">Clôture</span>
+                <span class="journey-phase-range">· 9–10</span>
+              </div>
+            </div>
             <div class="journey-body" id="journeyBody">
               <svg class="journey-flow" viewBox="0 0 800 460" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
                 <defs>
@@ -3914,10 +4098,32 @@ const FLOW_NODES = [
   { x: 690, y: 340 }, { x: 540, y: 340 }, { x: 390, y: 340 }, { x: 240, y: 340 }, { x: 90,  y: 340 }
 ];
 
+// Mapping étape → phase (0..9 → 1, 2 ou 3)
+// Phase 1 Préparation : étapes 1-4 (index 0-3)
+// Phase 2 Service    : étapes 5-8 (index 4-7)
+// Phase 3 Clôture    : étapes 9-10 (index 8-9)
+function getPhaseForStep(idx) {
+  if (idx <= 3) return 1;
+  if (idx <= 7) return 2;
+  return 3;
+}
+
+function updatePhaseBar() {
+  const current = getPhaseForStep(journeyIdx);
+  document.querySelectorAll('.journey-phase').forEach(el => {
+    const p = parseInt(el.dataset.phase, 10);
+    el.classList.toggle('active', p === current);
+    el.classList.toggle('done',   p <  current);
+  });
+}
+
 function journeyRender() {
   const step = journeySteps[journeyIdx];
   const lang = currentLang;
   const dots = document.querySelectorAll('#journeyDots .journey-dot');
+
+  // Barre des phases (Préparation / Service / Clôture)
+  updatePhaseBar();
 
   // SVG flow : nœuds, point en déplacement, chemin actif
   const flowNodes = document.querySelectorAll('#journeyBody .flow-node');
