@@ -313,6 +313,262 @@ a { color: inherit; text-decoration: none; }
 
 
 /* ============================================================
+   SECTION JOURNEY — Parcours utilisateur interactif (10 étapes)
+   ============================================================ */
+#journey {
+  position: relative;
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(45,189,126,.05), transparent 55%),
+    radial-gradient(ellipse at 80% 70%, rgba(212,160,23,.06), transparent 55%),
+    var(--black);
+  overflow: hidden;
+}
+#journey::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(212,160,23,.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(212,160,23,.022) 1px, transparent 1px);
+  background-size: 80px 80px;
+  mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 30%, transparent 100%);
+  pointer-events: none;
+}
+#journey .container { position: relative; z-index: 1; }
+.journey-wrap {
+  display: grid;
+  grid-template-columns: 1.1fr .9fr;
+  gap: 64px;
+  align-items: center;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+/* Écran : reprend le chrome du hero dashboard */
+.journey-screen {
+  position: relative;
+  background: var(--dark2);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: var(--r2);
+  overflow: hidden;
+  box-shadow:
+    0 40px 100px rgba(0,0,0,.55),
+    0 0 0 1px rgba(255,255,255,.04),
+    0 0 120px rgba(212,160,23,.08);
+}
+.journey-chrome {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 16px;
+  background: var(--dark3);
+  border-bottom: 1px solid var(--border);
+  font-family: var(--font-h);
+  font-size: .78rem;
+  color: var(--muted);
+}
+.journey-chrome-dots { display: flex; gap: 6px; flex-shrink: 0; }
+.journey-chrome-dot { width: 10px; height: 10px; border-radius: 50%; }
+.journey-chrome-title {
+  flex: 1;
+  text-align: center;
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.journey-chrome-title .gold { color: var(--gold); }
+.journey-chrome-step {
+  padding: 2px 9px;
+  background: rgba(212,160,23,.14);
+  border: 1px solid rgba(212,160,23,.3);
+  border-radius: 100px;
+  font-size: .62rem;
+  font-weight: 800;
+  color: var(--gold2);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+.journey-body {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  background:
+    radial-gradient(ellipse at center, #14180F 0%, #0A0C08 100%);
+}
+.journey-slide {
+  position: absolute; inset: 0;
+  opacity: 0;
+  transform: scale(1.02);
+  transition: opacity .7s ease, transform .9s cubic-bezier(.22,.61,.36,1);
+}
+.journey-slide.active { opacity: 1; transform: scale(1); }
+.journey-slide img {
+  width: 100%; height: 100%;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+}
+
+/* Colonne contenu (droite) */
+.journey-content { display: flex; flex-direction: column; gap: 18px; }
+.journey-step-num {
+  font-family: var(--font-h);
+  font-size: clamp(3.5rem, 7vw, 5.2rem);
+  font-weight: 800;
+  line-height: 1;
+  background: linear-gradient(135deg, var(--gold2), var(--gold));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  letter-spacing: -.05em;
+  display: inline-block;
+}
+.journey-step-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 4px 12px;
+  background: rgba(212,160,23,.12);
+  border: 1px solid rgba(212,160,23,.3);
+  border-radius: 100px;
+  font-family: var(--font-h);
+  font-size: .7rem;
+  font-weight: 800;
+  color: var(--gold2);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  width: fit-content;
+}
+.journey-step-tag-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--gold);
+  animation: bannerDotPulse 2s ease-out infinite;
+}
+.journey-step-title {
+  font-family: var(--font-h);
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 800;
+  color: var(--white);
+  line-height: 1.15;
+  letter-spacing: -.02em;
+  margin: 0;
+}
+.journey-step-desc {
+  font-size: 1rem;
+  color: var(--muted);
+  line-height: 1.65;
+  margin: 0;
+  max-width: 100%;
+}
+.journey-step-actor {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 14px;
+  background: rgba(45,189,126,.1);
+  border: 1px solid rgba(45,189,126,.25);
+  border-radius: 10px;
+  font-size: .82rem;
+  font-family: var(--font-h);
+  font-weight: 600;
+  color: var(--green2);
+  width: fit-content;
+  max-width: 100%;
+}
+.journey-step-actor svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+/* Contrôles : prev / play / next */
+.journey-controls {
+  display: flex; align-items: center; gap: 10px;
+  margin-top: 6px;
+}
+.journey-btn {
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  background: var(--card);
+  border: 1px solid var(--border2);
+  color: var(--text);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: all .22s ease;
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 0;
+}
+.journey-btn:hover {
+  background: var(--gold);
+  color: #0C0E0B;
+  border-color: var(--gold);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(212,160,23,.3);
+}
+.journey-btn svg { width: 16px; height: 16px; }
+.journey-btn-play {
+  background: linear-gradient(135deg, var(--gold2), var(--gold));
+  color: #0C0E0B;
+  border-color: var(--gold);
+}
+.journey-btn-play:hover {
+  background: linear-gradient(135deg, #F0C44A, var(--gold2));
+}
+
+/* Barre de progression */
+.journey-progress {
+  position: relative;
+  width: 100%;
+  height: 3px;
+  background: rgba(255,255,255,.06);
+  border-radius: 100px;
+  overflow: hidden;
+  margin-top: 4px;
+}
+.journey-progress-bar {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  background: linear-gradient(90deg, var(--gold2), var(--gold));
+  width: 0%;
+  transition: width .15s linear;
+  border-radius: 100px;
+}
+
+/* Indicateurs (sous la barre) */
+.journey-dots {
+  display: flex; gap: 5px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+.journey-dot {
+  flex: 1;
+  min-width: 0;
+  height: 4px;
+  border-radius: 100px;
+  background: rgba(255,255,255,.08);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: background .25s ease;
+}
+.journey-dot.active { background: var(--gold); }
+.journey-dot.done   { background: rgba(212,160,23,.4); }
+.journey-dot:hover:not(.active) { background: rgba(255,255,255,.2); }
+
+/* Responsive */
+@media (max-width: 900px) {
+  .journey-wrap {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+  .journey-content { order: 2; }
+  .journey-visual { order: 1; }
+}
+@media (max-width: 600px) {
+  .journey-chrome { padding: 9px 12px; }
+  .journey-chrome-dot { width: 8px; height: 8px; }
+  .journey-chrome-title { font-size: .7rem; }
+  .journey-chrome-step { font-size: .55rem; padding: 2px 7px; }
+  .journey-step-num { font-size: 3rem; }
+  .journey-step-title { font-size: 1.4rem; }
+  .journey-step-desc { font-size: .92rem; }
+  .journey-btn { width: 38px; height: 38px; }
+}
+
+/* ============================================================
    SECTION VIDÉO DÉMO
    ============================================================ */
 #video-demo {
@@ -2118,6 +2374,91 @@ textarea.form-control { resize: vertical; min-height: 120px; }
 
   <div class="divider"></div>
 
+  <!-- Section Journey : parcours utilisateur en 10 étapes -->
+  <section class="section" id="journey">
+    <div class="container">
+      <div class="section-header text-c stagger">
+        <div class="pill reveal" data-fr="Comment ça marche" data-en="How it works">Comment ça marche</div>
+        <h2 class="reveal" data-fr-html="Une journée type<br>avec <em class=&quot;gold&quot;>BarManager Pro</em>" data-en-html="A typical day<br>with <em class=&quot;gold&quot;>BarManager Pro</em>">Une journée type<br>avec <em class="gold">BarManager Pro</em></h2>
+        <p class="reveal" style="margin: 0 auto; color: var(--muted);" data-fr="Suivez le parcours d'un gérant : de l'installation au comptage du fond de caisse, en passant par chaque commande." data-en="Follow a manager's day: from install to cash count, walking through every order in between.">Suivez le parcours d'un gérant : de l'installation au comptage du fond de caisse, en passant par chaque commande.</p>
+      </div>
+
+      <div class="journey-wrap reveal" id="journeyWrap">
+
+        <!-- VISUEL : écran avec slides -->
+        <div class="journey-visual">
+          <div class="journey-screen">
+            <div class="journey-chrome">
+              <div class="journey-chrome-dots">
+                <div class="journey-chrome-dot" style="background:#FF5F57"></div>
+                <div class="journey-chrome-dot" style="background:#FFBD2E"></div>
+                <div class="journey-chrome-dot" style="background:#28CA41"></div>
+              </div>
+              <div class="journey-chrome-title">BarManager <span class="gold">Pro</span> — <span id="journeyScreenTitle">Installation</span></div>
+              <div class="journey-chrome-step">
+                <span data-fr="Étape" data-en="Step">Étape</span>
+                <span id="journeyChromeNum">1</span>/10
+              </div>
+            </div>
+            <div class="journey-body" id="journeyBody">
+              <div class="journey-slide active"><img src="image/dasboard.png" alt="Installation" loading="lazy" decoding="async"></div>
+              <div class="journey-slide"><img src="image/recherche.jpg" alt="Configuration du bar" loading="lazy" decoding="async"></div>
+              <div class="journey-slide"><img src="image/login.jpg" alt="Connexion équipe" loading="lazy" decoding="async"></div>
+              <div class="journey-slide"><img src="image/user.jpg" alt="Paramètres employés et catalogue" loading="lazy" decoding="async"></div>
+              <div class="journey-slide"><img src="image/stock.jpg" alt="Gestion des stocks" loading="lazy" decoding="async"></div>
+              <div class="journey-slide"><img src="image/pos.jpg" alt="Prise de commande à la table" loading="lazy" decoding="async"></div>
+              <div class="journey-slide"><img src="image/pos_commandes_2.jpg" alt="Envoi en caisse" loading="lazy" decoding="async"></div>
+              <div class="journey-slide"><img src="image/caisse.jpg" alt="Encaissement client" loading="lazy" decoding="async"></div>
+              <div class="journey-slide"><img src="image/fournisseur.jpg" alt="Commande fournisseur pour réappro" loading="lazy" decoding="async"></div>
+              <div class="journey-slide"><img src="image/caisse_3.jpg" alt="Clôture journalière et déconnexion" loading="lazy" decoding="async"></div>
+            </div>
+          </div>
+          <!-- Indicateurs : une pilule par étape -->
+          <div class="journey-dots" id="journeyDots"></div>
+        </div>
+
+        <!-- CONTENU : description -->
+        <div class="journey-content">
+          <div>
+            <span class="journey-step-num" id="journeyNum">01</span>
+          </div>
+          <span class="journey-step-tag">
+            <span class="journey-step-tag-dot" aria-hidden="true"></span>
+            <span data-fr="Étape" data-en="Step">Étape</span> <span id="journeyCurrent">1</span> / 10
+          </span>
+          <h3 class="journey-step-title" id="journeyTitle">Installation rapide</h3>
+          <p class="journey-step-desc" id="journeyDesc">L'utilisateur télécharge l'installateur Windows depuis le site et le lance. L'application s'installe en 30 secondes, sans configuration technique.</p>
+          <div class="journey-step-actor" id="journeyActor">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="9 12 11 14 15 10"/>
+            </svg>
+            <span id="journeyActorText">Tout utilisateur — premier lancement</span>
+          </div>
+
+          <div class="journey-progress">
+            <div class="journey-progress-bar" id="journeyBar"></div>
+          </div>
+
+          <div class="journey-controls">
+            <button class="journey-btn" onclick="journeyGo(-1)" aria-label="Étape précédente">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+            <button class="journey-btn journey-btn-play" id="journeyPlayBtn" onclick="journeyToggle()" aria-label="Lecture / pause">
+              <svg id="journeyPlayIcon" viewBox="0 0 24 24" fill="currentColor" stroke="none"><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg>
+            </button>
+            <button class="journey-btn" onclick="journeyGo(1)" aria-label="Étape suivante">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
   <!-- Features overview -->
   <section class="section">
     <div class="container">
@@ -3280,6 +3621,221 @@ function closeBanner() {
 }
 
 // ============================================================
+// JOURNEY — Parcours utilisateur en 10 étapes
+// ============================================================
+const journeySteps = [
+  {
+    short: { fr: 'Installation',           en: 'Installation' },
+    title: { fr: 'Installation rapide',    en: 'Quick install' },
+    desc:  {
+      fr: "L'utilisateur télécharge l'installateur Windows et le lance. L'application s'installe en 30 secondes, sans configuration technique requise.",
+      en: 'The user downloads the Windows installer and runs it. The app installs in 30 seconds, no technical setup required.'
+    },
+    actor: { fr: 'Tout utilisateur — premier lancement', en: 'Any user — first launch' }
+  },
+  {
+    short: { fr: 'Configuration du bar',   en: 'Bar setup' },
+    title: { fr: "Configurez votre établissement",  en: 'Set up your business' },
+    desc:  {
+      fr: "Au premier démarrage, un assistant guide la configuration : nom de l'établissement, adresse, devise (FCFA), TVA DGI 19,25 %, horaires d'ouverture.",
+      en: 'On first launch, a wizard guides the setup: business name, address, currency (FCFA), DGI VAT 19.25%, opening hours.'
+    },
+    actor: { fr: 'Propriétaire — installation initiale', en: 'Owner — initial install' }
+  },
+  {
+    short: { fr: 'Connexion équipe',       en: 'Team login' },
+    title: { fr: 'Connexion sécurisée',    en: 'Secure login' },
+    desc:  {
+      fr: "L'équipe se connecte avec ses identifiants. Quatre rôles : propriétaire, gérant, caissier et serveur — chacun avec ses permissions par module.",
+      en: 'Team members log in with their credentials. Four roles: owner, manager, cashier and server — each with per-module permissions.'
+    },
+    actor: { fr: 'Toute l\'équipe — début de service', en: 'Whole team — start of service' }
+  },
+  {
+    short: { fr: 'Paramètres',             en: 'Settings' },
+    title: { fr: 'Catalogue, équipe et rôles', en: 'Catalogue, team and roles' },
+    desc:  {
+      fr: "Le gérant importe le catalogue (produits, catégories, prix), ajoute les employés et leur attribue un rôle. L'import Excel/CSV gagne du temps.",
+      en: 'The manager imports the catalogue (products, categories, prices), adds employees and assigns roles. Excel/CSV import saves time.'
+    },
+    actor: { fr: 'Gérant — paramétrage', en: 'Manager — configuration' }
+  },
+  {
+    short: { fr: 'Stocks',                 en: 'Inventory' },
+    title: { fr: 'Gestion du stock',       en: 'Inventory management' },
+    desc:  {
+      fr: "Les produits sont entrés en stock avec des seuils d'alerte. L'inventaire s'affiche en temps réel par étagère, avec historique complet des mouvements.",
+      en: 'Products are entered with alert thresholds. Inventory displays in real-time per shelf, with full movement history.'
+    },
+    actor: { fr: 'Gérant — début de journée', en: 'Manager — day start' }
+  },
+  {
+    short: { fr: 'Commande table',         en: 'Table order' },
+    title: { fr: 'Prise de commande à la table', en: 'Order at the table' },
+    desc:  {
+      fr: "Le serveur ouvre une table sur le plan de salle, sélectionne les produits sur l'interface tactile et envoie la commande. Modification possible en un clic.",
+      en: 'The server opens a table on the floor plan, taps products on the touch interface and submits the order. Changes are one tap away.'
+    },
+    actor: { fr: 'Serveur — salle', en: 'Server — floor' }
+  },
+  {
+    short: { fr: 'Envoi en caisse',        en: 'Sent to register' },
+    title: { fr: 'La commande arrive en caisse', en: 'Order reaches the register' },
+    desc:  {
+      fr: "Dès l'envoi, la commande s'affiche en caisse pour préparation et facturation. La caissière a la vue complète : table, articles, montant total avec TVA.",
+      en: "Upon submission, the order appears at the register for prep and billing. The cashier sees it all: table, items, total amount with VAT."
+    },
+    actor: { fr: 'Caissière — comptoir', en: 'Cashier — counter' }
+  },
+  {
+    short: { fr: 'Encaissement',           en: 'Payment' },
+    title: { fr: 'Paiement multicanal',    en: 'Multi-channel payment' },
+    desc:  {
+      fr: "Le client paie : espèces, Orange Money, MTN MoMo, ou paiement mixte. Le rendu de monnaie est calculé. La caisse est réconciliée automatiquement.",
+      en: 'The customer pays: cash, Orange Money, MTN MoMo, or mixed. Change is calculated. The till is reconciled automatically.'
+    },
+    actor: { fr: 'Caissière — encaissement client', en: 'Cashier — customer payment' }
+  },
+  {
+    short: { fr: 'Réappro fournisseur',    en: 'Supplier reorder' },
+    title: { fr: 'Commande au fournisseur', en: 'Order from supplier' },
+    desc:  {
+      fr: "Les seuils sont atteints sur certains produits : le gérant crée un bon de commande fournisseur en quelques clics. L'historique des commandes guide la décision.",
+      en: 'Thresholds are hit on some products: the manager creates a supplier purchase order in a few clicks. Order history guides the decision.'
+    },
+    actor: { fr: 'Gérant — milieu de journée', en: 'Manager — mid-day' }
+  },
+  {
+    short: { fr: 'Clôture',                en: 'Closing' },
+    title: { fr: 'Clôture journalière',    en: 'End-of-day close' },
+    desc:  {
+      fr: "Fin de service : comptage du fond de caisse, vérification des écarts, génération du rapport Z DGI en PDF, backup chiffré automatique, puis déconnexion sécurisée.",
+      en: 'End of shift: cash drawer count, discrepancy check, DGI Z report generated as PDF, automatic encrypted backup, then secure logout.'
+    },
+    actor: { fr: 'Caissière + gérant — fin de service', en: 'Cashier + manager — shift end' }
+  }
+];
+
+let journeyIdx = 0;
+let journeyTimer = null;
+let journeyProgress = 0;
+const JOURNEY_DURATION = 6500; // ms par étape
+const JOURNEY_TICK = 60; // ms entre updates de barre
+
+function journeyRender() {
+  const step = journeySteps[journeyIdx];
+  const lang = currentLang;
+  const slides = document.querySelectorAll('#journeyBody .journey-slide');
+  const dots = document.querySelectorAll('#journeyDots .journey-dot');
+
+  // Slides
+  slides.forEach((el, i) => el.classList.toggle('active', i === journeyIdx));
+  // Dots : actif courant, "done" précédents
+  dots.forEach((el, i) => {
+    el.classList.toggle('active', i === journeyIdx);
+    el.classList.toggle('done', i < journeyIdx);
+  });
+
+  // Numérotation
+  const num = String(journeyIdx + 1).padStart(2, '0');
+  const numEl = document.getElementById('journeyNum');
+  if (numEl) numEl.textContent = num;
+  const cur = document.getElementById('journeyCurrent');
+  if (cur) cur.textContent = String(journeyIdx + 1);
+  const chromeNum = document.getElementById('journeyChromeNum');
+  if (chromeNum) chromeNum.textContent = String(journeyIdx + 1);
+
+  // Textes
+  const screenTitle = document.getElementById('journeyScreenTitle');
+  if (screenTitle) screenTitle.textContent = step.short[lang] || step.short.fr;
+  const titleEl = document.getElementById('journeyTitle');
+  if (titleEl) titleEl.textContent = step.title[lang] || step.title.fr;
+  const descEl = document.getElementById('journeyDesc');
+  if (descEl) descEl.textContent = step.desc[lang] || step.desc.fr;
+  const actorEl = document.getElementById('journeyActorText');
+  if (actorEl) actorEl.textContent = step.actor[lang] || step.actor.fr;
+}
+
+function journeyBuildDots() {
+  const container = document.getElementById('journeyDots');
+  if (!container) return;
+  container.innerHTML = '';
+  journeySteps.forEach((_, i) => {
+    const b = document.createElement('button');
+    b.className = 'journey-dot' + (i === 0 ? ' active' : '');
+    b.setAttribute('aria-label', 'Étape ' + (i + 1));
+    b.addEventListener('click', () => journeySet(i, true));
+    container.appendChild(b);
+  });
+}
+
+function journeySet(i, resetTimer) {
+  journeyIdx = (i + journeySteps.length) % journeySteps.length;
+  journeyProgress = 0;
+  journeyRender();
+  updateProgressBar();
+  if (resetTimer) journeyStart();
+}
+
+function journeyGo(delta) { journeySet(journeyIdx + delta, true); }
+
+function updateProgressBar() {
+  const bar = document.getElementById('journeyBar');
+  if (bar) bar.style.width = (journeyProgress * 100) + '%';
+}
+
+function journeyStart() {
+  journeyStop();
+  journeyProgress = 0;
+  updateProgressBar();
+  journeyTimer = setInterval(() => {
+    journeyProgress += JOURNEY_TICK / JOURNEY_DURATION;
+    if (journeyProgress >= 1) {
+      journeyProgress = 0;
+      journeySet(journeyIdx + 1, false);
+    }
+    updateProgressBar();
+  }, JOURNEY_TICK);
+  setPlayIcon(true);
+}
+
+function journeyStop() {
+  if (journeyTimer) { clearInterval(journeyTimer); journeyTimer = null; }
+  setPlayIcon(false);
+}
+
+function journeyToggle() {
+  if (journeyTimer) journeyStop();
+  else journeyStart();
+}
+
+function setPlayIcon(playing) {
+  const icon = document.getElementById('journeyPlayIcon');
+  if (!icon) return;
+  if (playing) {
+    // Pause icon (2 rectangles)
+    icon.innerHTML = '<rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/>';
+  } else {
+    // Play icon (triangle)
+    icon.innerHTML = '<polygon points="6 4 20 12 6 20 6 4"/>';
+  }
+}
+
+function initJourney() {
+  if (!document.getElementById('journeyWrap')) return;
+  journeyBuildDots();
+  journeyRender();
+  journeyStart();
+  // Pause au hover du visuel
+  const wrap = document.getElementById('journeyWrap');
+  if (wrap) {
+    wrap.addEventListener('mouseenter', journeyStop);
+    wrap.addEventListener('mouseleave', () => { if (!journeyTimer) journeyStart(); });
+  }
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) journeyStop();
+}
+
+// ============================================================
 // DASHBOARD CARROUSEL (hero)
 // ============================================================
 let dbIndex = 0;
@@ -3431,6 +3987,10 @@ function applyLang(lang) {
   if (document.getElementById('dbCarousel')) {
     dbCarouselSet(dbIndex, false);
   }
+  // Re-render du journey avec la nouvelle langue
+  if (document.getElementById('journeyWrap')) {
+    journeyRender();
+  }
 }
 
 function setLang(lang) {
@@ -3455,6 +4015,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initReveal();
   initDbCarousel();
   initFeatureCarousels();
+  initJourney();
   document.getElementById('navbar').classList.add('scrolled');
 });
 </script>
