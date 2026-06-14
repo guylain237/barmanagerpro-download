@@ -4,33 +4,72 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title data-fr="BarManager Pro — Gestion intégrale de bar | Cameroun" data-en="BarManager Pro — All-in-one bar management | Cameroon">BarManager Pro — Gestion intégrale de bar | Cameroun</title>
+<script>
+  // Anti-flash : applique le thème AVANT le rendu (synchrone)
+  (function() {
+    try {
+      var t = localStorage.getItem('bmp_theme');
+      if (!t) t = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      if (t === 'light') document.documentElement.classList.add('light');
+    } catch (e) {}
+  })();
+</script>
 <meta name="description" data-fr-content="La solution tout-en-un pour les bars et restaurants du Cameroun et d'Afrique Centrale — caisse, stocks, paiements MoMo, conformité DGI." data-en-content="The all-in-one solution for bars and restaurants in Cameroon and Central Africa — POS, inventory, MoMo payments, DGI compliance." content="La solution tout-en-un pour les bars et restaurants du Cameroun et d'Afrique Centrale — caisse, stocks, paiements MoMo, conformité DGI."/>
 <style>
 /* ============================================================
    RESET & TOKENS
    ============================================================ */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+/* ============================================================
+   THÈME — Tokens (mêmes valeurs que app/globals.css BarManager Pro)
+   Mode DARK par défaut. Mode LIGHT activé via <html class="light">.
+   ============================================================ */
 :root {
-  --black:  #0C0E0B;
-  --dark:   #111410;
-  --dark2:  #181B16;
-  --dark3:  #1F2419;
-  --card:   #232820;
-  --border: rgba(255,255,255,.08);
-  --border2: rgba(255,255,255,.14);
+  /* Couleurs marque — invariables */
   --gold:   #D4A017;
   --gold2:  #E8B840;
   --green:  #2DBD7E;
   --green2: #38D491;
-  --muted:  #888C7A;
-  --text:   #D8DDD0;
-  --white:  #F2F5EC;
+
+  /* Mode DARK (défaut) — repris de globals.css landing tokens */
+  --black:    #0C0E0B;
+  --dark:     #111410;
+  --dark2:    #181B16;
+  --dark3:    #1F2419;
+  --card:     #232820;
+  --border:   rgba(255,255,255,.08);
+  --border2:  rgba(255,255,255,.14);
+  --border-strong: rgba(255,255,255,.22);
+  --text:     #D8DDD0;
+  --white:    #F2F5EC;
+  --muted:    #888C7A;
+
+  /* Typo + layout */
   --font-h: Verdana, Geneva, Tahoma, sans-serif;
   --font-b: Verdana, Geneva, Tahoma, sans-serif;
   --nav-h:  68px;
   --banner-h: 0px;
   --r:      12px;
   --r2:     20px;
+
+  color-scheme: dark;
+}
+
+/* Mode LIGHT — overrides via .light sur <html> */
+html.light {
+  --black:    #FAFAF8;
+  --dark:     #F0F0EC;
+  --dark2:    #F5F5F2;
+  --dark3:    #E8E8E4;
+  --card:     #FFFFFF;
+  --border:   rgba(0,0,0,.08);
+  --border2:  rgba(0,0,0,.14);
+  --border-strong: rgba(0,0,0,.22);
+  --text:     #3A3A38;
+  --white:    #1A1A18;
+  --muted:    #6B6B60;
+
+  color-scheme: light;
 }
 
 html { scroll-behavior: smooth; font-size: 16px; overflow-x: hidden; }
@@ -44,6 +83,7 @@ body {
   overflow-x: hidden;
   width: 100%;
   max-width: 100vw;
+  transition: background .35s ease, color .35s ease;
 }
 
 /* Tout image / iframe / svg doit s'auto-contraindre */
@@ -1223,6 +1263,102 @@ body.banner-closed { --banner-h: 0px; }
 }
 
 .nav-cta { display: flex; align-items: center; gap: 10px; justify-self: end; }
+
+/* Toggle thème (Soleil / Lune) */
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  background: rgba(255,255,255,.04);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  cursor: pointer;
+  color: var(--text);
+  transition: all .25s ease, transform .35s cubic-bezier(.22,.61,.36,1);
+}
+.theme-toggle:hover {
+  background: rgba(212,160,23,.12);
+  border-color: rgba(212,160,23,.4);
+  color: var(--gold2);
+  transform: rotate(15deg);
+}
+.theme-icon { width: 18px; height: 18px; display: block; transition: opacity .25s ease, transform .35s ease; }
+/* DARK : on voit la lune (cliquer pour passer en clair) */
+.theme-icon-sun { display: none; }
+.theme-icon-moon { display: block; }
+/* LIGHT : on voit le soleil */
+html.light .theme-icon-sun { display: block; }
+html.light .theme-icon-moon { display: none; }
+
+/* Ajustements spécifiques au thème light pour quelques composants */
+html.light body { background: var(--black); }
+html.light .nav {
+  background: linear-gradient(180deg, rgba(255,255,255,.85) 0%, rgba(245,245,242,.92) 100%);
+  border-bottom-color: rgba(212,160,23,.18);
+}
+html.light .nav.scrolled {
+  background: rgba(255,255,255,.95);
+  box-shadow: 0 8px 32px rgba(0,0,0,.06), 0 0 60px rgba(212,160,23,.04);
+}
+html.light .nav-logo { color: var(--white); }
+html.light .nav-links {
+  background: rgba(0,0,0,.04);
+  border-color: rgba(0,0,0,.08);
+}
+html.light .nav-links a { color: #5a5a55; }
+html.light .nav-links a:hover { color: #1a1a18; background: rgba(0,0,0,.05); }
+html.light .lang-switch { background: rgba(0,0,0,.04); border-color: rgba(0,0,0,.08); }
+html.light .lang-switch button:not(.active) { color: #5a5a55; }
+html.light .theme-toggle { background: rgba(0,0,0,.04); color: #5a5a55; }
+
+/* Hero / sections light */
+html.light .hero-bg {
+  background:
+    radial-gradient(ellipse 80% 60% at 70% 40%, rgba(212,160,23,.10) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 20% 80%, rgba(45,189,126,.08) 0%, transparent 50%),
+    var(--black);
+}
+html.light .hero-grid {
+  background-image:
+    linear-gradient(rgba(0,0,0,.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,.04) 1px, transparent 1px);
+}
+html.light .badge-web-soon {
+  background: rgba(212,160,23,.12);
+  color: #8E6A0F;
+}
+html.light .pill { color: #5a5a55; background: rgba(0,0,0,.04); }
+html.light .pill.active { background: rgba(212,160,23,.15); color: #8E6A0F; border-color: rgba(212,160,23,.3); }
+
+/* Cards en mode clair : ombre douce + bordure */
+html.light .card,
+html.light .feature-card,
+html.light .module-card,
+html.light .plan-card,
+html.light .contact-form,
+html.light .dl-card,
+html.light .arch-card {
+  background: var(--card);
+  border-color: var(--border);
+  box-shadow: 0 4px 16px rgba(0,0,0,.04), 0 1px 3px rgba(0,0,0,.04);
+}
+html.light .feature-card:hover {
+  box-shadow: 0 12px 32px rgba(0,0,0,.08), 0 0 0 1px rgba(212,160,23,.15);
+}
+html.light .footer { background: var(--dark); border-top-color: var(--border); }
+html.light .dashboard-preview { background: var(--dark2); }
+html.light .db-topbar { background: var(--dark3); }
+html.light .video-wrapper { background: var(--dark2); }
+html.light .video-chrome { background: var(--dark3); }
+html.light .journey-screen { background: var(--dark2); }
+html.light .journey-chrome { background: var(--dark3); }
+html.light .journey-phase-bar { background: linear-gradient(180deg, var(--dark3), var(--card)); }
+html.light .tree-leaf-face { background: linear-gradient(135deg, var(--card), var(--dark2)); }
+html.light .divider { background: linear-gradient(90deg, transparent, rgba(0,0,0,.12) 30%, rgba(0,0,0,.12) 70%, transparent); }
+html.light h1, html.light h2, html.light h3, html.light h4 { color: var(--white); }
 
 /* Language switcher — style 3D */
 .lang-switch {
@@ -2734,6 +2870,15 @@ textarea.form-control { resize: vertical; min-height: 120px; }
 
       <!-- CTA -->
       <div class="nav-cta">
+        <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Basculer thème clair / sombre" title="Thème">
+          <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"/>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+          </svg>
+          <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+        </button>
         <div class="lang-switch" role="group" aria-label="Language selector">
           <button id="langFr" class="active" onclick="setLang('fr')" aria-label="Français">FR</button>
           <button id="langEn" onclick="setLang('en')" aria-label="English">EN</button>
@@ -4879,6 +5024,28 @@ function setLang(lang) {
   applyLang(lang);
 }
 
+// ============================================================
+// THÈME — bascule dark / light + persistance
+// ============================================================
+function applyTheme(theme) {
+  // theme = 'light' ou 'dark'
+  if (theme === 'light') document.documentElement.classList.add('light');
+  else                    document.documentElement.classList.remove('light');
+}
+
+function toggleTheme() {
+  const isLight = document.documentElement.classList.toggle('light');
+  localStorage.setItem('bmp_theme', isLight ? 'light' : 'dark');
+}
+
+function detectInitialTheme() {
+  const stored = localStorage.getItem('bmp_theme');
+  if (stored === 'light' || stored === 'dark') return stored;
+  // Préférence système si rien en cache
+  if (window.matchMedia('(prefers-color-scheme: light)').matches) return 'light';
+  return 'dark';
+}
+
 function detectInitialLang() {
   const stored = localStorage.getItem('bmp_lang');
   if (stored === 'fr' || stored === 'en') return stored;
@@ -4891,6 +5058,7 @@ function detectInitialLang() {
 // INIT
 // ============================================================
 document.addEventListener('DOMContentLoaded', () => {
+  applyTheme(detectInitialTheme());
   applyLang(detectInitialLang());
   initReveal();
   initDbCarousel();
