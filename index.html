@@ -4,7 +4,6 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title data-fr="BarManager Pro — Gestion intégrale de bar | Cameroun" data-en="BarManager Pro — All-in-one bar management | Cameroon">BarManager Pro — Gestion intégrale de bar | Cameroun</title>
-<link rel="preconnect" href="https://images.unsplash.com" crossorigin>
 <script>
   // Anti-flash : applique le thème AVANT le rendu (synchrone)
   (function() {
@@ -1357,7 +1356,7 @@ html.light .hero-bg {
     /* Filtre orange chaud (lumière tamisée) */
     radial-gradient(ellipse 100% 70% at 50% 30%, rgba(245,158,11,.15) 0%, transparent 60%),
     /* Même photo de bar qu'en dark, mais perçue comme une texture subtile */
-    url("https://images.unsplash.com/photo-1572116469696-31de0f17cc34?w=1800&q=70&auto=format&fit=crop")
+    url("image/bar/bar_douala.webp")
     center/cover no-repeat;
 }
 html.light .hero-bg::after {
@@ -1495,7 +1494,7 @@ html.light h1, html.light h2, html.light h3, html.light h4 { color: var(--white)
     /* Filtre orange chaud (lumière tamisée de bar) */
     radial-gradient(ellipse 100% 70% at 50% 30%, rgba(245,158,11,.18) 0%, transparent 60%),
     /* Photo de fond : comptoir de bar avec ambiance chaude */
-    url("https://images.unsplash.com/photo-1572116469696-31de0f17cc34?w=1800&q=70&auto=format&fit=crop")
+    url("image/bar/bar_douala.webp")
     center/cover no-repeat;
 }
 .hero-bg::after {
@@ -3024,14 +3023,16 @@ textarea.form-control { resize: vertical; min-height: 120px; }
               </span>
             </div>
 
-            <!-- Carrousel : ambiance bar (URLs Unsplash confirmées stables) -->
+            <!-- Carrousel : photos locales (image/bar/) — vrais bars camerounais -->
             <div class="db-carousel" id="dbCarousel"
-                 data-titles-fr="Le comptoir,L'étagère des bouteilles,Le service,L'ambiance du soir"
-                 data-titles-en="The counter,The bottle shelf,The service,Evening atmosphere">
-              <div class="db-slide active"><img src="https://images.unsplash.com/photo-1551024601-bec78aea704b?w=900&q=75&auto=format&fit=crop" alt="Bouteilles backlit au comptoir" loading="eager" decoding="async" onerror="this.style.background='#1E293B'"></div>
-              <div class="db-slide"><img src="https://images.unsplash.com/photo-1574096145006-2dcfd6db4b54?w=900&q=75&auto=format&fit=crop" alt="Étagère de bouteilles d'un bar" loading="lazy" decoding="async" onerror="this.style.background='#1E293B'"></div>
-              <div class="db-slide"><img src="https://images.unsplash.com/photo-1572116469696-31de0f17cc34?w=900&q=75&auto=format&fit=crop" alt="Bartender en pleine action" loading="lazy" decoding="async" onerror="this.style.background='#1E293B'"></div>
-              <div class="db-slide"><img src="https://images.unsplash.com/photo-1485872299829-c673f5194813?w=900&q=75&auto=format&fit=crop" alt="Salle de bar — lumière chaude" loading="lazy" decoding="async" onerror="this.style.background='#1E293B'"></div>
+                 data-titles-fr="Bar à Douala,Soirée animée,Au Kadji,Restaurant du soir,Bartender du quartier,Bar Le Nickel"
+                 data-titles-en="Bar in Douala,Lively evening,At Kadji,Evening restaurant,Local bartender,Nickel Bar">
+              <div class="db-slide active"><img src="image/bar/bar_douala.webp" alt="Bar à Douala" loading="eager" decoding="async"></div>
+              <div class="db-slide"><img src="image/bar/soiree.jpg" alt="Soirée animée dans un bar camerounais" loading="lazy" decoding="async"></div>
+              <div class="db-slide"><img src="image/bar/kadji.jpeg" alt="Au Kadji — ambiance camerounaise" loading="lazy" decoding="async"></div>
+              <div class="db-slide"><img src="image/bar/restaurant.jpg" alt="Restaurant du soir" loading="lazy" decoding="async"></div>
+              <div class="db-slide"><img src="image/bar/bartender_local.webp" alt="Bartender camerounais en plein service" loading="lazy" decoding="async"></div>
+              <div class="db-slide"><img src="image/bar/nickel.png" alt="Bar Le Nickel" loading="lazy" decoding="async"></div>
 
               <!-- Flèches navigation -->
               <button class="db-nav db-nav-prev" onclick="dbCarouselGo(-1)" aria-label="Précédent">‹</button>
@@ -3041,7 +3042,7 @@ textarea.form-control { resize: vertical; min-height: 120px; }
             <!-- Pied : indicateurs + compteur -->
             <div class="db-footer">
               <div class="db-indicators" id="dbIndicators"></div>
-              <div class="db-counter"><span id="dbCounter">1</span> / 4</div>
+              <div class="db-counter"><span id="dbCounter">1</span> / 6</div>
             </div>
           </div>
         </div>
