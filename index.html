@@ -25,11 +25,12 @@
    Mode DARK par défaut. Mode LIGHT activé via <html class="light">.
    ============================================================ */
 :root {
-  /* Couleurs marque — invariables */
-  --gold:   #D4A017;
-  --gold2:  #E8B840;
-  --green:  #2DBD7E;
-  --green2: #38D491;
+  /* Couleurs marque — identiques à --color-amber* de globals.css */
+  --gold:      #F59E0B;  /* amber 500 — primary brand de l'app desktop */
+  --gold2:     #FCD34D;  /* amber 300 — accent clair */
+  --gold-dark: #D97706;  /* amber 600 — hover/active */
+  --green:     #2DBD7E;
+  --green2:    #38D491;
 
   /* Mode DARK (défaut) — palette NAVY identique à .dark de globals.css */
   --black:    #0F172A;   /* navy 900 — fond principal */
@@ -178,7 +179,7 @@ a { color: inherit; text-decoration: none; }
 .btn-primary:hover {
   background: var(--gold2);
   transform: translateY(-2px);
-  box-shadow: 0 12px 40px rgba(212,160,23,.3);
+  box-shadow: 0 12px 40px rgba(245,158,11,.3);
 }
 .btn-outline {
   background: transparent;
@@ -188,7 +189,7 @@ a { color: inherit; text-decoration: none; }
 .btn-outline:hover {
   border-color: var(--gold);
   color: var(--gold);
-  background: rgba(212,160,23,.06);
+  background: rgba(245,158,11,.06);
 }
 .btn-ghost {
   background: transparent;
@@ -241,7 +242,7 @@ a { color: inherit; text-decoration: none; }
   font-size: 1.3rem;
   flex-shrink: 0;
 }
-.icon-box-gold { background: rgba(212,160,23,.12); }
+.icon-box-gold { background: rgba(245,158,11,.12); }
 .icon-box-green { background: rgba(45,189,126,.12); }
 .icon-box-blue { background: rgba(64,120,210,.12); }
 .icon-box-purple { background: rgba(150,80,220,.12); }
@@ -256,7 +257,7 @@ a { color: inherit; text-decoration: none; }
   font-family: var(--font-h);
   letter-spacing: .04em;
 }
-.badge-gold   { background: rgba(212,160,23,.15); color: var(--gold); }
+.badge-gold   { background: rgba(245,158,11,.15); color: var(--gold); }
 .badge-green  { background: rgba(45,189,126,.15); color: var(--green); }
 .badge-blue   { background: rgba(64,120,210,.15); color: #6CA0F7; }
 
@@ -264,17 +265,17 @@ a { color: inherit; text-decoration: none; }
    Animation pulse réutilisée par les badges LIVE & status
    ============================================================ */
 @keyframes bannerDotPulse {
-  0%   { box-shadow: 0 0 0 0 rgba(212,160,23,.5); }
-  70%  { box-shadow: 0 0 0 8px rgba(212,160,23,0); }
-  100% { box-shadow: 0 0 0 0 rgba(212,160,23,0); }
+  0%   { box-shadow: 0 0 0 0 rgba(245,158,11,.5); }
+  70%  { box-shadow: 0 0 0 8px rgba(245,158,11,0); }
+  100% { box-shadow: 0 0 0 0 rgba(245,158,11,0); }
 }
 
 /* Badge "Web bientôt" dans le hero */
 .badge-web-soon {
   display: inline-flex; align-items: center; gap: 8px;
   padding: 7px 16px;
-  background: rgba(212,160,23,.1);
-  border: 1px solid rgba(212,160,23,.3);
+  background: rgba(245,158,11,.1);
+  border: 1px solid rgba(245,158,11,.3);
   border-radius: 100px;
   font-size: .78rem;
   font-family: var(--font-h);
@@ -291,7 +292,7 @@ a { color: inherit; text-decoration: none; }
 
 /* Section téléchargement */
 #telechargement {
-  background: linear-gradient(135deg, rgba(212,160,23,.04), rgba(45,189,126,.03));
+  background: linear-gradient(135deg, rgba(245,158,11,.04), rgba(45,189,126,.03));
 }
 .dl-grid {
   display: flex;
@@ -312,13 +313,13 @@ a { color: inherit; text-decoration: none; }
   display: flex; flex-direction: column; align-items: center; gap: 16px;
 }
 .dl-card:hover {
-  border-color: rgba(212,160,23,.4);
+  border-color: rgba(245,158,11,.4);
   transform: translateY(-4px);
 }
 .dl-os-icon {
   width: 64px; height: 64px;
   border-radius: 16px;
-  background: rgba(212,160,23,.1);
+  background: rgba(245,158,11,.1);
   display: flex; align-items: center; justify-content: center;
   font-size: 2rem;
   flex-shrink: 0;
@@ -345,7 +346,7 @@ a { color: inherit; text-decoration: none; }
 .dl-btn:hover {
   background: var(--gold2);
   transform: translateY(-2px);
-  box-shadow: 0 12px 40px rgba(212,160,23,.3);
+  box-shadow: 0 12px 40px rgba(245,158,11,.3);
 }
 .dl-version { font-size: .73rem; color: var(--muted); margin-top: -8px; }
 
@@ -357,7 +358,7 @@ a { color: inherit; text-decoration: none; }
   position: relative;
   background:
     radial-gradient(ellipse at 20% 20%, rgba(45,189,126,.05), transparent 55%),
-    radial-gradient(ellipse at 80% 70%, rgba(212,160,23,.06), transparent 55%),
+    radial-gradient(ellipse at 80% 70%, rgba(245,158,11,.06), transparent 55%),
     var(--black);
   overflow: hidden;
 }
@@ -365,8 +366,8 @@ a { color: inherit; text-decoration: none; }
   content: '';
   position: absolute; inset: 0;
   background-image:
-    linear-gradient(rgba(212,160,23,.022) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(212,160,23,.022) 1px, transparent 1px);
+    linear-gradient(rgba(245,158,11,.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(245,158,11,.022) 1px, transparent 1px);
   background-size: 80px 80px;
   mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 30%, transparent 100%);
   pointer-events: none;
@@ -391,7 +392,7 @@ a { color: inherit; text-decoration: none; }
   box-shadow:
     0 40px 100px rgba(0,0,0,.55),
     0 0 0 1px rgba(255,255,255,.04),
-    0 0 120px rgba(212,160,23,.08);
+    0 0 120px rgba(245,158,11,.08);
 }
 .journey-chrome {
   display: flex; align-items: center; gap: 12px;
@@ -416,8 +417,8 @@ a { color: inherit; text-decoration: none; }
 .journey-chrome-title .gold { color: var(--gold); }
 .journey-chrome-step {
   padding: 2px 9px;
-  background: rgba(212,160,23,.14);
-  border: 1px solid rgba(212,160,23,.3);
+  background: rgba(245,158,11,.14);
+  border: 1px solid rgba(245,158,11,.3);
   border-radius: 100px;
   font-size: .62rem;
   font-weight: 800;
@@ -521,17 +522,17 @@ a { color: inherit; text-decoration: none; }
 
 /* Phase 3 : Clôture = Or */
 .journey-phase.phase-close.active {
-  background: linear-gradient(135deg, rgba(212,160,23,.22), rgba(212,160,23,.08));
+  background: linear-gradient(135deg, rgba(245,158,11,.22), rgba(245,158,11,.08));
   color: var(--gold2);
-  border-color: rgba(212,160,23,.5);
-  box-shadow: 0 6px 18px rgba(212,160,23,.25);
+  border-color: rgba(245,158,11,.5);
+  box-shadow: 0 6px 18px rgba(245,158,11,.25);
 }
 .journey-phase.phase-close.active .journey-phase-num {
-  background: rgba(212,160,23,.35);
+  background: rgba(245,158,11,.35);
   color: #0C0E0B;
 }
 .journey-phase.phase-close.done .journey-phase-num {
-  background: rgba(212,160,23,.2);
+  background: rgba(245,158,11,.2);
   color: var(--gold2);
 }
 
@@ -638,11 +639,11 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* État "done" : passé, doré tamisé */
-.flow-node.done .flow-node-ring { stroke: rgba(212,160,23,.35); }
-.flow-node.done .flow-node-bg   { fill: rgba(212,160,23,.08); stroke: rgba(212,160,23,.35); }
+.flow-node.done .flow-node-ring { stroke: rgba(245,158,11,.35); }
+.flow-node.done .flow-node-bg   { fill: rgba(245,158,11,.08); stroke: rgba(245,158,11,.35); }
 .flow-node.done .flow-node-icon { color: var(--gold2); }
 .flow-node.done .flow-node-num,
-.flow-node.done .flow-node-label { fill: rgba(212,160,23,.7); }
+.flow-node.done .flow-node-label { fill: rgba(245,158,11,.7); }
 
 /* État "active" : en cours, doré complet + ring pulsant */
 .flow-node.active .flow-node-ring {
@@ -650,7 +651,7 @@ a { color: inherit; text-decoration: none; }
   stroke-width: 2.5;
   animation: nodeRingPulse 1.6s ease-out infinite;
 }
-.flow-node.active .flow-node-bg   { fill: rgba(212,160,23,.22); stroke: var(--gold); }
+.flow-node.active .flow-node-bg   { fill: rgba(245,158,11,.22); stroke: var(--gold); }
 .flow-node.active .flow-node-icon { color: #FFE38A; }
 .flow-node.active .flow-node-num,
 .flow-node.active .flow-node-label { fill: var(--white); }
@@ -695,8 +696,8 @@ a { color: inherit; text-decoration: none; }
 .journey-step-tag {
   display: inline-flex; align-items: center; gap: 8px;
   padding: 4px 12px;
-  background: rgba(212,160,23,.12);
-  border: 1px solid rgba(212,160,23,.3);
+  background: rgba(245,158,11,.12);
+  border: 1px solid rgba(245,158,11,.3);
   border-radius: 100px;
   font-family: var(--font-h);
   font-size: .7rem;
@@ -765,7 +766,7 @@ a { color: inherit; text-decoration: none; }
   color: #0C0E0B;
   border-color: var(--gold);
   transform: translateY(-1px);
-  box-shadow: 0 6px 16px rgba(212,160,23,.3);
+  box-shadow: 0 6px 16px rgba(245,158,11,.3);
 }
 .journey-btn svg { width: 16px; height: 16px; }
 .journey-btn-play {
@@ -814,7 +815,7 @@ a { color: inherit; text-decoration: none; }
   transition: background .25s ease;
 }
 .journey-dot.active { background: var(--gold); }
-.journey-dot.done   { background: rgba(212,160,23,.4); }
+.journey-dot.done   { background: rgba(245,158,11,.4); }
 .journey-dot:hover:not(.active) { background: rgba(255,255,255,.2); }
 
 /* Responsive */
@@ -843,7 +844,7 @@ a { color: inherit; text-decoration: none; }
 #video-demo {
   position: relative;
   background:
-    radial-gradient(ellipse 70% 60% at 50% 30%, rgba(212,160,23,.07) 0%, transparent 55%),
+    radial-gradient(ellipse 70% 60% at 50% 30%, rgba(245,158,11,.07) 0%, transparent 55%),
     radial-gradient(ellipse 50% 50% at 80% 70%, rgba(45,189,126,.04) 0%, transparent 50%),
     var(--black);
   overflow: hidden;
@@ -874,7 +875,7 @@ a { color: inherit; text-decoration: none; }
   position: absolute;
   inset: -20% -10% -30% -10%;
   background:
-    radial-gradient(ellipse at 30% 40%, rgba(212,160,23,.16), transparent 60%),
+    radial-gradient(ellipse at 30% 40%, rgba(245,158,11,.16), transparent 60%),
     radial-gradient(ellipse at 70% 60%, rgba(45,189,126,.10), transparent 60%);
   filter: blur(80px);
   z-index: -1;
@@ -892,15 +893,15 @@ a { color: inherit; text-decoration: none; }
   box-shadow:
     0 40px 100px rgba(0,0,0,.55),
     0 0 0 1px rgba(255,255,255,.04),
-    0 0 120px rgba(212,160,23,.08);
+    0 0 120px rgba(245,158,11,.08);
   transition: transform .4s ease, box-shadow .4s ease;
 }
 .video-wrapper:hover {
   transform: translateY(-4px);
   box-shadow:
     0 50px 120px rgba(0,0,0,.6),
-    0 0 0 1px rgba(212,160,23,.14),
-    0 0 140px rgba(212,160,23,.14);
+    0 0 0 1px rgba(245,158,11,.14),
+    0 0 140px rgba(245,158,11,.14);
 }
 
 /* Barre supérieure type macOS / Tauri */
@@ -985,8 +986,8 @@ a { color: inherit; text-decoration: none; }
   max-width: 100%;
 }
 .video-fallback:hover {
-  background: rgba(212,160,23,.08);
-  border-color: rgba(212,160,23,.3);
+  background: rgba(245,158,11,.08);
+  border-color: rgba(245,158,11,.3);
   color: var(--gold2);
 }
 .video-stage { display: flex; flex-direction: column; align-items: center; }
@@ -1000,7 +1001,7 @@ a { color: inherit; text-decoration: none; }
   position: absolute; inset: 0;
   border-radius: var(--r2);
   padding: 1px;
-  background: linear-gradient(135deg, rgba(212,160,23,.45), transparent 35%, transparent 65%, rgba(45,189,126,.35));
+  background: linear-gradient(135deg, rgba(245,158,11,.45), transparent 35%, transparent 65%, rgba(45,189,126,.35));
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
@@ -1026,13 +1027,13 @@ a { color: inherit; text-decoration: none; }
   transition: border-color .25s, background .25s;
 }
 .video-highlight:hover {
-  border-color: rgba(212,160,23,.3);
-  background: rgba(212,160,23,.04);
+  border-color: rgba(245,158,11,.3);
+  background: rgba(245,158,11,.04);
 }
 .video-highlight-icon {
   width: 36px; height: 36px;
   border-radius: 9px;
-  background: rgba(212,160,23,.12);
+  background: rgba(245,158,11,.12);
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
   color: var(--gold2);
@@ -1119,7 +1120,7 @@ a { color: inherit; text-decoration: none; }
     inset 0 1px 0 rgba(255,255,255,.06),
     inset 0 -1px 0 rgba(0,0,0,.5),
     0 4px 24px rgba(0,0,0,.25);
-  border-bottom: 1px solid rgba(212,160,23,.14);
+  border-bottom: 1px solid rgba(245,158,11,.14);
 }
 body.banner-closed .nav { top: 0; }
 body.banner-closed { --banner-h: 0px; }
@@ -1131,7 +1132,7 @@ body.banner-closed { --banner-h: 0px; }
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,.05),
     0 8px 32px rgba(0,0,0,.45),
-    0 0 60px rgba(212,160,23,.06);
+    0 0 60px rgba(245,158,11,.06);
 }
 
 /* Liseré inférieur or → vert (subtil, évoque la forêt) */
@@ -1142,7 +1143,7 @@ body.banner-closed { --banner-h: 0px; }
   background: linear-gradient(90deg,
     transparent,
     rgba(45,189,126,.4) 25%,
-    rgba(212,160,23,.55) 50%,
+    rgba(245,158,11,.55) 50%,
     rgba(45,189,126,.4) 75%,
     transparent);
   opacity: .5;
@@ -1212,8 +1213,8 @@ body.banner-closed { --banner-h: 0px; }
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,.45),
     inset 0 -2px 0 rgba(0,0,0,.18),
-    0 4px 14px rgba(212,160,23,.35),
-    0 0 0 1px rgba(212,160,23,.5);
+    0 4px 14px rgba(245,158,11,.35),
+    0 0 0 1px rgba(245,158,11,.5);
   transition: transform .3s ease, box-shadow .3s ease;
 }
 .nav-logo:hover .nav-logo-mark {
@@ -1221,8 +1222,8 @@ body.banner-closed { --banner-h: 0px; }
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,.5),
     inset 0 -2px 0 rgba(0,0,0,.18),
-    0 6px 20px rgba(212,160,23,.5),
-    0 0 0 1px rgba(212,160,23,.6);
+    0 6px 20px rgba(245,158,11,.5),
+    0 0 0 1px rgba(245,158,11,.6);
 }
 
 /* Nav links — pilule 3D centrée */
@@ -1259,7 +1260,7 @@ body.banner-closed { --banner-h: 0px; }
   background: linear-gradient(135deg, var(--gold2), var(--gold));
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,.4),
-    0 2px 10px rgba(212,160,23,.35);
+    0 2px 10px rgba(245,158,11,.35);
 }
 
 .nav-cta { display: flex; align-items: center; gap: 10px; justify-self: end; }
@@ -1280,8 +1281,8 @@ body.banner-closed { --banner-h: 0px; }
   transition: all .25s ease, transform .35s cubic-bezier(.22,.61,.36,1);
 }
 .theme-toggle:hover {
-  background: rgba(212,160,23,.12);
-  border-color: rgba(212,160,23,.4);
+  background: rgba(245,158,11,.12);
+  border-color: rgba(245,158,11,.4);
   color: var(--gold2);
   transform: rotate(15deg);
 }
@@ -1297,11 +1298,11 @@ html.light .theme-icon-moon { display: none; }
 html.light body { background: var(--black); }
 html.light .nav {
   background: linear-gradient(180deg, rgba(255,255,255,.85) 0%, rgba(245,245,242,.92) 100%);
-  border-bottom-color: rgba(212,160,23,.18);
+  border-bottom-color: rgba(245,158,11,.18);
 }
 html.light .nav.scrolled {
   background: rgba(255,255,255,.95);
-  box-shadow: 0 8px 32px rgba(0,0,0,.06), 0 0 60px rgba(212,160,23,.04);
+  box-shadow: 0 8px 32px rgba(0,0,0,.06), 0 0 60px rgba(245,158,11,.04);
 }
 html.light .nav-logo { color: var(--white); }
 html.light .nav-links {
@@ -1317,7 +1318,7 @@ html.light .theme-toggle { background: rgba(0,0,0,.04); color: #5a5a55; }
 /* Hero / sections light */
 html.light .hero-bg {
   background:
-    radial-gradient(ellipse 80% 60% at 70% 40%, rgba(212,160,23,.10) 0%, transparent 60%),
+    radial-gradient(ellipse 80% 60% at 70% 40%, rgba(245,158,11,.10) 0%, transparent 60%),
     radial-gradient(ellipse 60% 50% at 20% 80%, rgba(45,189,126,.08) 0%, transparent 50%),
     var(--black);
 }
@@ -1327,11 +1328,11 @@ html.light .hero-grid {
     linear-gradient(90deg, rgba(0,0,0,.04) 1px, transparent 1px);
 }
 html.light .badge-web-soon {
-  background: rgba(212,160,23,.12);
+  background: rgba(245,158,11,.12);
   color: #8E6A0F;
 }
 html.light .pill { color: #5a5a55; background: rgba(0,0,0,.04); }
-html.light .pill.active { background: rgba(212,160,23,.15); color: #8E6A0F; border-color: rgba(212,160,23,.3); }
+html.light .pill.active { background: rgba(245,158,11,.15); color: #8E6A0F; border-color: rgba(245,158,11,.3); }
 
 /* Cards en mode clair : ombre douce + bordure */
 html.light .card,
@@ -1346,7 +1347,7 @@ html.light .arch-card {
   box-shadow: 0 4px 16px rgba(0,0,0,.04), 0 1px 3px rgba(0,0,0,.04);
 }
 html.light .feature-card:hover {
-  box-shadow: 0 12px 32px rgba(0,0,0,.08), 0 0 0 1px rgba(212,160,23,.15);
+  box-shadow: 0 12px 32px rgba(0,0,0,.08), 0 0 0 1px rgba(245,158,11,.15);
 }
 html.light .footer { background: var(--dark); border-top-color: var(--border); }
 html.light .dashboard-preview { background: var(--dark2); }
@@ -1391,7 +1392,7 @@ html.light h1, html.light h2, html.light h3, html.light h4 { color: var(--white)
   color: #0C0E0B;
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,.4),
-    0 2px 8px rgba(212,160,23,.3);
+    0 2px 8px rgba(245,158,11,.3);
 }
 .lang-switch button:not(.active):hover { color: var(--white); }
 
@@ -1401,7 +1402,7 @@ html.light h1, html.light h2, html.light h3, html.light h4 { color: var(--white)
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,.4),
     inset 0 -2px 0 rgba(0,0,0,.18),
-    0 4px 14px rgba(212,160,23,.35);
+    0 4px 14px rgba(245,158,11,.35);
   padding: 10px 20px;
   font-size: .84rem;
 }
@@ -1411,7 +1412,7 @@ html.light h1, html.light h2, html.light h3, html.light h4 { color: var(--white)
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,.5),
     inset 0 -2px 0 rgba(0,0,0,.18),
-    0 8px 24px rgba(212,160,23,.45);
+    0 8px 24px rgba(245,158,11,.45);
 }
 
 /* Mobile menu */
@@ -1446,7 +1447,7 @@ html.light h1, html.light h2, html.light h3, html.light h4 { color: var(--white)
 .hero-bg {
   position: absolute; inset: 0;
   background:
-    radial-gradient(ellipse 80% 60% at 70% 40%, rgba(212,160,23,.07) 0%, transparent 60%),
+    radial-gradient(ellipse 80% 60% at 70% 40%, rgba(245,158,11,.07) 0%, transparent 60%),
     radial-gradient(ellipse 60% 50% at 20% 80%, rgba(45,189,126,.05) 0%, transparent 50%),
     var(--black);
 }
@@ -1526,7 +1527,7 @@ html.light h1, html.light h2, html.light h3, html.light h4 { color: var(--white)
   box-shadow:
     0 40px 120px rgba(0,0,0,.6),
     0 0 0 1px rgba(255,255,255,.04),
-    0 0 80px rgba(212,160,23,.08);
+    0 0 80px rgba(245,158,11,.08);
   /* Perspective figée : aucun mouvement quand le carrousel change */
   transform: perspective(1200px) rotateY(-8deg) rotateX(3deg);
   transform-origin: center center;
@@ -1696,11 +1697,11 @@ html.light h1, html.light h2, html.light h3, html.light h4 { color: var(--white)
   transition: border-color .3s ease, transform .3s ease, box-shadow .3s ease;
 }
 .feature-card:hover {
-  border-color: rgba(212,160,23,.3);
+  border-color: rgba(245,158,11,.3);
   transform: translateY(-6px);
   box-shadow:
     0 20px 50px rgba(0,0,0,.4),
-    0 0 0 1px rgba(212,160,23,.08);
+    0 0 0 1px rgba(245,158,11,.08);
 }
 /* Image en haut, ratio 16:10, cover */
 .feature-card-image {
@@ -1807,7 +1808,7 @@ html.light h1, html.light h2, html.light h3, html.light h4 { color: var(--white)
    ============================================================ */
 .modules-hero {
   padding: 160px 0 80px;
-  background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(212,160,23,.06) 0%, transparent 60%);
+  background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(245,158,11,.06) 0%, transparent 60%);
 }
 .modules-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
 .module-card { padding: 32px; }
@@ -1870,7 +1871,7 @@ html.light h1, html.light h2, html.light h3, html.light h4 { color: var(--white)
 .plan-card { padding: 36px; position: relative; }
 .plan-card.featured {
   border-color: var(--gold);
-  background: linear-gradient(135deg, rgba(212,160,23,.05), rgba(212,160,23,.02));
+  background: linear-gradient(135deg, rgba(245,158,11,.05), rgba(245,158,11,.02));
 }
 .plan-badge {
   position: absolute; top: -13px; left: 50%; transform: translateX(-50%);
@@ -1962,7 +1963,7 @@ html.light h1, html.light h2, html.light h3, html.light h4 { color: var(--white)
 }
 .form-control:focus {
   border-color: var(--gold);
-  box-shadow: 0 0 0 3px rgba(212,160,23,.1);
+  box-shadow: 0 0 0 3px rgba(245,158,11,.1);
 }
 .form-control::placeholder { color: var(--muted); }
 select.form-control { appearance: none; cursor: pointer; }
@@ -2071,7 +2072,7 @@ textarea.form-control { resize: vertical; min-height: 120px; }
     background: linear-gradient(180deg, rgba(18,22,14,.97), rgba(10,12,8,.97));
     backdrop-filter: blur(20px);
     padding: 16px 20px;
-    border-bottom: 1px solid rgba(212,160,23,.18);
+    border-bottom: 1px solid rgba(245,158,11,.18);
     border-radius: 0;
     box-shadow: 0 12px 32px rgba(0,0,0,.4);
     gap: 6px;
@@ -2189,8 +2190,8 @@ textarea.form-control { resize: vertical; min-height: 120px; }
   content: '';
   position: absolute; inset: 0;
   background-image:
-    linear-gradient(rgba(212,160,23,.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(212,160,23,.025) 1px, transparent 1px);
+    linear-gradient(rgba(245,158,11,.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(245,158,11,.025) 1px, transparent 1px);
   background-size: 80px 80px;
   mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 30%, transparent 100%);
   pointer-events: none;
@@ -2218,10 +2219,10 @@ textarea.form-control { resize: vertical; min-height: 120px; }
   border-radius: 16px;
   text-align: center;
   box-shadow:
-    0 16px 44px rgba(212,160,23,.45),
+    0 16px 44px rgba(245,158,11,.45),
     inset 0 1px 0 rgba(255,255,255,.55),
     inset 0 -2px 0 rgba(0,0,0,.18),
-    0 0 0 1px rgba(212,160,23,.6);
+    0 0 0 1px rgba(245,158,11,.6);
   position: relative;
   overflow: hidden;
 }
@@ -2257,7 +2258,7 @@ textarea.form-control { resize: vertical; min-height: 120px; }
   bottom: -40px;
   left: 50%;
   width: 2px; height: 40px;
-  background: linear-gradient(180deg, var(--gold) 0%, rgba(212,160,23,.25) 100%);
+  background: linear-gradient(180deg, var(--gold) 0%, rgba(245,158,11,.25) 100%);
   transform: translateX(-50%);
 }
 /* Petit point doré qui descend en boucle pour matérialiser le flux */
@@ -2268,7 +2269,7 @@ textarea.form-control { resize: vertical; min-height: 120px; }
   width: 6px; height: 6px;
   border-radius: 50%;
   background: var(--gold);
-  box-shadow: 0 0 10px rgba(212,160,23,.8);
+  box-shadow: 0 0 10px rgba(245,158,11,.8);
   transform: translateX(-50%);
   animation: treeFlowDown 2.5s ease-in-out infinite;
   pointer-events: none;
@@ -2293,7 +2294,7 @@ textarea.form-control { resize: vertical; min-height: 120px; }
   top: -12px;
   left: 25%; right: 25%;
   height: 2px;
-  background: linear-gradient(90deg, rgba(212,160,23,.3), var(--gold), rgba(212,160,23,.3));
+  background: linear-gradient(90deg, rgba(245,158,11,.3), var(--gold), rgba(245,158,11,.3));
 }
 
 .tree-branch {
@@ -2434,9 +2435,9 @@ textarea.form-control { resize: vertical; min-height: 120px; }
   box-shadow: 0 0 6px var(--green2);
 }
 .tree-branch-web .tree-branch-status {
-  background: rgba(212,160,23,.18);
+  background: rgba(245,158,11,.18);
   color: var(--gold2);
-  border: 1px solid rgba(212,160,23,.4);
+  border: 1px solid rgba(245,158,11,.4);
 }
 .tree-branch-web .tree-branch-status-dot {
   background: var(--gold);
@@ -2460,7 +2461,7 @@ textarea.form-control { resize: vertical; min-height: 120px; }
   top: -18px;
   left: 50%;
   width: 2px; height: 18px;
-  background: linear-gradient(180deg, var(--gold), rgba(212,160,23,.3));
+  background: linear-gradient(180deg, var(--gold), rgba(245,158,11,.3));
   transform: translateX(-50%);
 }
 
@@ -2475,7 +2476,7 @@ textarea.form-control { resize: vertical; min-height: 120px; }
   position: absolute;
   left: -10px; top: 50%;
   width: 10px; height: 2px;
-  background: rgba(212,160,23,.25);
+  background: rgba(245,158,11,.25);
   transform: translateY(-50%);
   z-index: 1;
 }
@@ -2510,7 +2511,7 @@ textarea.form-control { resize: vertical; min-height: 120px; }
   box-shadow: 0 6px 20px rgba(0,0,0,.3);
 }
 .tree-leaf-yes:hover .tree-leaf-back { box-shadow: 0 8px 24px rgba(45,189,126,.18); }
-.tree-leaf-soon:hover .tree-leaf-back { box-shadow: 0 8px 24px rgba(212,160,23,.18); }
+.tree-leaf-soon:hover .tree-leaf-back { box-shadow: 0 8px 24px rgba(245,158,11,.18); }
 .tree-leaf-no:hover .tree-leaf-back { box-shadow: 0 8px 24px rgba(248,113,113,.18); }
 
 /* État YES (vert) */
@@ -2520,9 +2521,9 @@ textarea.form-control { resize: vertical; min-height: 120px; }
 .tree-leaf-yes .tree-leaf-meta { color: var(--green2); }
 
 /* État SOON (or) */
-.tree-leaf-soon .tree-leaf-face { border-left-color: rgba(212,160,23,.6); }
-.tree-leaf-soon .tree-leaf-back { background: linear-gradient(135deg, rgba(212,160,23,.1), rgba(212,160,23,.04)); border-color: rgba(212,160,23,.3); }
-.tree-leaf-soon .tree-leaf-icon { background: rgba(212,160,23,.15); color: var(--gold2); border: 1px solid rgba(212,160,23,.3); }
+.tree-leaf-soon .tree-leaf-face { border-left-color: rgba(245,158,11,.6); }
+.tree-leaf-soon .tree-leaf-back { background: linear-gradient(135deg, rgba(245,158,11,.1), rgba(245,158,11,.04)); border-color: rgba(245,158,11,.3); }
+.tree-leaf-soon .tree-leaf-icon { background: rgba(245,158,11,.15); color: var(--gold2); border: 1px solid rgba(245,158,11,.3); }
 .tree-leaf-soon .tree-leaf-meta { color: var(--gold2); }
 
 /* État NO (rouge) */
@@ -2616,8 +2617,8 @@ textarea.form-control { resize: vertical; min-height: 120px; }
   border-radius: 14px;
   margin: 0 auto 14px;
   display: flex; align-items: center; justify-content: center;
-  background: rgba(212,160,23,.1);
-  border: 1px solid rgba(212,160,23,.2);
+  background: rgba(245,158,11,.1);
+  border: 1px solid rgba(245,158,11,.2);
   color: var(--gold2);
   overflow: hidden;
 }
@@ -2644,7 +2645,7 @@ textarea.form-control { resize: vertical; min-height: 120px; }
   .tree-branch:first-child::before { top: -20px; height: 20px; }
   .tree-branch:nth-child(2)::before {
     top: -20px; height: 20px;
-    background: linear-gradient(180deg, rgba(212,160,23,.3), var(--gold));
+    background: linear-gradient(180deg, rgba(245,158,11,.3), var(--gold));
   }
   .tree-branch-card { padding: 16px 14px; margin-bottom: 18px; }
   .tree-branch-name { font-size: 1.05rem; }
@@ -2823,7 +2824,7 @@ textarea.form-control { resize: vertical; min-height: 120px; }
     <defs>
       <linearGradient id="leafGradL" x1="0" x2="1" y1="0" y2="0">
         <stop offset="0" stop-color="#2DBD7E"/>
-        <stop offset="1" stop-color="#D4A017"/>
+        <stop offset="1" stop-color="#F59E0B"/>
       </linearGradient>
     </defs>
   </svg>
@@ -2848,7 +2849,7 @@ textarea.form-control { resize: vertical; min-height: 120px; }
     <defs>
       <linearGradient id="leafGradR" x1="0" x2="1" y1="0" y2="0">
         <stop offset="0" stop-color="#2DBD7E"/>
-        <stop offset="1" stop-color="#D4A017"/>
+        <stop offset="1" stop-color="#F59E0B"/>
       </linearGradient>
     </defs>
   </svg>
@@ -3173,13 +3174,13 @@ textarea.form-control { resize: vertical; min-height: 120px; }
               <svg class="journey-flow" viewBox="0 0 800 460" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
                 <defs>
                   <linearGradient id="flowGoldGrad" x1="0" y1="0" x2="1" y2="0">
-                    <stop offset="0" stop-color="#D4A017"/>
-                    <stop offset="1" stop-color="#E8B840"/>
+                    <stop offset="0" stop-color="#F59E0B"/>
+                    <stop offset="1" stop-color="#FCD34D"/>
                   </linearGradient>
                   <radialGradient id="flowDotHalo">
                     <stop offset="0" stop-color="#FFE38A" stop-opacity="1"/>
-                    <stop offset="0.4" stop-color="#D4A017" stop-opacity=".8"/>
-                    <stop offset="1" stop-color="#D4A017" stop-opacity="0"/>
+                    <stop offset="0.4" stop-color="#F59E0B" stop-opacity=".8"/>
+                    <stop offset="1" stop-color="#F59E0B" stop-opacity="0"/>
                   </radialGradient>
                   <filter id="flowGlow" x="-50%" y="-50%" width="200%" height="200%">
                     <feGaussianBlur stdDeviation="6" result="b"/>
@@ -3359,11 +3360,11 @@ textarea.form-control { resize: vertical; min-height: 120px; }
             <img class="active" src="image/caisse.jpg" alt="Caisse — vue 1" loading="lazy" decoding="async">
             <img src="image/caisse_2.jpg" alt="Caisse — vue 2" loading="lazy" decoding="async">
             <img src="image/caisse_3.jpg" alt="Caisse — vue 3" loading="lazy" decoding="async">
-            <span class="feature-card-badge"><span class="feature-card-badge-dot" style="background:#D4A017"></span><span data-fr="Caisse" data-en="Cash register">Caisse</span></span>
+            <span class="feature-card-badge"><span class="feature-card-badge-dot" style="background:#F59E0B"></span><span data-fr="Caisse" data-en="Cash register">Caisse</span></span>
             <div class="feature-card-image-indicators"><span class="active"></span><span></span><span></span></div>
           </div>
           <div class="feature-card-body">
-            <p class="feature-card-tag" style="color:#D4A017" data-fr="Le coeur financier du bar" data-en="The financial heart of the bar">Le coeur financier du bar</p>
+            <p class="feature-card-tag" style="color:#F59E0B" data-fr="Le coeur financier du bar" data-en="The financial heart of the bar">Le coeur financier du bar</p>
             <h3 data-fr="Caisse" data-en="Cash register">Caisse</h3>
             <p data-fr="Ouverture / clôture avec fond initial, rapport Z PDF conforme DGI, alerte écart de caisse, audit log complet." data-en="Open / close with initial float, DGI-compliant Z report PDF, cash discrepancy alerts, full audit log.">Ouverture / clôture avec fond initial, rapport Z PDF conforme DGI, alerte écart de caisse, audit log complet.</p>
           </div>
@@ -3468,8 +3469,8 @@ textarea.form-control { resize: vertical; min-height: 120px; }
                   <stop offset="1" stop-color="#1A2418"/>
                 </linearGradient>
                 <radialGradient id="dgiGlow" cx="50%" cy="50%" r="55%">
-                  <stop offset="0" stop-color="#D4A017" stop-opacity="0.22"/>
-                  <stop offset="1" stop-color="#D4A017" stop-opacity="0"/>
+                  <stop offset="0" stop-color="#F59E0B" stop-opacity="0.22"/>
+                  <stop offset="1" stop-color="#F59E0B" stop-opacity="0"/>
                 </radialGradient>
                 <path id="dgiTopArc" d="M 160,150 A 80,80 0 0 1 320,150"/>
                 <path id="dgiBotArc" d="M 320,150 A 80,80 0 0 1 160,150"/>
@@ -3478,7 +3479,7 @@ textarea.form-control { resize: vertical; min-height: 120px; }
               <circle cx="240" cy="150" r="135" fill="url(#dgiGlow)"/>
 
               <!-- Lignes document en arrière-plan -->
-              <g opacity=".08" stroke="#D4A017" stroke-width="1" stroke-linecap="round">
+              <g opacity=".08" stroke="#F59E0B" stroke-width="1" stroke-linecap="round">
                 <line x1="30" y1="40" x2="120" y2="40"/>
                 <line x1="30" y1="55" x2="170" y2="55"/>
                 <line x1="30" y1="70" x2="100" y2="70"/>
@@ -3499,21 +3500,21 @@ textarea.form-control { resize: vertical; min-height: 120px; }
 
               <!-- Sceau central -->
               <g transform="translate(240, 150)">
-                <circle r="92" fill="rgba(212,160,23,.04)" stroke="#D4A017" stroke-width="2.5"/>
-                <circle r="85" fill="none" stroke="#D4A017" stroke-width=".6" stroke-dasharray="2.5,3.5"/>
-                <circle r="62" fill="rgba(212,160,23,.08)" stroke="#D4A017" stroke-width="1.2"/>
+                <circle r="92" fill="rgba(245,158,11,.04)" stroke="#F59E0B" stroke-width="2.5"/>
+                <circle r="85" fill="none" stroke="#F59E0B" stroke-width=".6" stroke-dasharray="2.5,3.5"/>
+                <circle r="62" fill="rgba(245,158,11,.08)" stroke="#F59E0B" stroke-width="1.2"/>
 
                 <!-- Texte arc supérieur -->
-                <text font-family="Verdana, Geneva, sans-serif" font-size="11" font-weight="800" fill="#E8B840" letter-spacing="2.2">
+                <text font-family="Verdana, Geneva, sans-serif" font-size="11" font-weight="800" fill="#FCD34D" letter-spacing="2.2">
                   <textPath href="#dgiTopArc" startOffset="50%" text-anchor="middle">DIRECTION GÉNÉRALE DES IMPÔTS</textPath>
                 </text>
                 <!-- Texte arc inférieur -->
-                <text font-family="Verdana, Geneva, sans-serif" font-size="10" font-weight="700" fill="#E8B840" letter-spacing="3">
+                <text font-family="Verdana, Geneva, sans-serif" font-size="10" font-weight="700" fill="#FCD34D" letter-spacing="3">
                   <textPath href="#dgiBotArc" startOffset="50%" text-anchor="middle">★ RÉPUBLIQUE DU CAMEROUN ★</textPath>
                 </text>
 
                 <!-- Étoile centrale (emblème national) -->
-                <polygon points="0,-30 8,-9 30,-9 12,4 19,25 0,12 -19,25 -12,4 -30,-9 -8,-9" fill="#D4A017"/>
+                <polygon points="0,-30 8,-9 30,-9 12,4 19,25 0,12 -19,25 -12,4 -30,-9 -8,-9" fill="#F59E0B"/>
 
                 <!-- DGI -->
                 <text y="44" text-anchor="middle" font-family="Verdana, Geneva, sans-serif" font-size="22" font-weight="900" fill="#F2F5EC" letter-spacing="4">DGI</text>
@@ -3521,7 +3522,7 @@ textarea.form-control { resize: vertical; min-height: 120px; }
 
               <!-- Badge TVA en bas -->
               <g transform="translate(240, 278)">
-                <rect x="-72" y="-13" width="144" height="22" rx="11" fill="#D4A017"/>
+                <rect x="-72" y="-13" width="144" height="22" rx="11" fill="#F59E0B"/>
                 <text y="3" text-anchor="middle" font-family="Verdana, Geneva, sans-serif" font-size="11" font-weight="900" fill="#0C0E0B" letter-spacing="1.5">TVA 19,25% · CONFORME</text>
               </g>
 
@@ -3562,7 +3563,7 @@ textarea.form-control { resize: vertical; min-height: 120px; }
   <!-- CTA Banner -->
   <section class="section-sm">
     <div class="container">
-      <div class="card card-accent text-c" style="padding: 56px; background: linear-gradient(135deg, rgba(212,160,23,.06), rgba(45,189,126,.04));">
+      <div class="card card-accent text-c" style="padding: 56px; background: linear-gradient(135deg, rgba(245,158,11,.06), rgba(45,189,126,.04));">
         <h2 style="margin-bottom: 16px;" data-fr-html="Prêt à transformer la gestion<br>de votre bar ?" data-en-html="Ready to transform<br>your bar management?">Prêt à transformer la gestion<br>de votre bar ?</h2>
         <p style="color: var(--muted); margin: 0 auto 32px; font-size: 1.05rem;" data-fr="Téléchargez la version Desktop dès aujourd'hui — gratuit, sans carte bancaire. Version web SaaS en développement." data-en="Download the Desktop version today — free, no credit card required. Web SaaS version in development.">Téléchargez la version Desktop dès aujourd'hui — gratuit, sans carte bancaire. Version web SaaS en développement.</p>
         <div style="display: flex; justify-content: center; gap: 14px; flex-wrap: wrap;">
@@ -3855,7 +3856,7 @@ textarea.form-control { resize: vertical; min-height: 120px; }
         <div class="dl-card reveal">
           <div class="dl-os-icon">
             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path d="M3 5.557L10.078 4.6V11.5H3V5.557ZM10.955 4.48L21 3V11.5H10.955V4.48ZM3 12.5H10.078V19.38L3 18.41V12.5ZM10.955 12.5H21V21L10.955 19.5V12.5Z" fill="#D4A017"/>
+              <path d="M3 5.557L10.078 4.6V11.5H3V5.557ZM10.955 4.48L21 3V11.5H10.955V4.48ZM3 12.5H10.078V19.38L3 18.41V12.5ZM10.955 12.5H21V21L10.955 19.5V12.5Z" fill="#F59E0B"/>
             </svg>
           </div>
           <h3>Windows</h3>
@@ -3914,7 +3915,7 @@ textarea.form-control { resize: vertical; min-height: 120px; }
         </div>
         <div class="card module-card card-green">
           <div class="badge badge-green" data-fr="P1 — Essentiel" data-en="P1 — Essential">P1 — Essentiel</div>
-          <div class="icon-box icon-box-gold" style="margin-bottom: 16px; width: 52px; height: 52px; color:#D4A017;" aria-hidden="true">
+          <div class="icon-box icon-box-gold" style="margin-bottom: 16px; width: 52px; height: 52px; color:#F59E0B;" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
           </div>
           <h3 data-fr="Facturation & Comptabilité" data-en="Billing & Accounting">Facturation & Comptabilité</h3>
@@ -3982,7 +3983,7 @@ textarea.form-control { resize: vertical; min-height: 120px; }
       <div class="modules-grid">
         <div class="card module-card card-accent">
           <div class="badge badge-gold" data-fr="P2 — Important" data-en="P2 — Important">P2 — Important</div>
-          <div class="icon-box icon-box-gold" style="margin-bottom: 16px; width: 52px; height: 52px; color:#D4A017;" aria-hidden="true">
+          <div class="icon-box icon-box-gold" style="margin-bottom: 16px; width: 52px; height: 52px; color:#F59E0B;" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
           </div>
           <h3 data-fr="RH & Paie" data-en="HR & Payroll">RH & Paie</h3>
@@ -3995,7 +3996,7 @@ textarea.form-control { resize: vertical; min-height: 120px; }
         </div>
         <div class="card module-card card-accent">
           <div class="badge badge-gold" data-fr="P2 — Important" data-en="P2 — Important">P2 — Important</div>
-          <div class="icon-box icon-box-gold" style="margin-bottom: 16px; width: 52px; height: 52px; color:#D4A017;" aria-hidden="true">
+          <div class="icon-box icon-box-gold" style="margin-bottom: 16px; width: 52px; height: 52px; color:#F59E0B;" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
           </div>
           <h3 data-fr="Programme de fidélité" data-en="Loyalty program">Programme de fidélité</h3>
@@ -4021,7 +4022,7 @@ textarea.form-control { resize: vertical; min-height: 120px; }
         </div>
         <div class="card module-card card-accent">
           <div class="badge badge-gold" data-fr="P2 — Important" data-en="P2 — Important">P2 — Important</div>
-          <div class="icon-box icon-box-gold" style="margin-bottom: 16px; width: 52px; height: 52px; color:#D4A017;" aria-hidden="true">
+          <div class="icon-box icon-box-gold" style="margin-bottom: 16px; width: 52px; height: 52px; color:#F59E0B;" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
           </div>
           <h3 data-fr="Analytics & BI" data-en="Analytics & BI">Analytics & BI</h3>
@@ -4073,7 +4074,7 @@ textarea.form-control { resize: vertical; min-height: 120px; }
           </div>
           <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:6px;">
             <h4 style="margin:0;" data-fr="Tablette tactile" data-en="Touch tablet">Tablette tactile</h4>
-            <span style="font-size:.68rem; background:rgba(212,160,23,.15); color:var(--gold); border:1px solid rgba(212,160,23,.30); padding:2px 9px; border-radius:6px; font-family:var(--font-h); font-weight:700; letter-spacing:.04em; white-space:nowrap;" data-fr="Bientôt" data-en="Soon">Bientôt</span>
+            <span style="font-size:.68rem; background:rgba(245,158,11,.15); color:var(--gold); border:1px solid rgba(245,158,11,.30); padding:2px 9px; border-radius:6px; font-family:var(--font-h); font-weight:700; letter-spacing:.04em; white-space:nowrap;" data-fr="Bientôt" data-en="Soon">Bientôt</span>
           </div>
           <p data-fr="Mode POS optimisé pour les tablettes Android et iPad. Saisie rapide des commandes en salle, synchronisation temps réel avec la caisse." data-en="POS mode optimized for Android tablets and iPad. Quick order entry on the floor, real-time sync with the cash register.">Mode POS optimisé pour les tablettes Android et iPad. Saisie rapide des commandes en salle, synchronisation temps réel avec la caisse.</p>
           <div style="margin-top:auto; padding-top:14px;">
@@ -4090,7 +4091,7 @@ textarea.form-control { resize: vertical; min-height: 120px; }
           </div>
           <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:6px;">
             <h4 style="margin:0;" data-fr="Smartphone" data-en="Smartphone">Smartphone</h4>
-            <span style="font-size:.68rem; background:rgba(212,160,23,.15); color:var(--gold); border:1px solid rgba(212,160,23,.30); padding:2px 9px; border-radius:6px; font-family:var(--font-h); font-weight:700; letter-spacing:.04em; white-space:nowrap;" data-fr="Bientôt" data-en="Soon">Bientôt</span>
+            <span style="font-size:.68rem; background:rgba(245,158,11,.15); color:var(--gold); border:1px solid rgba(245,158,11,.30); padding:2px 9px; border-radius:6px; font-family:var(--font-h); font-weight:700; letter-spacing:.04em; white-space:nowrap;" data-fr="Bientôt" data-en="Soon">Bientôt</span>
           </div>
           <p data-fr="Application mobile pour suivre les ventes, les stocks et les performances de votre bar depuis n'importe où. Notifications push en cas d'alerte stock ou de clôture caisse." data-en="Mobile app to track sales, inventory and your bar's performance from anywhere. Push notifications for stock alerts or register close.">Application mobile pour suivre les ventes, les stocks et les performances de votre bar depuis n'importe où. Notifications push en cas d'alerte stock ou de clôture caisse.</p>
           <div style="margin-top:auto; padding-top:14px;">
@@ -4107,7 +4108,7 @@ textarea.form-control { resize: vertical; min-height: 120px; }
           </div>
           <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:6px;">
             <h4 style="margin:0;" data-fr="Navigateur web" data-en="Web browser">Navigateur web</h4>
-            <span style="font-size:.68rem; background:rgba(212,160,23,.15); color:var(--gold); border:1px solid rgba(212,160,23,.30); padding:2px 9px; border-radius:6px; font-family:var(--font-h); font-weight:700; letter-spacing:.04em; white-space:nowrap;" data-fr="Bientôt" data-en="Soon">Bientôt</span>
+            <span style="font-size:.68rem; background:rgba(245,158,11,.15); color:var(--gold); border:1px solid rgba(245,158,11,.30); padding:2px 9px; border-radius:6px; font-family:var(--font-h); font-weight:700; letter-spacing:.04em; white-space:nowrap;" data-fr="Bientôt" data-en="Soon">Bientôt</span>
           </div>
           <p data-fr="Accédez à votre bar depuis n'importe quel ordinateur, sans installation. Idéal pour les chaînes multi-établissements et la consultation à distance." data-en="Access your bar from any computer, no installation needed. Perfect for multi-location chains and remote consultation.">Accédez à votre bar depuis n'importe quel ordinateur, sans installation. Idéal pour les chaînes multi-établissements et la consultation à distance.</p>
           <div style="margin-top:auto; padding-top:14px;">
@@ -4311,7 +4312,7 @@ textarea.form-control { resize: vertical; min-height: 120px; }
           <div class="contact-items">
             <div class="contact-item">
               <div class="icon-box icon-box-gold" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="#D4A017" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="20" height="20">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="20" height="20">
                   <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
                   <circle cx="12" cy="10" r="3"/>
                 </svg>
