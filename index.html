@@ -4,6 +4,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title data-fr="BarManager Pro — Gestion intégrale de bar | Cameroun" data-en="BarManager Pro — All-in-one bar management | Cameroon">BarManager Pro — Gestion intégrale de bar | Cameroun</title>
+<link rel="preconnect" href="https://images.unsplash.com" crossorigin>
 <script>
   // Anti-flash : applique le thème AVANT le rendu (synchrone)
   (function() {
@@ -89,6 +90,39 @@ body {
 
 /* Tout image / iframe / svg doit s'auto-contraindre */
 img, iframe, svg, video { max-width: 100%; }
+
+/* ============================================================
+   AMBIANCE BAR — bokeh lumineux flottant en fond du site
+   Évoque les lampes tamisées d'un bar camerounais (lumière chaude)
+   ============================================================ */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(circle 220px at 12% 18%, rgba(245,158,11,.10) 0%, transparent 60%),
+    radial-gradient(circle 180px at 88% 28%, rgba(217,119,6,.08) 0%, transparent 60%),
+    radial-gradient(circle 260px at 22% 72%, rgba(252,211,77,.07) 0%, transparent 60%),
+    radial-gradient(circle 200px at 78% 82%, rgba(245,158,11,.09) 0%, transparent 60%),
+    radial-gradient(circle 150px at 50% 45%, rgba(217,119,6,.05) 0%, transparent 60%);
+  animation: barBokeh 25s ease-in-out infinite alternate;
+}
+@keyframes barBokeh {
+  0%   { transform: translate(0, 0)     scale(1); opacity: .8; }
+  50%  { transform: translate(15px,-20px) scale(1.05); opacity: 1; }
+  100% { transform: translate(-10px,15px) scale(.98); opacity: .85; }
+}
+html.light body::before {
+  background:
+    radial-gradient(circle 220px at 12% 18%, rgba(245,158,11,.07) 0%, transparent 60%),
+    radial-gradient(circle 180px at 88% 28%, rgba(217,119,6,.05) 0%, transparent 60%),
+    radial-gradient(circle 260px at 22% 72%, rgba(252,211,77,.05) 0%, transparent 60%),
+    radial-gradient(circle 200px at 78% 82%, rgba(245,158,11,.06) 0%, transparent 60%);
+}
+/* Tout le contenu reste devant le bokeh */
+body > *, .page > * { position: relative; z-index: 1; }
 
 /* ============================================================
    TYPOGRAPHY
@@ -1447,9 +1481,21 @@ html.light h1, html.light h2, html.light h3, html.light h4 { color: var(--white)
 .hero-bg {
   position: absolute; inset: 0;
   background:
-    radial-gradient(ellipse 80% 60% at 70% 40%, rgba(245,158,11,.07) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 50% at 20% 80%, rgba(45,189,126,.05) 0%, transparent 50%),
-    var(--black);
+    /* Calque sombre par-dessus pour lisibilité du texte */
+    linear-gradient(180deg, rgba(15,23,42,.86) 0%, rgba(15,23,42,.78) 50%, rgba(15,23,42,.92) 100%),
+    /* Filtre orange chaud (lumière tamisée de bar) */
+    radial-gradient(ellipse 100% 70% at 50% 30%, rgba(245,158,11,.18) 0%, transparent 60%),
+    /* Photo de fond : comptoir de bar avec ambiance chaude */
+    url("https://images.unsplash.com/photo-1572116469696-31de0f17cc34?w=1800&q=70&auto=format&fit=crop")
+    center/cover no-repeat;
+}
+.hero-bg::after {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 70% 40%, rgba(245,158,11,.10) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 20% 80%, rgba(45,189,126,.05) 0%, transparent 50%);
+  pointer-events: none;
 }
 .hero-grid {
   position: absolute; inset: 0;
@@ -2960,22 +3006,23 @@ textarea.form-control { resize: vertical; min-height: 120px; }
                 <div class="db-dot" style="background:#28CA41"></div>
               </div>
               <div class="db-logo">
-                BarManager Pro —
-                <span class="db-logo-title" id="dbSlideTitle" data-fr="Dashboard" data-en="Dashboard">Dashboard</span>
+                <span data-fr="Votre bar —" data-en="Your bar —">Votre bar —</span>
+                <span class="db-logo-title" id="dbSlideTitle" data-fr="Le comptoir" data-en="The counter">Le comptoir</span>
               </div>
               <span class="db-live">
                 <span class="db-live-dot" aria-hidden="true"></span>
-                <span data-fr="Live" data-en="Live">Live</span>
+                <span data-fr="Ouvert" data-en="Open">Ouvert</span>
               </span>
             </div>
 
-            <!-- Carrousel : uniquement les écrans de tableau de bord -->
+            <!-- Carrousel : scènes d'ambiance d'un bar camerounais -->
             <div class="db-carousel" id="dbCarousel"
-                 data-titles-fr="Tableau de bord,Tableau de bord — Vue alternative,Tableau de bord — Synthèse"
-                 data-titles-en="Dashboard,Dashboard — Alternate view,Dashboard — Summary">
-              <div class="db-slide active"><img src="image/dasboard.jpg" alt="Tableau de bord principal" loading="eager" decoding="async"></div>
-              <div class="db-slide"><img src="image/dasboard_2.jpg" alt="Tableau de bord — Vue alternative" loading="lazy" decoding="async"></div>
-              <div class="db-slide"><img src="image/dasboard.png" alt="Tableau de bord — Synthèse" loading="lazy" decoding="async"></div>
+                 data-titles-fr="Le comptoir,L'ambiance du soir,Les amis qui trinquent,Le service en salle"
+                 data-titles-en="The counter,Evening atmosphere,Friends raising glasses,Floor service">
+              <div class="db-slide active"><img src="https://images.unsplash.com/photo-1551024601-bec78aea704b?w=900&q=75&auto=format&fit=crop" alt="Bouteilles backlit au comptoir" loading="eager" decoding="async"></div>
+              <div class="db-slide"><img src="https://images.unsplash.com/photo-1572116469696-31de0f17cc34?w=900&q=75&auto=format&fit=crop" alt="Bartender dans une lumière chaude" loading="lazy" decoding="async"></div>
+              <div class="db-slide"><img src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=900&q=75&auto=format&fit=crop" alt="Verres qui trinquent — ambiance amicale" loading="lazy" decoding="async"></div>
+              <div class="db-slide"><img src="https://images.unsplash.com/photo-1485872299829-c673f5194813?w=900&q=75&auto=format&fit=crop" alt="Bar avec ambiance et lampes tamisées" loading="lazy" decoding="async"></div>
 
               <!-- Flèches navigation -->
               <button class="db-nav db-nav-prev" onclick="dbCarouselGo(-1)" aria-label="Précédent">‹</button>
@@ -2985,7 +3032,7 @@ textarea.form-control { resize: vertical; min-height: 120px; }
             <!-- Pied : indicateurs + compteur -->
             <div class="db-footer">
               <div class="db-indicators" id="dbIndicators"></div>
-              <div class="db-counter"><span id="dbCounter">1</span> / 3</div>
+              <div class="db-counter"><span id="dbCounter">1</span> / 4</div>
             </div>
           </div>
         </div>
