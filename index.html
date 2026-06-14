@@ -1352,9 +1352,18 @@ html.light .theme-toggle { background: rgba(0,0,0,.04); color: #5a5a55; }
 /* Hero / sections light */
 html.light .hero-bg {
   background:
-    radial-gradient(ellipse 80% 60% at 70% 40%, rgba(245,158,11,.10) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 50% at 20% 80%, rgba(45,189,126,.08) 0%, transparent 50%),
-    var(--black);
+    /* Calque clair par-dessus pour rendre le texte sombre lisible (mode light) */
+    linear-gradient(180deg, rgba(250,250,248,.92) 0%, rgba(250,250,248,.85) 50%, rgba(250,250,248,.94) 100%),
+    /* Filtre orange chaud (lumière tamisée) */
+    radial-gradient(ellipse 100% 70% at 50% 30%, rgba(245,158,11,.15) 0%, transparent 60%),
+    /* Même photo de bar qu'en dark, mais perçue comme une texture subtile */
+    url("https://images.unsplash.com/photo-1572116469696-31de0f17cc34?w=1800&q=70&auto=format&fit=crop")
+    center/cover no-repeat;
+}
+html.light .hero-bg::after {
+  background:
+    radial-gradient(ellipse 80% 60% at 70% 40%, rgba(245,158,11,.08) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 20% 80%, rgba(45,189,126,.05) 0%, transparent 50%);
 }
 html.light .hero-grid {
   background-image:
@@ -3015,14 +3024,14 @@ textarea.form-control { resize: vertical; min-height: 120px; }
               </span>
             </div>
 
-            <!-- Carrousel : scènes d'ambiance d'un bar camerounais -->
+            <!-- Carrousel : scènes d'ambiance bar (objets, atmosphère, sans personnes) -->
             <div class="db-carousel" id="dbCarousel"
-                 data-titles-fr="Le comptoir,L'ambiance du soir,Les amis qui trinquent,Le service en salle"
-                 data-titles-en="The counter,Evening atmosphere,Friends raising glasses,Floor service">
+                 data-titles-fr="Le comptoir,Les bouteilles alignées,Le rhum et les cocktails,L'ambiance tamisée"
+                 data-titles-en="The counter,Bottles lined up,Rum and cocktails,Warm ambient">
               <div class="db-slide active"><img src="https://images.unsplash.com/photo-1551024601-bec78aea704b?w=900&q=75&auto=format&fit=crop" alt="Bouteilles backlit au comptoir" loading="eager" decoding="async"></div>
-              <div class="db-slide"><img src="https://images.unsplash.com/photo-1572116469696-31de0f17cc34?w=900&q=75&auto=format&fit=crop" alt="Bartender dans une lumière chaude" loading="lazy" decoding="async"></div>
-              <div class="db-slide"><img src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=900&q=75&auto=format&fit=crop" alt="Verres qui trinquent — ambiance amicale" loading="lazy" decoding="async"></div>
-              <div class="db-slide"><img src="https://images.unsplash.com/photo-1485872299829-c673f5194813?w=900&q=75&auto=format&fit=crop" alt="Bar avec ambiance et lampes tamisées" loading="lazy" decoding="async"></div>
+              <div class="db-slide"><img src="https://images.unsplash.com/photo-1574096145006-2dcfd6db4b54?w=900&q=75&auto=format&fit=crop" alt="Étagère de bouteilles" loading="lazy" decoding="async"></div>
+              <div class="db-slide"><img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=900&q=75&auto=format&fit=crop" alt="Cocktail avec citron vert" loading="lazy" decoding="async"></div>
+              <div class="db-slide"><img src="https://images.unsplash.com/photo-1583347267039-c2ec77a9b40e?w=900&q=75&auto=format&fit=crop" alt="Bar bas-lumière chaude" loading="lazy" decoding="async"></div>
 
               <!-- Flèches navigation -->
               <button class="db-nav db-nav-prev" onclick="dbCarouselGo(-1)" aria-label="Précédent">‹</button>
